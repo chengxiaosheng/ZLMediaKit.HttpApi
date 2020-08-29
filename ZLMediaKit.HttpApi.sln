@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZLMediaKit.HttpApi", "ZLMediaKit.HttpApi\ZLMediaKit.HttpApi.csproj", "{0C11B025-1BF5-46B6-9EF2-274FDDEEE84E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLMediaKit.HttpApi", "ZLMediaKit.HttpApi\ZLMediaKit.HttpApi.csproj", "{FC1697A7-80D5-40B9-8A03-3CCF62D2D799}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLMediaKit.HttpApi.Test", "ZLMediaKit.HttpApi.Test\ZLMediaKit.HttpApi.Test.csproj", "{DE954215-BC92-4627-BD82-81A90189D7C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0C11B025-1BF5-46B6-9EF2-274FDDEEE84E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C11B025-1BF5-46B6-9EF2-274FDDEEE84E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C11B025-1BF5-46B6-9EF2-274FDDEEE84E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C11B025-1BF5-46B6-9EF2-274FDDEEE84E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC1697A7-80D5-40B9-8A03-3CCF62D2D799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1697A7-80D5-40B9-8A03-3CCF62D2D799}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1697A7-80D5-40B9-8A03-3CCF62D2D799}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1697A7-80D5-40B9-8A03-3CCF62D2D799}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE954215-BC92-4627-BD82-81A90189D7C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE954215-BC92-4627-BD82-81A90189D7C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE954215-BC92-4627-BD82-81A90189D7C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE954215-BC92-4627-BD82-81A90189D7C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

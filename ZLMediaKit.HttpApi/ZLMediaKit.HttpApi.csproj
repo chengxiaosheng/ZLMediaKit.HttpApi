@@ -6,7 +6,18 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>ChengXiaoSheng</Authors>
     <Description>实现ZLMediaKit Api访问</Description>
+    <PackageProjectUrl>https://github.com/chengxiaosheng/ZLMediaKit.HttpApi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/chengxiaosheng/ZLMediaKit.HttpApi</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryBranch>master</RepositoryBranch>
+    <PackageTags>ZLMediaKit HttpClient HttpApi</PackageTags>
+    <NeutralLanguage>zh-Hans</NeutralLanguage>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>1.0.1</FileVersion>
     <Version>1.0.1</Version>
+    <PackageReleaseNotes>
+      v1.0.1 : 实现ZLMediaKit Http Api 接口封装
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
