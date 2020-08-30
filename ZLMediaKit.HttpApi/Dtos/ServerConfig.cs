@@ -3,37 +3,65 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZLMediaKit.HttpApi.Newtonsoft.Json;
 
 namespace ZLMediaKit.HttpApi.Dtos
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ServerConfig
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
         public ApiConfig Api { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public FfmpegConfig Ffmpeg { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public GeneralConfig General { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public HlsConfig Hls { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public HookConfig Hook { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public HttpConfig Http { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public MulticastConfig Multicast { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public RecordConfig Record { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public RtmpConfig Rtmp { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public RtpConfig Rtp { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public RtpProxyConfig RtpProxy { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public RtspConfig Rtsp { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public ShellConfig Shell { get; set; }
 
 
@@ -55,7 +83,9 @@ namespace ZLMediaKit.HttpApi.Dtos
 
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
 
         public class ApiConfig
         {
@@ -82,7 +112,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public string DefaultSnap { get; set; }
 
-            public Dictionary<string,object> GetUpdateDicts(ApiConfig apiConfig)
+            internal Dictionary<string,object> GetUpdateDicts(ApiConfig apiConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(ApiDebug, apiConfig.ApiDebug)) dict.Add($"{ApiConfig.PrefixName}apiDebug", ApiDebug ? 1 : 0);
@@ -92,13 +122,15 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class FfmpegConfig
         {
+            internal static string PrefixName = "ffmpeg.";
             /// <summary>
             /// FFmpeg可执行程序绝对路径
             /// </summary>
-            internal static string PrefixName = "ffmpeg.";
             public string Bin { get; set; }
 
             /// <summary>
@@ -117,7 +149,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// <remarks>可以为相对(相对于本可执行程序目录)或绝对路径</remarks>
             public string Log { get; set; }
 
-            public Dictionary<string, object> GetUpdateDicts(FfmpegConfig binConfig)
+            internal Dictionary<string, object> GetUpdateDicts(FfmpegConfig binConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(Bin, binConfig.Bin)) dict.Add($"{FfmpegConfig.PrefixName}apiDebug", Bin );
@@ -127,7 +159,9 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class GeneralConfig
         {
             internal static string PrefixName = "general.";
@@ -205,7 +239,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             [JsonConverter(typeof(ZLBoolConverter))]
             public bool ModifyStamp { get; set; }
 
-            public Dictionary<string, object> GetUpdateDicts(GeneralConfig generalConfig)
+            internal Dictionary<string, object> GetUpdateDicts(GeneralConfig generalConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(EnableVhost, generalConfig.EnableVhost)) dict.Add($"{GeneralConfig.PrefixName}enableVhost", EnableVhost ? 1 : 0);
@@ -223,7 +257,9 @@ namespace ZLMediaKit.HttpApi.Dtos
             }
 
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class HlsConfig
         {
             internal static string PrefixName = "hls.";
@@ -255,7 +291,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public int SegRetain { get; set; }
 
-            public Dictionary<string, object> GetUpdateDicts(HlsConfig hlsConfig)
+            internal Dictionary<string, object> GetUpdateDicts(HlsConfig hlsConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(FileBufSize, hlsConfig.FileBufSize)) dict.Add($"{HlsConfig.PrefixName}fileBufSize", FileBufSize );
@@ -266,6 +302,9 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public class HookConfig
         {
             internal static string PrefixName = "hook.";
@@ -347,7 +386,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public int TimeoutSec { get; set; }
 
-            public Dictionary<string, object> GetUpdateDicts(HookConfig hookConfig)
+            internal Dictionary<string, object> GetUpdateDicts(HookConfig hookConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(Admin_params, hookConfig.Admin_params)) dict.Add($"{HookConfig.PrefixName}admin_params", Admin_params);
@@ -368,7 +407,9 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class HttpConfig
         {
             internal static string PrefixName = "http.";
@@ -419,7 +460,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             [JsonConverter(typeof(ZLBoolConverter))]
             public bool DirMenu { get; set; }
 
-            public Dictionary<string, object> GetUpdateDicts(HttpConfig httpConfig)
+            internal Dictionary<string, object> GetUpdateDicts(HttpConfig httpConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(CharSet, httpConfig.CharSet)) dict.Add($"{HttpConfig.PrefixName}charSet", CharSet);
@@ -434,7 +475,9 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class MulticastConfig
         {
             internal static string PrefixName = "multicast.";
@@ -454,7 +497,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public int UdpTTL { get; set; }
 
-            public Dictionary<string, object> GetUpdateDicts(MulticastConfig multicastConfig)
+            internal Dictionary<string, object> GetUpdateDicts(MulticastConfig multicastConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(AddrMax, multicastConfig.AddrMax)) dict.Add($"{MulticastConfig.PrefixName}addrMax", AddrMax);
@@ -463,14 +506,17 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class RecordConfig
         {
+            internal static string PrefixName = "record.";
+
             /// <summary>
             /// mp4录制或mp4点播的应用名，通过限制应用名，可以防止随意点播
             /// </summary>
             /// <remarks>点播的文件必须放置在此文件夹下</remarks>
-            internal static string PrefixName = "record.";
             public string AppName { get; set; }
 
             /// <summary>
@@ -504,7 +550,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public int FileRepeat { get; set; }
 
-            public Dictionary<string, object> GetUpdateDicts(RecordConfig recordConfig)
+            internal Dictionary<string, object> GetUpdateDicts(RecordConfig recordConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(AppName, recordConfig.AppName)) dict.Add($"{RecordConfig.PrefixName}appName", AppName);
@@ -517,7 +563,9 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class RtmpConfig
         {
             internal static string PrefixName = "rtmp.";
@@ -544,7 +592,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public int Sslport { get; set; } = 19350;
 
-            public Dictionary<string, object> GetUpdateDicts(RtmpConfig rtmpConfig)
+            internal Dictionary<string, object> GetUpdateDicts(RtmpConfig rtmpConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(HandshakeSecond, rtmpConfig.HandshakeSecond)) dict.Add($"{RtmpConfig.PrefixName}handshakeSecond", HandshakeSecond);
@@ -555,7 +603,9 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class RtpConfig
         {
             internal static string PrefixName = "rtp.";
@@ -582,7 +632,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public int VideoMtuSize { get; set; } = 1400;
 
-            public Dictionary<string, object> GetUpdateDicts(RtpConfig rtpConfig)
+            internal Dictionary<string, object> GetUpdateDicts(RtpConfig rtpConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(AudioMtuSize, rtpConfig.AudioMtuSize)) dict.Add($"{RtpConfig.PrefixName}audioMtuSize", AudioMtuSize);
@@ -593,7 +643,9 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class RtpProxyConfig
         {
             internal static string PrefixName = "rtp_proxy.";
@@ -614,7 +666,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// rtp超时时间，单位秒
             /// </summary>
             public int TimeoutSec { get; set; } = 15;
-            public Dictionary<string, object> GetUpdateDicts(RtpProxyConfig rtpProxyConfig)
+            internal Dictionary<string, object> GetUpdateDicts(RtpProxyConfig rtpProxyConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(CheckSource, rtpProxyConfig.CheckSource)) dict.Add($"{RtpProxyConfig.PrefixName}checkSource", CheckSource);
@@ -624,7 +676,9 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class RtspConfig
         {
             internal static string PrefixName = "rtsp.";
@@ -662,7 +716,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public int Sslport { get; set; } = 322;
 
-            public Dictionary<string, object> GetUpdateDicts(RtspConfig rtspConfig)
+            internal Dictionary<string, object> GetUpdateDicts(RtspConfig rtspConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(AuthBasic, rtspConfig.AuthBasic)) dict.Add($"{RtspConfig.PrefixName}authBasic", AuthBasic ? 1: 0);
@@ -674,7 +728,9 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class ShellConfig
         {
             internal static string PrefixName = "shell.";
@@ -687,7 +743,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public int Port { get; set; } = 9000;
 
-            public Dictionary<string, object> GetUpdateDicts(ShellConfig shellConfig)
+            internal Dictionary<string, object> GetUpdateDicts(ShellConfig shellConfig)
             {
                 var dict = new Dictionary<string, object>();
                 if (!object.Equals(MaxReqSize, shellConfig.MaxReqSize)) dict.Add($"{ShellConfig.PrefixName}maxReqSize", MaxReqSize);

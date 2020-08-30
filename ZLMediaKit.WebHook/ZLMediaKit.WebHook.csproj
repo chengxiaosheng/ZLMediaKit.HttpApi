@@ -2,14 +2,26 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Authors>ChengXiaoSheng</Authors>
+    <Description>ZLMediaKit Web Hook 转为C# 委托事件</Description>
+    <PackageProjectUrl>https://github.com/chengxiaosheng/ZLMediaKit.HttpApi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/chengxiaosheng/ZLMediaKit.HttpApi</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryBranch>master</RepositoryBranch>
+    <PackageTags>ZLMediaKit WebHook HttpApi</PackageTags>
+    <NeutralLanguage>zh-Hans</NeutralLanguage>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>1.0.1</FileVersion>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>
+      v1.0.1 : 实现ZLMediaKit Http Api 接口封装
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Cors" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.7" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.7" />
   </ItemGroup>
 
 </Project>

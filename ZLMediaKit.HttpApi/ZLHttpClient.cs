@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace ZLMediaKit.HttpApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ZLHttpClient
     {
 
@@ -82,7 +85,11 @@ namespace ZLMediaKit.HttpApi
             var objDict = dicts.Where(w => w.Key.StartsWith(name)).ToDictionary(f => f.Key.Replace(name,""), v => v.Value);
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(objDict));
         }
-
+        /// <summary>
+        /// 动态修改ZLM配置
+        /// </summary>
+        /// <param name="serverConfig"></param>
+        /// <returns></returns>
         public Task<ServerConfigResult> SetServerConfig(ServerConfig serverConfig)
         {
             return GetServerConfig().ContinueWith(task =>
@@ -288,7 +295,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="app">应用名，例如 live</param>
         /// <param name="stream">流id，例如 obs</param>
         /// <returns></returns>
-        /// <remarks>已过期，请使用 <see cref="getMediaList(string, string, string)"/>接口替代</remarks>
+        /// <remarks>已过期，请使用 <see cref="GetMediaList(string, string, string)"/>接口替代</remarks>
         [Obsolete("已过期，请使用getMediaList接口替代")]
         public Task<ResultBase> IsMediaOnline(string schema , string vhost ,string app,string stream)
         {
@@ -308,7 +315,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="app">应用名，例如 live</param>
         /// <param name="stream">流id，例如 obs</param>
         /// <returns></returns>
-        /// <remarks>已过期，请使用 <see cref="getMediaList(string, string, string)"/>接口替代</remarks>
+        /// <remarks>已过期，请使用 <see cref="GetMediaList(string, string, string)"/>接口替代</remarks>
         [Obsolete("已过期，请使用getMediaList接口替代")]
         public Task<ResultBase<MediaInfo>> GetMediaInfo(string schema, string vhost, string app, string stream)
         {
@@ -378,7 +385,6 @@ namespace ZLMediaKit.HttpApi
         /// <param name="vhost">流的虚拟主机名</param>
         /// <param name="app">流的应用名</param>
         /// <param name="stream">流的ID</param>
-        /// <param name="customized_path">录像保存目录</param>
         /// <returns></returns>
         public Task<ResultBase> StopRecord(int type, string vhost, string app, string stream)
         {
@@ -397,7 +403,6 @@ namespace ZLMediaKit.HttpApi
         /// <param name="vhost">流的虚拟主机名</param>
         /// <param name="app">流的应用名</param>
         /// <param name="stream">流的ID</param>
-        /// <param name="customized_path">录像保存目录</param>
         /// <returns></returns>
         public Task<ResultBase> IsRecording(int type, string vhost, string app, string stream)
         {

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ZLMediaKit.HttpApi.Dtos
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RtpServer
     {
         /// <summary>

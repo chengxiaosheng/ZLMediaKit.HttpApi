@@ -1,12 +1,8 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
-namespace ZLMediaKit.HttpApi.Newtonsoft.Json
+namespace Newtonsoft.Json
 {
-    public class ZLBoolConverter : JsonConverter
+    internal class ZLBoolConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
