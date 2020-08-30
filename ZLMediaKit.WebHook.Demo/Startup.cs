@@ -26,10 +26,7 @@ namespace ZLMediaKit.WebHook.Demo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddMediaKitWebHook(new APIRouteOptions { 
-                //定义访问路径，action之前的所有路径
-                RoutePrefix = "index/hook"
-            });
+            services.AddMediaKitWebHook(new APIRouteOptions());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,8 +40,6 @@ namespace ZLMediaKit.WebHook.Demo
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors();
 
             app.UseAuthorization();
 
