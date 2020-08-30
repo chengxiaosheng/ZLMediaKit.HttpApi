@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ZLMediaKit.HttpApi\ZLMediaKit.HttpApi.csproj" />
     <ProjectReference Include="..\ZLMediaKit.WebHook\ZLMediaKit.WebHook.csproj" />
   </ItemGroup>
 

@@ -22,10 +22,11 @@ namespace ZLMediaKit.WebHook
             {
                 if (controller.ControllerType == typeof(ZLMediaKitWebHookServcies))
                 {
-                    if (controller.Attributes.Cast<EnableCorsAttribute>().FirstOrDefault() is EnableCorsAttribute enableCors)
-                    {
-                        enableCors.PolicyName = _routeOptions.CorsPolicyName;
-                    }
+                    //移除跨域设置
+                    //if (controller.Attributes.Cast<EnableCorsAttribute>().FirstOrDefault() is EnableCorsAttribute enableCors)
+                    //{
+                    //    enableCors.PolicyName = _routeOptions.CorsPolicyName;
+                    //}
                     controller.ApiExplorer.GroupName = "ZLMediaKit-WebHook";
                     controller.ApiExplorer.IsVisible = true;
                     foreach (var action in controller.Actions)

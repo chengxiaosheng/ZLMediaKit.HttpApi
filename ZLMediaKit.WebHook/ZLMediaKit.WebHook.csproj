@@ -16,7 +16,7 @@
     <FileVersion>1.0.1</FileVersion>
     <Version>1.0.1</Version>
     <PackageReleaseNotes>
-      v1.0.1 : 实现ZLMediaKit Http Api 接口封装
+      v1.0.1 : 实现ZLMediaKit Http Hook 接口封装
     </PackageReleaseNotes>
   </PropertyGroup>
 

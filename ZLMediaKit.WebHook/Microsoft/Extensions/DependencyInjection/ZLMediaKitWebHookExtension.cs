@@ -14,19 +14,19 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddHttpContextAccessor();
 
-            if (string.IsNullOrEmpty(routeOptions.CorsPolicyName))
-            {
-                routeOptions.CorsPolicyName = "ZLMWebHook";
-                services.AddCors(options =>
-                {
-                    options.AddPolicy(routeOptions.CorsPolicyName, builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .WithMethods("GET", "POST", "HEAD", "PUT", "DELETE", "OPTIONS");
-                    });
-                });
-            }
+            //if (string.IsNullOrEmpty(routeOptions.CorsPolicyName))
+            //{
+            //    routeOptions.CorsPolicyName = "ZLMWebHook";
+            //    services.AddCors(options =>
+            //    {
+            //        options.AddPolicy(routeOptions.CorsPolicyName, builder =>
+            //        {
+            //            builder.AllowAnyOrigin()
+            //              .AllowAnyHeader()
+            //              .WithMethods("GET", "POST", "HEAD", "PUT", "DELETE", "OPTIONS");
+            //        });
+            //    });
+            //}
 
             services.AddMvcCore(options =>
             {

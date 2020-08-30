@@ -38,6 +38,7 @@ namespace ZLMediaKit.HttpApi.Test
             ZLMediaKitWebHookEvents.OnStreamChanged += ZLMediaKitWebHookEvents_OnStreamChanged;
             ZLMediaKitWebHookEvents.OnStreamNoneReader += ZLMediaKitWebHookEvents_OnStreamNoneReader;
             ZLMediaKitWebHookEvents.OnStreamNotFound += ZLMediaKitWebHookEvents_OnStreamNotFound;
+
         }
 
         [Test]

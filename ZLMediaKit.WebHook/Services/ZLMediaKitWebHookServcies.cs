@@ -10,7 +10,7 @@ using ZLMediaKit.WebHook.Dtos;
 
 namespace ZLMediaKit.WebHook.Services
 {
-    [EnableCors]
+    //[EnableCors]
     public class ZLMediaKitWebHookServcies 
     {
         private readonly IHttpContextAccessor _contextAccessor;
@@ -34,9 +34,12 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_flow_report")]
         public async Task<IActionResult> FlowReportAsync([FromBody]Dtos.FlowReport flowReport)
         {
-            SetServerInfo(flowReport);
-            _ = Task.Run(() => ZLMediaKitWebHookEvents.OnFlowReport?.Invoke(flowReport));
-            return await Task.FromResult( Json(new { code = 0 , msg = "success"}));
+            if(!ZLMediaKitWebHookEvents.OnFlowReport_IsNull)
+                _ = Task.Run(() => {
+                    SetServerInfo(flowReport);
+                    ZLMediaKitWebHookEvents.OnFlowReport_Call(flowReport);
+                });
+            return await Task.FromResult( Json(new ResultBase() ));
         }
 
         /// <summary>
@@ -47,13 +50,13 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_http_access")]
         public async Task<IActionResult> HttpAccessAsync([FromBody] Dtos.HttpAccess httpAccess)
         {
-            if(ZLMediaKitWebHookEvents.OnHttpAccess == null)
+            if(ZLMediaKitWebHookEvents.OnHttpAccess_IsNull)
             {
                 return Json(new FlowReport());
             }
             SetServerInfo(httpAccess);
             httpAccess.Header = _contextAccessor.HttpContext.Request.Form.Where(w => w.Key.StartsWith("header.")).ToDictionary(k => k.Key, v => v.Value.ToString());
-            return Json(ZLMediaKitWebHookEvents.OnHttpAccess.Invoke(httpAccess));
+            return Json(ZLMediaKitWebHookEvents.OnHttpAccess_Call(httpAccess));
         }
 
         /// <summary>
@@ -65,9 +68,9 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_play")]
         public async Task<IActionResult> PlayAsync(PlayInfo playInfo)
         {
-            if (ZLMediaKitWebHookEvents.OnPlay == null) return Json(new ResultBase());
+            if (ZLMediaKitWebHookEvents.OnPlay_IsNull) return Json(new ResultBase());
             SetServerInfo(playInfo);
-            return Json(ZLMediaKitWebHookEvents.OnPlay.Invoke(playInfo));
+            return Json(ZLMediaKitWebHookEvents.OnPlay_Call(playInfo));
 
         }
 
@@ -79,9 +82,9 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_publish")]
         public async Task<IActionResult> PublishAsync(PublishInfo publishInfo)
         {
-            if (ZLMediaKitWebHookEvents.OnPublish == null) return Json(new PublishResult());
+            if (ZLMediaKitWebHookEvents.OnPlay_IsNull) return Json(new PublishResult());
             SetServerInfo(publishInfo);
-            return Json(ZLMediaKitWebHookEvents.OnPublish.Invoke(publishInfo));
+            return Json(ZLMediaKitWebHookEvents.OnPublish_Call(publishInfo));
         }
 
         /// <summary>
@@ -92,8 +95,12 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_record_mp4")]
         public async Task<IActionResult> RecordMp4Async(RecordInfo recordInfo)
         {
-            SetServerInfo(recordInfo);
-            _ = Task.Run(() => ZLMediaKitWebHookEvents.OnRecordMP4?.Invoke(recordInfo));
+            if(!ZLMediaKitWebHookEvents.OnRecordMP4_IsNull)
+                _ = Task.Run(() => 
+                { 
+                    SetServerInfo(recordInfo); 
+                    ZLMediaKitWebHookEvents.OnRecordMP4_Call(recordInfo); 
+                });
             return Json(new ResultBase());
         }
         /// <summary>
@@ -103,9 +110,9 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_rtsp_realm")]
         public async Task<IActionResult> RtspRealmAsync(RtspRealmInfo rtspRealmInfo)
         {
-            if (ZLMediaKitWebHookEvents.OnRtspRealm == null) return Json(new RtspRealmInfoResult());
+            if (ZLMediaKitWebHookEvents.OnRtspRealm_IsNull) return Json(new RtspRealmInfoResult());
             SetServerInfo(rtspRealmInfo);
-            return Json(ZLMediaKitWebHookEvents.OnRtspRealm.Invoke(rtspRealmInfo));
+            return Json(ZLMediaKitWebHookEvents.OnRtspRealm_Call(rtspRealmInfo));
 
         }
         /// <summary>
@@ -116,9 +123,9 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_rtsp_auth")]
         public async Task<IActionResult> RtspAuthAsync(RtspAuthInfo rtspAuthInfo)
         {
-            if (ZLMediaKitWebHookEvents.OnRtspAuth == null) return Json(new RtspAuthResult { Code = 0,Encrypted = false});
+            if (ZLMediaKitWebHookEvents.OnRtspAuth_IsNull) return Json(new RtspAuthResult { Code = 0,Encrypted = false});
             SetServerInfo(rtspAuthInfo);
-            return Json(ZLMediaKitWebHookEvents.OnRtspAuth.Invoke(rtspAuthInfo));
+            return Json(ZLMediaKitWebHookEvents.OnRtspAuth_Call(rtspAuthInfo));
         }
 
         /// <summary>
@@ -130,9 +137,9 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_shell_login")]
         public async Task<IActionResult> ShellLoginAsync(ShellLoginInfo shellLoginInfo)
         {
-            if(ZLMediaKitWebHookEvents.OnShellLogin == null) return Json(new ShellLonginResult());
+            if(ZLMediaKitWebHookEvents.OnShellLogin_IsNull) return Json(new ShellLonginResult());
             SetServerInfo(shellLoginInfo);
-            return Json(ZLMediaKitWebHookEvents.OnShellLogin.Invoke(shellLoginInfo));
+            return Json(ZLMediaKitWebHookEvents.OnShellLogin_Call(shellLoginInfo));
         }
 
         /// <summary>
@@ -143,8 +150,11 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_stream_changed")]
         public async Task<IActionResult> StreamChangedAsync(StreamChangedInfo streamChangedInfo)
         {
-            SetServerInfo(streamChangedInfo);
-            _ = Task.Run(() => ZLMediaKitWebHookEvents.OnStreamChanged.Invoke(streamChangedInfo));
+            if(!ZLMediaKitWebHookEvents.OnStreamChanged_IsNull)
+            _ = Task.Run(() => {
+                SetServerInfo(streamChangedInfo);
+                ZLMediaKitWebHookEvents.OnStreamChanged_Call(streamChangedInfo);
+            });
             return Json(new ResultBase());
         }
 
@@ -156,9 +166,9 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_stream_none_reader")]
         public async Task<IActionResult> StreamNoneReaderAsync(StreamNoneReaderInfo streamNoneReaderInfo)
         {
-            if (ZLMediaKitWebHookEvents.OnStreamNoneReader == null) return Json(new StreamNoneReaderInfoResult());
+            if (ZLMediaKitWebHookEvents.OnStreamNoneReader_IsNull) return Json(new StreamNoneReaderInfoResult());
             SetServerInfo(streamNoneReaderInfo);
-            return Json(ZLMediaKitWebHookEvents.OnStreamNoneReader.Invoke(streamNoneReaderInfo));
+            return Json(ZLMediaKitWebHookEvents.OnStreamNoneReader_Call(streamNoneReaderInfo));
         }
 
         /// <summary>
@@ -169,10 +179,10 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_stream_not_found")]
         public async Task<IActionResult> StreamNotFoundAsync(StreamNotFoundInfo streamNotFoundInfo)
         {
-            if(ZLMediaKitWebHookEvents.OnStreamNotFound != null)
+            if(!ZLMediaKitWebHookEvents.OnStreamNotFound_IsNull)
             {
                 SetServerInfo(streamNotFoundInfo);
-                _ = Task.Run(() => ZLMediaKitWebHookEvents.OnStreamNotFound.Invoke(streamNotFoundInfo));
+                _ = Task.Run(() => ZLMediaKitWebHookEvents.OnStreamNotFound_Call(streamNotFoundInfo));
             }
             return Json(new ResultBase());
         }
@@ -185,7 +195,7 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_server_started")]
         public async Task<IActionResult> ServerStartedAsync(Dictionary<string,object> dicts)
         {
-            if (ZLMediaKitWebHookEvents.OnServerStarted == null) return Json(new ResultBase());
+            if (!ZLMediaKitWebHookEvents.OnServerStarted_IsNull)
             _= Task.Run(() =>
             {
                 var config = new ServerConfig
@@ -205,7 +215,7 @@ namespace ZLMediaKit.WebHook.Services
                     Shell = GetModel<ServerConfig.ShellConfig>(dicts, ServerConfig.ShellConfig.PrefixName)
                 };
                 SetServerInfo(config);
-                ZLMediaKitWebHookEvents.OnServerStarted?.Invoke(config);
+                ZLMediaKitWebHookEvents.OnServerStarted_Call(config);
             });
             return Json(new ResultBase());
 
