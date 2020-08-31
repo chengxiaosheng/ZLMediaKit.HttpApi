@@ -5,6 +5,9 @@ using System.Text;
 
 namespace ZLMediaKit.HttpApi.Dtos
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MediaInfo
     {
         /// <summary>
@@ -35,7 +38,9 @@ namespace ZLMediaKit.HttpApi.Dtos
         public List<MediaInfoTrack> Tracks = new List<MediaInfoTrack>();
 
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class MediaInfoTrack
     {
         /// <summary>
@@ -45,12 +50,17 @@ namespace ZLMediaKit.HttpApi.Dtos
         /// <summary>
         /// 编码
         /// </summary>
-        public CodecEnum codec_id { get; set; }
+        public CodecEnum Codec_id { get; set; }
 
         /// <summary>
         /// 编码类型名称
         /// </summary>
         public string Codec_Id_Name { get; set; }
+
+        /// <summary>
+        /// Video = 0, Audio = 1
+        /// </summary>
+        public CodecTypeEnum Codec_Type { get; set; }
 
         /// <summary>
         /// 是否准备就绪
@@ -77,7 +87,9 @@ namespace ZLMediaKit.HttpApi.Dtos
         /// </summary>
         public int Width { get; set; }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public enum CodecTypeEnum
     {
         /// <summary>
@@ -91,7 +103,9 @@ namespace ZLMediaKit.HttpApi.Dtos
         [Description("音频")]
         Audio = 1
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public enum CodecEnum
     {
         /// <summary>
