@@ -86,6 +86,10 @@ namespace ZLMediaKit.HttpApi.Dtos
         /// 视频宽
         /// </summary>
         public int Width { get; set; }
+        /// <summary>
+        /// 视频FPS
+        /// </summary>
+        public int Fps { get; set; }
     }
     /// <summary>
     /// 
