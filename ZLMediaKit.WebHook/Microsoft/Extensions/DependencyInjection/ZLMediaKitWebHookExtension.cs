@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Text;
 using ZLMediaKit.WebHook;
+using ZLMediaKit.WebHook.Services;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -27,7 +28,7 @@ namespace Microsoft.Extensions.DependencyInjection
             //        });
             //    });
             //}
-
+            services.AddTransient<ZLMediaKitWebHookServcies>();
             services.AddMvcCore(options =>
             {
                 options.Conventions.Add(new ZLMediaKitWebHookApplicationModelConvention(routeOptions));
