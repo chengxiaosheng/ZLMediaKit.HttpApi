@@ -25,7 +25,7 @@
         private readonly ZLHttpClient _zlhttpClient;
         public Test(ZLHttpClient zlhttpClient)
         {
-            this._zlhttpClient = ;zlhttpClient
+            this._zlhttpClient = zlhttpClient
         }
 
         public CallTest()
