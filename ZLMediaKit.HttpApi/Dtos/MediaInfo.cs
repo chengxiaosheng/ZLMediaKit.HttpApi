@@ -136,6 +136,11 @@ namespace ZLMediaKit.HttpApi.Dtos
         /// G711.U
         /// </summary>
         [Description("G711.U")]
-        G711U
+        G711U,
+        /// <summary>
+        /// OPUS
+        /// </summary>
+        [Description("OPUS")]
+        OPUS
     }
 }
