@@ -30,12 +30,12 @@
 
         public CallTest()
         {
-            zlhttpClient.GetThreadsLoad();
-            zlhttpClient.GetWorkThreadsLoad();
-            zlhttpClient.GetServerConfig();
-            zlhttpClient.SetServerConfig();
-            zlhttpClient.RestartServer();
-            zlhttpClient.GetMediaList();
+            _zlhttpClient.GetThreadsLoad();
+            _zlhttpClient.GetWorkThreadsLoad();
+            _zlhttpClient.GetServerConfig();
+            _zlhttpClient.SetServerConfig();
+            _zlhttpClient.RestartServer();
+            _zlhttpClient.GetMediaList();
            .
            .
            .
