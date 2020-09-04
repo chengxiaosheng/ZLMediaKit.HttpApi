@@ -12,10 +12,11 @@
     <RepositoryBranch>master</RepositoryBranch>
     <PackageTags>ZLMediaKit WebHook HttpApi</PackageTags>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
-    <AssemblyVersion>1.0.2</AssemblyVersion>
-    <FileVersion>1.0.2</FileVersion>
-    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <FileVersion>1.0.3</FileVersion>
+    <Version>1.0.3</Version>
     <PackageReleaseNotes>
+      v1.0.3 : 增加 FromBody 
       v1.0.2 : 修复采Autofac全局接管容器时无法注入ZLMediaKitWebHookServcies 的bug
       v1.0.1 : 实现ZLMediaKit Http Hook 接口封装
     </PackageReleaseNotes>
@@ -23,6 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Cors" Version="2.2.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.1" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using ZLMediaKit.WebHook.Dtos;
 
@@ -18,6 +19,7 @@ namespace ZLMediaKit.WebHook.Services
         public ZLMediaKitWebHookServcies(IHttpContextAccessor contextAccessor)
         {
             this._contextAccessor = contextAccessor;
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
         private void SetServerInfo(EventBase eventBase)
@@ -66,7 +68,7 @@ namespace ZLMediaKit.WebHook.Services
         /// 播放rtsp流时，如果该流启动了rtsp专属鉴权(on_rtsp_realm)那么将不再触发on_play事件。
         /// </remarks>
         [HttpPost(Name = "on_play")]
-        public async Task<IActionResult> PlayAsync(PlayInfo playInfo)
+        public async Task<IActionResult> PlayAsync([FromBody]PlayInfo playInfo)
         {
             if (ZLMediaKitWebHookEvents.OnPlay_IsNull) return Json(new ResultBase());
             SetServerInfo(playInfo);
@@ -80,7 +82,7 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="publishInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_publish")]
-        public async Task<IActionResult> PublishAsync(PublishInfo publishInfo)
+        public async Task<IActionResult> PublishAsync([FromBody]PublishInfo publishInfo)
         {
             if (ZLMediaKitWebHookEvents.OnPlay_IsNull) return Json(new PublishResult());
             SetServerInfo(publishInfo);
@@ -93,7 +95,7 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="recordInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_record_mp4")]
-        public async Task<IActionResult> RecordMp4Async(RecordInfo recordInfo)
+        public async Task<IActionResult> RecordMp4Async([FromBody]RecordInfo recordInfo)
         {
             if(!ZLMediaKitWebHookEvents.OnRecordMP4_IsNull)
                 _ = Task.Run(() => 
@@ -108,7 +110,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <remarks>需要指出的是rtsp也支持url参数鉴权，它支持两种方式鉴权</remarks>
         [HttpPost(Name = "on_rtsp_realm")]
-        public async Task<IActionResult> RtspRealmAsync(RtspRealmInfo rtspRealmInfo)
+        public async Task<IActionResult> RtspRealmAsync([FromBody]RtspRealmInfo rtspRealmInfo)
         {
             if (ZLMediaKitWebHookEvents.OnRtspRealm_IsNull) return Json(new RtspRealmInfoResult());
             SetServerInfo(rtspRealmInfo);
@@ -121,7 +123,7 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="rtspAuthInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_rtsp_auth")]
-        public async Task<IActionResult> RtspAuthAsync(RtspAuthInfo rtspAuthInfo)
+        public async Task<IActionResult> RtspAuthAsync([FromBody]RtspAuthInfo rtspAuthInfo)
         {
             if (ZLMediaKitWebHookEvents.OnRtspAuth_IsNull) return Json(new RtspAuthResult { Code = 0,Encrypted = false});
             SetServerInfo(rtspAuthInfo);
@@ -135,7 +137,7 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="shellLoginInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_shell_login")]
-        public async Task<IActionResult> ShellLoginAsync(ShellLoginInfo shellLoginInfo)
+        public async Task<IActionResult> ShellLoginAsync([FromBody]ShellLoginInfo shellLoginInfo)
         {
             if(ZLMediaKitWebHookEvents.OnShellLogin_IsNull) return Json(new ShellLonginResult());
             SetServerInfo(shellLoginInfo);
@@ -148,7 +150,7 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="streamChangedInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_stream_changed")]
-        public async Task<IActionResult> StreamChangedAsync(StreamChangedInfo streamChangedInfo)
+        public async Task<IActionResult> StreamChangedAsync([FromBody]StreamChangedInfo streamChangedInfo)
         {
             if(!ZLMediaKitWebHookEvents.OnStreamChanged_IsNull)
             _ = Task.Run(() => {
@@ -164,7 +166,7 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="streamNoneReaderInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_stream_none_reader")]
-        public async Task<IActionResult> StreamNoneReaderAsync(StreamNoneReaderInfo streamNoneReaderInfo)
+        public async Task<IActionResult> StreamNoneReaderAsync([FromBody]StreamNoneReaderInfo streamNoneReaderInfo)
         {
             if (ZLMediaKitWebHookEvents.OnStreamNoneReader_IsNull) return Json(new StreamNoneReaderInfoResult());
             SetServerInfo(streamNoneReaderInfo);
@@ -177,7 +179,7 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="streamNotFoundInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_stream_not_found")]
-        public async Task<IActionResult> StreamNotFoundAsync(StreamNotFoundInfo streamNotFoundInfo)
+        public async Task<IActionResult> StreamNotFoundAsync([FromBody]StreamNotFoundInfo streamNotFoundInfo)
         {
             if(!ZLMediaKitWebHookEvents.OnStreamNotFound_IsNull)
             {
@@ -193,7 +195,7 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="dicts"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_server_started")]
-        public async Task<IActionResult> ServerStartedAsync(Dictionary<string,object> dicts)
+        public async Task<IActionResult> ServerStartedAsync([FromBody]Dictionary<string,string> dicts)
         {
             if (!ZLMediaKitWebHookEvents.OnServerStarted_IsNull)
             _= Task.Run(() =>
@@ -221,7 +223,7 @@ namespace ZLMediaKit.WebHook.Services
 
         }
 
-        private T GetModel<T>(Dictionary<string, object> dicts, string name) where T : new()
+        private T GetModel<T>(Dictionary<string, string> dicts, string name) where T : new()
         {
             var objDict = dicts.Where(w => w.Key.StartsWith(name)).ToDictionary(f => f.Key.Replace(name, ""), v => v.Value);
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(objDict));
