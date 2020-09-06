@@ -465,5 +465,48 @@ namespace ZLMediaKit.HttpApi
             return BaseRequest().AppendPathSegment("listRtpServer")
               .GetJsonAsync<ResultListBase<RtpServer>>();
         }
+
+        /// <summary>
+        /// 作为GB28181客户端，启动ps-rtp推流，支持rtp/udp方式；该接口支持rtsp/rtmp等协议转ps-rtp推流。第一次推流失败会直接返回错误，成功一次后，后续失败也将无限重试
+        /// </summary>
+        /// <param name="secret">api操作密钥(配置文件配置)，如果操作ip是127.0.0.1，则不需要此参数</param>
+        /// <param name="vhost">虚拟主机，例如__defaultVhost__</param>
+        /// <param name="app">应用名，例如 live</param>
+        /// <param name="stream">流id，例如 test</param>
+        /// <param name="ssrc">推流的rtp的ssrc</param>
+        /// <param name="dst_url">目标ip或域名</param>
+        /// <param name="dst_port">目标端口</param>
+        /// <param name="is_udp">是否为udp模式,否则为tcp模式</param>
+        /// <returns></returns>
+        public Task<ResultBase> StartSendRtp(string secret,string vhost,string app,string stream,string ssrc,string dst_url,int dst_port,bool is_udp)
+        {
+            return BaseRequest().AppendPathSegment("startSendRtp")
+                .SetQueryParam("secret", secret)
+                .SetQueryParam("vhost", vhost)
+                .SetQueryParam("app	", app)
+                .SetQueryParam("stream", stream)
+                .SetQueryParam("ssrc	", ssrc)
+                .SetQueryParam("dst_url", dst_url)
+                .SetQueryParam("dst_port", dst_port)
+                .SetQueryParam("is_udp", is_udp ? 1 : 0)
+                .GetJsonAsync<ResultBase>();
+        }
+        /// <summary>
+        /// 停止GB28181 ps-rtp推流
+        /// </summary>
+        /// <param name="secret">api操作密钥(配置文件配置)，如果操作ip是127.0.0.1，则不需要此参数</param>
+        /// <param name="vhost">虚拟主机，例如__defaultVhost__</param>
+        /// <param name="app">应用名，例如 live</param>
+        /// <param name="stream">流id，例如 test</param>
+        /// <returns></returns>
+        public Task<ResultBase> StopSendRtp(string secret, string vhost, string app, string stream)
+        {
+            return BaseRequest().AppendPathSegment("stopSendRtp")
+                .SetQueryParam("secret", secret)
+                .SetQueryParam("vhost", vhost)
+                .SetQueryParam("app	", app)
+                .SetQueryParam("stream", stream)
+                .GetJsonAsync<ResultBase>();
+        }
     }
 }
