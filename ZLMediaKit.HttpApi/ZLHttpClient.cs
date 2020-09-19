@@ -217,27 +217,23 @@ namespace ZLMediaKit.HttpApi
         }
 
         /// <summary>
-        /// 
+        /// 动态添加rtsp/rtmp/hls拉流代理(只支持H264/H265/aac/G711负载)
         /// </summary>
         /// <param name="vhost">添加的流的虚拟主机，例如__defaultVhost__</param>
         /// <param name="app">添加的流的应用名，例如live</param>
         /// <param name="stream">添加的流的id名，例如test</param>
         /// <param name="url">拉流地址，例如rtmp://live.hkstv.hk.lxdns.com/live/hks2</param>
-        /// <param name="enable_rtsp">是否转rtsp</param>
-        /// <param name="enable_rtmp">是否转rtmp</param>
         /// <param name="enable_hls">是否转hls</param>
         /// <param name="enable_mp4">是否mp4录制</param>
         /// <param name="rtp_type">rtsp拉流时，拉流方式，0：tcp，1：udp，2：组播</param>
         /// <returns></returns>
-        public Task<ResultBase<StreamProxy>> AddStreamProxy(string vhost,string app,string stream,string url,bool enable_rtsp,bool enable_rtmp,bool enable_hls = false,bool enable_mp4 = false,int rtp_type = 0)
+        public Task<ResultBase<StreamProxy>> AddStreamProxy(string vhost,string app,string stream,string url,bool enable_hls = false,bool enable_mp4 = false,int rtp_type = 0)
         {
             return BaseRequest().AppendPathSegment("addStreamProxy")
                 .SetQueryParam("vhost", vhost)
                 .SetQueryParam("app", app)
                 .SetQueryParam("stream", stream)
                 .SetQueryParam("url", url)
-                .SetQueryParam("enable_rtsp", enable_rtsp ? 1 : 0)
-                .SetQueryParam("enable_rtmp", enable_rtmp ? 1 : 0)
                 .SetQueryParam("enable_hls", enable_hls ? 1 : 0)
                 .SetQueryParam("enable_mp4", enable_mp4 ? 1 : 0)
                 .SetQueryParam("rtp_type", rtp_type)

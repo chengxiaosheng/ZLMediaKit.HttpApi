@@ -12,11 +12,12 @@
     <RepositoryBranch>master</RepositoryBranch>
     <PackageTags>ZLMediaKit HttpClient HttpApi</PackageTags>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
-    <AssemblyVersion>1.0.4</AssemblyVersion>
-    <FileVersion>1.0.4</FileVersion>
-    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.5</AssemblyVersion>
+    <FileVersion>1.0.5</FileVersion>
+    <Version>1.0.5</Version>
     <PackageReleaseNotes>
-      v1.0.4 :新增 StartSendRtp StopSendRtp 方法
+      v1.0.5 : addStreamProxy 方法移除 enable_rtsp，enable_rtmp方法
+      v1.0.4 : 新增 StartSendRtp StopSendRtp 方法
       v1.0.3 : 增加MediaInfo->Track-> Fps字段
       v1.0.2 : 增加MediaInfo->Track-> codec_type字段
       v1.0.1 : 实现ZLMediaKit Http Api 接口封装
