@@ -35,6 +35,21 @@ namespace ZLMediaKit.HttpApi.Dtos
         /// </summary>
         public string Vhost { get; set; }
 
+        /// <summary>
+        /// 媒体来源类型
+        /// </summary>
+        public MediaOriginType OriginType { get; set; }
+
+        /// <summary>
+        /// 来源tcp连接信息
+        /// </summary>
+        public SockInfo OriginSock { get; set; }
+
+        /// <summary>
+        /// 来源Url 地址
+        /// </summary>
+        public string OriginUrl { get; set; }
+
         public List<MediaInfoTrack> Tracks = new List<MediaInfoTrack>();
 
     }
@@ -142,5 +157,52 @@ namespace ZLMediaKit.HttpApi.Dtos
         /// </summary>
         [Description("OPUS")]
         OPUS
+    }
+
+    /// <summary>
+    /// 媒体来源
+    /// </summary>
+    public enum MediaOriginType
+    {
+        /// <summary>
+        /// 未知
+        /// </summary>
+        [Description("未知")]
+        unknown = 0,
+        /// <summary>
+        /// RTMP 推流
+        /// </summary>
+        [Description("RTMP 推流")]
+        rtmp_push,
+        /// <summary>
+        /// RTSP 推流
+        /// </summary>
+        [Description("RTSP 推流")]
+        rtsp_push,
+        /// <summary>
+        /// RTP 推流
+        /// </summary>
+        [Description("RTP 推流")]
+        rtp_push,
+        /// <summary>
+        /// 拉流
+        /// </summary>
+        [Description("拉流")]
+        pull,
+        /// <summary>
+        /// FFMPEG 拉流
+        /// </summary>
+        [Description("FFMPEG 拉流")]
+        ffmpeg_pull,
+        /// <summary>
+        /// MP4点播
+        /// </summary>
+        [Description("MP4点播")]
+        mp4_vod,
+        /// <summary>
+        /// device_chn
+        /// </summary>
+        [Description("device_chn")]
+        device_chn
     }
 }
