@@ -16,6 +16,7 @@
     <FileVersion>1.0.6</FileVersion>
     <Version>1.0.6</Version>
     <PackageReleaseNotes>
+      V1.0.7 : 添加媒体时间错等信息  commit by zlmediaKit : # 6a8268f
       v1.0.6 : 添加媒体生成源信息 commit: 5cd8e8a
       v1.0.5 : addStreamProxy 方法移除 enable_rtsp，enable_rtmp方法
       v1.0.4 : 新增 StartSendRtp StopSendRtp 方法
