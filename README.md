@@ -2,7 +2,9 @@
 基于优秀的开源项目 [ZLMediaKit](http://https://github.com/xia-chu/ZLMediaKit) 提供的[Restful Api](https://github.com/xia-chu/ZLMediaKit/wiki/MediaServer%E6%94%AF%E6%8C%81%E7%9A%84HTTP-API) 实现数据请求
 
 ## 实现功能
-+ 封装 ZLMediaKit的Restful Api接口，提供快捷访问 
+- [x] 封装 ZLMediaKit的Restful Api接口，提供快捷访问 
+- [x] 支持配置多个MediaKit
+- [x] 支持动态添加 MediaKit (比如通过Web Hook动态注册)
 
 ## 快速开始
 
@@ -17,6 +19,20 @@
         //ZLMediaKit 密钥
         option.ApiSecret = "035c73f7-bb6b-4889-a715-d9eb2d1925cc";
     });
+
+    //  -------------------------------------------------------------------------------------
+	//通过Web Hook 动态注册
+    private void ZLMediaKitWebHookEvents_OnServerStarted(Dtos.ServerConfig obj)
+    {
+        ZLHttpClientRegister.Register(new ZLMediaKitSettings
+        {
+            ApiPort = obj.Http.Port,
+            ApiSecret = obj.Api.Secret,
+            HttpSchema = HttpSchema.http,
+            IpAddress = obj.ServerIp.ToString(),
+            MediaServerId = obj.General.MediaServerId
+        });
+    }
 ```
 2. 使用
 ```C#
@@ -27,7 +43,7 @@
         {
             this._zlhttpClient = zlhttpClient
         }
-
+		//如果您只有一个MediaKit交互，请直接使用此处的方式
         public CallTest()
         {
             _zlhttpClient.GetThreadsLoad();
@@ -36,6 +52,21 @@
             _zlhttpClient.SetServerConfig();
             _zlhttpClient.RestartServer();
             _zlhttpClient.GetMediaList();
+           .
+           .
+           .
+        }
+        
+        //多个MediaKit 调用方式
+        //就算您只有一个 MediaKit交互，也可以使用此方法，（但是在服务注册时必须填写 mediaServerId）
+        public CallTest1()
+        {
+            _zlhttpClient.SetMediaServerId("ZLMediaKit配置文件中的，mediaServerId").GetThreadsLoad();
+            _zlhttpClient.SetMediaServerId("ZLMediaKit配置文件中的，mediaServerId").GetWorkThreadsLoad();
+            _zlhttpClient.SetMediaServerId("ZLMediaKit配置文件中的，mediaServerId").GetServerConfig();
+            _zlhttpClient.SetMediaServerId("ZLMediaKit配置文件中的，mediaServerId").SetServerConfig();
+            _zlhttpClient.SetMediaServerId("ZLMediaKit配置文件中的，mediaServerId").RestartServer();
+            _zlhttpClient.SetMediaServerId("ZLMediaKit配置文件中的，mediaServerId").GetMediaList();
            .
            .
            .
@@ -50,9 +81,9 @@
 基于优秀的开源项目 [ZLMediaKit](http://https://github.com/xia-chu/ZLMediaKit) 提供的 [Web Hook](https://github.com/xia-chu/ZLMediaKit/wiki/MediaServer%E6%94%AF%E6%8C%81%E7%9A%84HTTP-HOOK-API)实现接收请求
 
 ## 实现功能
-+ 接入 ZLMediaKit WebHook
-+ 自定义路由路径
-+ 以事件的形式访问
+- [x] 接入 ZLMediaKit WebHook
+- [x] 自定义路由路径
+- [x] 以事件的形式访问
 
 ## 快速开始
 1. 注入服务

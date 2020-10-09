@@ -47,6 +47,14 @@ namespace ZLMediaKit.WebHook.Demo
 
         private void ZLMediaKitWebHookEvents_OnServerStarted(Dtos.ServerConfig obj)
         {
+            ZLHttpClientRegister.Register(new ZLMediaKitSettings
+            {
+                ApiPort = obj.Http.Port,
+                ApiSecret = obj.Api.Secret,
+                HttpSchema = HttpSchema.http,
+                IpAddress = obj.ServerIp.ToString(),
+                MediaServerId = obj.General.MediaServerId
+            });
         }
 
         private Dtos.PublishResult ZLMediaKitWebHookEvents_OnPublish(Dtos.PublishInfo arg)

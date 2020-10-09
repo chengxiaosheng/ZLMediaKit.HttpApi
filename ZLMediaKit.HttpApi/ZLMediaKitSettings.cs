@@ -4,10 +4,13 @@ using System.Text;
 
 namespace ZLMediaKit.HttpApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ZLMediaKitSettings
     {
-        internal static ZLMediaKitSettings ZLMediaKitSetting = new ZLMediaKitSettings();
-        internal static string HttpUrl => $"http://{ZLMediaKitSetting.IpAddress}:{ZLMediaKitSetting.ApiPort}/index/api/";
+        internal static  Dictionary<string, ZLMediaKitSettings>  ZLMediaKitSettingsDict =  new Dictionary<string, ZLMediaKitSettings>();
+        internal string HttpUrl => $"{HttpSchema.ToString()}://{IpAddress}:{ApiPort}/index/api/";
         
         /// <summary>
         /// Api Ip
@@ -28,5 +31,25 @@ namespace ZLMediaKit.HttpApi
         /// 超时时间
         /// </summary>
         public int Timeout { get; set; } = 2000;
+
+        /// <summary>
+        /// 服务器唯一id，用于触发hook时区别是哪台服务器
+        /// </summary>
+        public string MediaServerId { get; set; } = "your_server_id";
+
+        /// <summary>
+        /// Http/Https
+        /// </summary>
+        public HttpSchema HttpSchema { get; set; } = HttpSchema.http;
+
+    }
+
+    /// <summary>
+    /// Http Schema
+    /// </summary>
+    public enum HttpSchema:byte
+    {
+        http = 0,
+        https
     }
 }

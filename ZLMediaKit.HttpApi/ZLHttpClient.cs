@@ -13,16 +13,47 @@ namespace ZLMediaKit.HttpApi
     /// </summary>
     public class ZLHttpClient
     {
+        internal IFlurlRequest Request = default;
+        internal string MediaServerId = string.Empty;
+        /// <summary>
+        /// 当前请求的ZLMediakit
+        /// </summary>
+        public ZLMediaKitSettings Config => Request == null ? ZLMediaKitSettings.ZLMediaKitSettingsDict.Values.FirstOrDefault() :
+            ZLMediaKitSettings.ZLMediaKitSettingsDict[MediaServerId];
 
         private IFlurlRequest BaseRequest()
         {
-            return ZLMediaKitSettings.HttpUrl
-                .WithTimeout(ZLMediaKitSettings.ZLMediaKitSetting.Timeout)
+            if (Request != default && Request != null) return Request;
+            var config = ZLMediaKitSettings.ZLMediaKitSettingsDict.Values.FirstOrDefault();
+            if (config == null) throw new NullReferenceException("不存在ZLMediaKit HttpApi配置 ,应先调用AddZLMediaKitHttpClient方法进行全局注册");
+            return config.HttpUrl
+                .WithTimeout(config.Timeout)
                 .ConfigureRequest(action =>
                 {
                     action.CookiesEnabled = false;
                 })
-                .SetQueryParam("secret", ZLMediaKitSettings.ZLMediaKitSetting.ApiSecret);
+                .SetQueryParam("secret", config.ApiSecret);
+        }
+
+        /// <summary>
+        /// 在多ZLMediaKit部署模式下，调用ZLM接口前，应先调用此方法设置具体的ZLMediaKit
+        /// </summary>
+        /// <param name="mediaServerId"></param>
+        /// <returns></returns>
+        public ZLHttpClient SetMediaServerId(string mediaServerId)
+        {
+            this.MediaServerId = mediaServerId;
+            ZLMediaKitSettings config = default;
+            ZLMediaKitSettings.ZLMediaKitSettingsDict.TryGetValue(mediaServerId,out config);
+            if (config == default) throw new NullReferenceException("ZLMediaKit服务器配置不存在");
+            this.Request = config.HttpUrl
+                .WithTimeout(config.Timeout)
+                .ConfigureRequest(action =>
+                {
+                    action.CookiesEnabled = false;
+                })
+                .SetQueryParam("secret", config.ApiSecret);
+            return this;
         }
 
         /// <summary>
