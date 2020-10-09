@@ -16,5 +16,10 @@ namespace ZLMediaKit.WebHook.Dtos
         /// ZLM请求端口
         /// </summary>
         public int ServerPort { get; set; }
+
+        /// <summary>
+        /// 服务器Id
+        /// </summary>
+        public string MediaServerId { get; set; }
     }
 }

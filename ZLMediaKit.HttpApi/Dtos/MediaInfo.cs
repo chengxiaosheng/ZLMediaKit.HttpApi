@@ -50,6 +50,27 @@ namespace ZLMediaKit.HttpApi.Dtos
         /// </summary>
         public string OriginUrl { get; set; }
 
+        /// <summary>
+        /// 创建时间戳
+        /// </summary>
+        public long CreateStamp { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime =>
+            DateTimeOffset.FromUnixTimeSeconds(CreateStamp).ToLocalTime().DateTime;
+
+        /// <summary>
+        /// 传输速度
+        /// </summary>
+        public int BytesSpeed { get; set; }
+
+        /// <summary>
+        /// 保活时长
+        /// </summary>
+        public ulong AliveSecond { get; set; }
+
         public List<MediaInfoTrack> Tracks = new List<MediaInfoTrack>();
 
     }

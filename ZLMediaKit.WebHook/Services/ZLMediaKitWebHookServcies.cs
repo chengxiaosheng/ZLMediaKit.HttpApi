@@ -24,8 +24,8 @@ namespace ZLMediaKit.WebHook.Services
 
         private void SetServerInfo(EventBase eventBase)
         {
-            eventBase.ServerIp = _contextAccessor.HttpContext.Connection.RemoteIpAddress;
-            eventBase.ServerPort = _contextAccessor.HttpContext.Connection.RemotePort;
+            eventBase.ServerIp = _contextAccessor?.HttpContext?.Connection?.RemoteIpAddress;
+            eventBase.ServerPort = (_contextAccessor?.HttpContext?.Connection?.RemotePort)??0;
         }
 
         /// <summary>
@@ -37,10 +37,12 @@ namespace ZLMediaKit.WebHook.Services
         public async Task<IActionResult> FlowReportAsync([FromBody]Dtos.FlowReport flowReport)
         {
             if(!ZLMediaKitWebHookEvents.OnFlowReport_IsNull)
+            {
+                SetServerInfo(flowReport);
                 _ = Task.Run(() => {
-                    SetServerInfo(flowReport);
                     ZLMediaKitWebHookEvents.OnFlowReport_Call(flowReport);
                 });
+            }
             return await Task.FromResult( Json(new ResultBase() ));
         }
 
@@ -98,11 +100,13 @@ namespace ZLMediaKit.WebHook.Services
         public async Task<IActionResult> RecordMp4Async([FromBody]RecordInfo recordInfo)
         {
             if(!ZLMediaKitWebHookEvents.OnRecordMP4_IsNull)
-                _ = Task.Run(() => 
-                { 
-                    SetServerInfo(recordInfo); 
-                    ZLMediaKitWebHookEvents.OnRecordMP4_Call(recordInfo); 
+            {
+                SetServerInfo(recordInfo);
+                _ = Task.Run(() =>
+                {
+                    ZLMediaKitWebHookEvents.OnRecordMP4_Call(recordInfo);
                 });
+            }
             return Json(new ResultBase());
         }
         /// <summary>
@@ -153,10 +157,12 @@ namespace ZLMediaKit.WebHook.Services
         public async Task<IActionResult> StreamChangedAsync([FromBody]StreamChangedInfo streamChangedInfo)
         {
             if(!ZLMediaKitWebHookEvents.OnStreamChanged_IsNull)
-            _ = Task.Run(() => {
+            {
                 SetServerInfo(streamChangedInfo);
-                ZLMediaKitWebHookEvents.OnStreamChanged_Call(streamChangedInfo);
-            });
+                _ = Task.Run(() => {
+                    ZLMediaKitWebHookEvents.OnStreamChanged_Call(streamChangedInfo);
+                });
+            }
             return Json(new ResultBase());
         }
 
@@ -197,28 +203,30 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_server_started")]
         public async Task<IActionResult> ServerStartedAsync([FromBody]Dictionary<string,string> dicts)
         {
+
             if (!ZLMediaKitWebHookEvents.OnServerStarted_IsNull)
-            _= Task.Run(() =>
             {
-                var config = new ServerConfig
-                {
-                    Api = GetModel<ServerConfig.ApiConfig>(dicts, ServerConfig.ApiConfig.PrefixName),
-                    Ffmpeg = GetModel<ServerConfig.FfmpegConfig>(dicts, ServerConfig.FfmpegConfig.PrefixName),
-                    General = GetModel<ServerConfig.GeneralConfig>(dicts, ServerConfig.GeneralConfig.PrefixName),
-                    Hls = GetModel<ServerConfig.HlsConfig>(dicts, ServerConfig.HlsConfig.PrefixName),
-                    Hook = GetModel<ServerConfig.HookConfig>(dicts, ServerConfig.HookConfig.PrefixName),
-                    Http = GetModel<ServerConfig.HttpConfig>(dicts, ServerConfig.HttpConfig.PrefixName),
-                    Multicast = GetModel<ServerConfig.MulticastConfig>(dicts, ServerConfig.MulticastConfig.PrefixName),
-                    Record = GetModel<ServerConfig.RecordConfig>(dicts, ServerConfig.RecordConfig.PrefixName),
-                    Rtmp = GetModel<ServerConfig.RtmpConfig>(dicts, ServerConfig.RtmpConfig.PrefixName),
-                    Rtp = GetModel<ServerConfig.RtpConfig>(dicts, ServerConfig.RtpConfig.PrefixName),
-                    RtpProxy = GetModel<ServerConfig.RtpProxyConfig>(dicts, ServerConfig.RtpProxyConfig.PrefixName),
-                    Rtsp = GetModel<ServerConfig.RtspConfig>(dicts, ServerConfig.RtspConfig.PrefixName),
-                    Shell = GetModel<ServerConfig.ShellConfig>(dicts, ServerConfig.ShellConfig.PrefixName)
-                };
+                var config = new ServerConfig();
                 SetServerInfo(config);
-                ZLMediaKitWebHookEvents.OnServerStarted_Call(config);
-            });
+                _ = Task.Run(() =>
+                {
+                    config.Api = GetModel<ServerConfig.ApiConfig>(dicts, ServerConfig.ApiConfig.PrefixName);
+                    config.Ffmpeg = GetModel<ServerConfig.FfmpegConfig>(dicts, ServerConfig.FfmpegConfig.PrefixName);
+                    config.General = GetModel<ServerConfig.GeneralConfig>(dicts, ServerConfig.GeneralConfig.PrefixName);
+                    config.Hls = GetModel<ServerConfig.HlsConfig>(dicts, ServerConfig.HlsConfig.PrefixName);
+                    config.Hook = GetModel<ServerConfig.HookConfig>(dicts, ServerConfig.HookConfig.PrefixName);
+                    config.Http = GetModel<ServerConfig.HttpConfig>(dicts, ServerConfig.HttpConfig.PrefixName);
+                    config.Multicast = GetModel<ServerConfig.MulticastConfig>(dicts, ServerConfig.MulticastConfig.PrefixName);
+                    config.Record = GetModel<ServerConfig.RecordConfig>(dicts, ServerConfig.RecordConfig.PrefixName);
+                    config.Rtmp = GetModel<ServerConfig.RtmpConfig>(dicts, ServerConfig.RtmpConfig.PrefixName);
+                    config.Rtp = GetModel<ServerConfig.RtpConfig>(dicts, ServerConfig.RtpConfig.PrefixName);
+                    config.RtpProxy = GetModel<ServerConfig.RtpProxyConfig>(dicts, ServerConfig.RtpProxyConfig.PrefixName);
+                    config.Rtsp = GetModel<ServerConfig.RtspConfig>(dicts, ServerConfig.RtspConfig.PrefixName);
+                    config.Shell = GetModel<ServerConfig.ShellConfig>(dicts, ServerConfig.ShellConfig.PrefixName);
+                    ZLMediaKitWebHookEvents.OnServerStarted_Call(config);
+                });
+            }
+            
             return Json(new ResultBase());
 
         }

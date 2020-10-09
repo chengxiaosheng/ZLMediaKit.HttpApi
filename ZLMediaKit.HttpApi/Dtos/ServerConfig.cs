@@ -239,6 +239,11 @@ namespace ZLMediaKit.HttpApi.Dtos
             [JsonConverter(typeof(ZLBoolConverter))]
             public bool ModifyStamp { get; set; }
 
+            /// <summary>
+            /// 服务器唯一id，用于触发hook时区别是哪台服务器
+            /// </summary>
+            public string MediaServerId { get; set; }
+
             internal Dictionary<string, object> GetUpdateDicts(GeneralConfig generalConfig)
             {
                 var dict = new Dictionary<string, object>();
@@ -253,6 +258,7 @@ namespace ZLMediaKit.HttpApi.Dtos
                 if (!object.Equals(PublishToMP4, generalConfig.PublishToMP4)) dict.Add($"{GeneralConfig.PrefixName}publishToMP4", PublishToMP4 ? 1 : 0);
                 if (!object.Equals(MergeWriteMS, generalConfig.MergeWriteMS)) dict.Add($"{GeneralConfig.PrefixName}mergeWriteMS", MergeWriteMS ? 1 : 0);
                 if (!object.Equals(ModifyStamp, generalConfig.ModifyStamp)) dict.Add($"{GeneralConfig.PrefixName}modifyStamp", ModifyStamp ? 1 : 0);
+                if (!object.Equals(MediaServerId, generalConfig.MediaServerId)) dict.Add($"{GeneralConfig.PrefixName}mediaServerId", MediaServerId);
                 return dict;
             }
 
