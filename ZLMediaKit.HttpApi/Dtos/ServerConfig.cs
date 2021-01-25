@@ -211,6 +211,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// 是否默认推流时转换成rtsp或rtmp，hook接口(on_publish)中可以覆盖该设置
             /// </summary>
             [JsonConverter(typeof(ZLBoolConverter))]
+            [Obsolete("此配置项已过时")]
             public bool PublishToRtxp { get; set; }
 
             /// <summary>
@@ -244,6 +245,32 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public string MediaServerId { get; set; }
 
+            /// <summary>
+            /// hls协议是否按需生成，如果hls.segNum配置为0(意味着hls录制)，那么hls将一直生成(不管此开关)
+            /// </summary>
+            [JsonConverter(typeof(ZLBoolConverter))]
+            public bool Hls_demand { get; set; }
+            /// <summary>
+            /// rtsp[s]协议是否按需生成
+            /// </summary>
+            [JsonConverter(typeof(ZLBoolConverter))]
+            public bool Rtsp_demand { get; set; }
+            /// <summary>
+            /// rtmp[s]、http[s]-flv、ws[s]-flv协议是否按需生成
+            /// </summary>
+            [JsonConverter(typeof(ZLBoolConverter))]
+            public bool Rtmp_demand { get; set; }
+            /// <summary>
+            /// http[s]-ts协议是否按需生成
+            /// </summary>
+            [JsonConverter(typeof(ZLBoolConverter))]
+            public bool Ts_demand { get; set; }
+            /// <summary>
+            /// http[s]-fmp4、ws[s]-fmp4协议是否按需生成
+            /// </summary>
+            [JsonConverter(typeof(ZLBoolConverter))]
+            public bool Fmp4_demand { get; set; }
+
             internal Dictionary<string, object> GetUpdateDicts(GeneralConfig generalConfig)
             {
                 var dict = new Dictionary<string, object>();
@@ -259,6 +286,11 @@ namespace ZLMediaKit.HttpApi.Dtos
                 if (!object.Equals(MergeWriteMS, generalConfig.MergeWriteMS)) dict.Add($"{GeneralConfig.PrefixName}mergeWriteMS", MergeWriteMS ? 1 : 0);
                 if (!object.Equals(ModifyStamp, generalConfig.ModifyStamp)) dict.Add($"{GeneralConfig.PrefixName}modifyStamp", ModifyStamp ? 1 : 0);
                 if (!object.Equals(MediaServerId, generalConfig.MediaServerId)) dict.Add($"{GeneralConfig.PrefixName}mediaServerId", MediaServerId);
+                if (!object.Equals(Hls_demand, generalConfig.Hls_demand)) dict.Add($"{GeneralConfig.PrefixName}hls_demand", Hls_demand ? 1 : 0);
+                if (!object.Equals(Rtsp_demand, generalConfig.Rtsp_demand)) dict.Add($"{GeneralConfig.PrefixName}rtsp_demand", Rtsp_demand ? 1 : 0);
+                if (!object.Equals(Rtmp_demand, generalConfig.Rtmp_demand)) dict.Add($"{GeneralConfig.PrefixName}rtmp_demand", Rtmp_demand ? 1 : 0);
+                if (!object.Equals(Ts_demand, generalConfig.Ts_demand)) dict.Add($"{GeneralConfig.PrefixName}ts_demand", Ts_demand ? 1 : 0);
+                if (!object.Equals(Fmp4_demand, generalConfig.Fmp4_demand)) dict.Add($"{GeneralConfig.PrefixName}fmp4_demand", Fmp4_demand ? 1 : 0);
                 return dict;
             }
 
@@ -297,6 +329,12 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             public int SegRetain { get; set; }
 
+            /// <summary>
+            /// 是否广播 ts 切片完成通知
+            /// </summary>
+            [JsonConverter(typeof(ZLBoolConverter))]
+            public bool BroadcastRecordTs { get; set; }
+
             internal Dictionary<string, object> GetUpdateDicts(HlsConfig hlsConfig)
             {
                 var dict = new Dictionary<string, object>();
@@ -305,6 +343,7 @@ namespace ZLMediaKit.HttpApi.Dtos
                 if (!object.Equals(SegDur, hlsConfig.SegDur)) dict.Add($"{HlsConfig.PrefixName}segDur", SegDur);
                 if (!object.Equals(SegNum, hlsConfig.SegNum)) dict.Add($"{HlsConfig.PrefixName}segNum", SegNum);
                 if (!object.Equals(SegRetain, hlsConfig.SegRetain)) dict.Add($"{HlsConfig.PrefixName}segRetain", SegRetain);
+                if (!object.Equals(BroadcastRecordTs, hlsConfig.BroadcastRecordTs)) dict.Add($"{HlsConfig.PrefixName}broadcastRecordTs", BroadcastRecordTs ? 1 : 0);
                 return dict;
             }
         }
@@ -350,6 +389,11 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// 录制mp4切片完成事件
             /// </summary>
             public string On_record_mp4 { get; set; }
+
+            /// <summary>
+            /// 录制TS，完成切片通知
+            /// </summary>
+            public string On_record_TS { get; set; }
 
             /// <summary>
             /// rtsp播放鉴权事件，此事件中比对rtsp的用户名密码
@@ -402,6 +446,7 @@ namespace ZLMediaKit.HttpApi.Dtos
                 if (!object.Equals(On_play, hookConfig.On_play)) dict.Add($"{HookConfig.PrefixName}on_play", On_play);
                 if (!object.Equals(On_publish, hookConfig.On_publish)) dict.Add($"{HookConfig.PrefixName}on_publish", On_publish);
                 if (!object.Equals(On_record_mp4, hookConfig.On_record_mp4)) dict.Add($"{HookConfig.PrefixName}on_record_mp4", On_record_mp4);
+                if (!object.Equals(On_record_TS, hookConfig.On_record_TS)) dict.Add($"{HookConfig.PrefixName}On_record_ts", On_record_TS);
                 if (!object.Equals(On_rtsp_auth, hookConfig.On_rtsp_auth)) dict.Add($"{HookConfig.PrefixName}on_rtsp_auth", On_rtsp_auth);
                 if (!object.Equals(On_rtsp_realm, hookConfig.On_rtsp_realm)) dict.Add($"{HookConfig.PrefixName}on_rtsp_realm", On_rtsp_realm);
                 if (!object.Equals(On_shell_login, hookConfig.On_shell_login)) dict.Add($"{HookConfig.PrefixName}on_shell_login", On_shell_login);
@@ -624,6 +669,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// <summary>
             /// 如果rtp的序列号连续clearCount次有序，那么rtp将不再排序(目的减少rtp排序导致的延时)
             /// </summary>
+            [Obsolete("此配置项已过时")]
             public int ClearCount { get; set; } = 10;
             /// <summary>
             /// rtp时间戳回环时间，单位毫秒
@@ -632,6 +678,7 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// <summary>
             /// rtp排序map缓存大小，加大该值可能会增大延时，但是rtp乱序问题会减小
             /// </summary>
+            [Obsolete("此配置项已过时")]
             public int MaxRtpCount { get; set; } = 50;
             /// <summary>
             /// 视频mtu大小，该参数限制rtp最大字节数，推荐不要超过1400

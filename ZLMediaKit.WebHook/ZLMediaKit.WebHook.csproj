@@ -12,10 +12,11 @@
     <RepositoryBranch>master</RepositoryBranch>
     <PackageTags>ZLMediaKit WebHook HttpApi</PackageTags>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
-    <AssemblyVersion>1.0.4</AssemblyVersion>
-    <FileVersion>1.0.4</FileVersion>
-    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.5</AssemblyVersion>
+    <FileVersion>1.0.5</FileVersion>
+    <Version>1.0.5</Version>
     <PackageReleaseNotes>
+      V1.0.5 : 适配ZLMediaKit 到 # bad9553
       v1.0.4 : 增加mediaserverId；修复部分事件无法获取到对端IP与端口， commit by zlmediaKit : # 6a8268f
       v1.0.3 : 增加 FromBody
       v1.0.2 : 修复采Autofac全局接管容器时无法注入ZLMediaKitWebHookServcies 的bug

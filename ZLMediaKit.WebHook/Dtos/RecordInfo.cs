@@ -35,7 +35,7 @@ namespace ZLMediaKit.WebHook.Dtos
         /// <summary>
         /// 录制的流ID
         /// </summary>
-        public string sStream { get; set; }
+        public string Stream { get; set; }
         /// <summary>
         /// 录制时长，单位秒
         /// </summary>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ZLMediaKit.HttpApi.Dtos;
 
 namespace ZLMediaKit.WebHook.Demo.Controllers
 {
@@ -11,6 +12,7 @@ namespace ZLMediaKit.WebHook.Demo.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private readonly ZLMediaKit.HttpApi.ZLHttpClient _zLHttpClient;
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -18,9 +20,10 @@ namespace ZLMediaKit.WebHook.Demo.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, HttpApi.ZLHttpClient zLHttpClient)
         {
             _logger = logger;
+            this._zLHttpClient = zLHttpClient;
         }
 
         [HttpGet]
@@ -34,6 +37,25 @@ namespace ZLMediaKit.WebHook.Demo.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet("GetStatistic")]
+        public async Task<ZLMediaKit.HttpApi.Dtos.ResultBase<StatisticInfo>> GetStatistic()
+        {
+            var value = await _zLHttpClient.GetStatistic();
+            return value;
+        }
+
+        [HttpGet("GetConfig")]
+        public async Task<ZLMediaKit.HttpApi.Dtos.ResultBase<ServerConfig>> GetConfig()
+        {
+            return await _zLHttpClient.GetServerConfig();
+        }
+
+        [HttpGet("GetBin")]
+        public IActionResult GetdownloadBin()
+        {
+            return File(_zLHttpClient.DownloadBin().Result, "application/octet-stream", "MediaServer.exe");
         }
     }
 }

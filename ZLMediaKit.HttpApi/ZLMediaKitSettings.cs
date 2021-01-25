@@ -49,7 +49,13 @@ namespace ZLMediaKit.HttpApi
     /// </summary>
     public enum HttpSchema:byte
     {
+        /// <summary>
+        /// Http
+        /// </summary>
         http = 0,
+        /// <summary>
+        /// Https
+        /// </summary>
         https
     }
 }

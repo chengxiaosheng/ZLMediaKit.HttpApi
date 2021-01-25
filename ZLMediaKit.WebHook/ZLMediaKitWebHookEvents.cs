@@ -48,6 +48,14 @@ namespace ZLMediaKit.WebHook
         internal static bool OnRecordMP4_IsNull => OnRecordMP4 == null;
         internal static void OnRecordMP4_Call(RecordInfo recordInfo) => OnRecordMP4?.Invoke(recordInfo);
 
+        /// <summary>
+        /// 录制TS完成后通知事件
+        /// </summary>
+        /// <remarks> 详情请查看 https://github.com/xia-chu/ZLMediaKit/wiki </remarks>
+        public static event Action<RecordInfo> OnRecordTS;
+        internal static bool OnRecordTS_IsNull => OnRecordTS == null;
+        internal static void OnRecordTS_Call(RecordInfo recordInfo) => OnRecordTS?.Invoke(recordInfo);
+
 
         /// <summary>
         /// 该rtsp流是否开启rtsp专用方式的鉴权事件，开启后才会触发on_rtsp_auth事件。

@@ -12,10 +12,16 @@ using ZLMediaKit.WebHook.Dtos;
 namespace ZLMediaKit.WebHook.Services
 {
     //[EnableCors]
+    /// <summary>
+    /// Web Hook Service
+    /// </summary>
     public class ZLMediaKitWebHookServcies 
     {
         private readonly IHttpContextAccessor _contextAccessor;
-
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="contextAccessor"></param>
         public ZLMediaKitWebHookServcies(IHttpContextAccessor contextAccessor)
         {
             this._contextAccessor = contextAccessor;
@@ -109,6 +115,26 @@ namespace ZLMediaKit.WebHook.Services
             }
             return Json(new ResultBase());
         }
+
+        /// <summary>
+        /// 录制TS完成后通知事件；此事件对回复不敏感
+        /// </summary>
+        /// <param name="recordInfo"></param>
+        /// <returns></returns>
+        [HttpPost(Name = "on_record_ts")]
+        public async Task<IActionResult> RecordTsAsync([FromBody]RecordInfo recordInfo)
+        {
+            if (!ZLMediaKitWebHookEvents.OnRecordTS_IsNull)
+            {
+                SetServerInfo(recordInfo);
+                _ = Task.Run(() =>
+                {
+                    ZLMediaKitWebHookEvents.OnRecordTS_Call(recordInfo);
+                });
+            }
+            return Json(new ResultBase());
+        }
+
         /// <summary>
         /// 该rtsp流是否开启rtsp专用方式的鉴权事件，开启后才会触发on_rtsp_auth事件
         /// </summary>
