@@ -39,6 +39,10 @@ namespace ZLMediaKit.HttpApi.Dtos
         /// 媒体来源类型
         /// </summary>
         public MediaOriginType OriginType { get; set; }
+        /// <summary>
+        /// 媒体来源类型
+        /// </summary>
+        public string OriginTypeStr { get; set; }
 
         /// <summary>
         /// 来源tcp连接信息
@@ -70,10 +74,20 @@ namespace ZLMediaKit.HttpApi.Dtos
         /// 保活时长
         /// </summary>
         public ulong AliveSecond { get; set; }
+        /// <summary>
+        /// 是否正在录制MP4
+        /// </summary>
+        public bool IsRecordingMP4 { get; set; }
+        /// <summary>
+        /// 是否正在录制HLS
+        /// </summary>
+        public bool isRecordingHLS { get; set; }
 
         public List<MediaInfoTrack> Tracks = new List<MediaInfoTrack>();
 
     }
+
+
     /// <summary>
     /// 
     /// </summary>

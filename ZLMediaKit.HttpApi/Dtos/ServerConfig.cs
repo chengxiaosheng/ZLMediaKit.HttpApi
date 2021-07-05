@@ -54,6 +54,10 @@ namespace ZLMediaKit.HttpApi.Dtos
         /// <summary>
         /// 
         /// </summary>
+        public RTCConfig Rtc { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public RtpProxyConfig RtpProxy { get; set; }
         /// <summary>
         /// 
@@ -77,6 +81,7 @@ namespace ZLMediaKit.HttpApi.Dtos
                 .Concat(this.Record.GetUpdateDicts(serverConfig.Record))
                 .Concat(this.Rtmp.GetUpdateDicts(serverConfig.Rtmp))
                 .Concat(this.Rtp.GetUpdateDicts(serverConfig.Rtp))
+                .Concat(this.Rtc.GetUpdateDicts(serverConfig.Rtc))
                 .Concat(this.RtpProxy.GetUpdateDicts(serverConfig.RtpProxy))
                 .Concat(this.Rtsp.GetUpdateDicts(serverConfig.Rtsp))
                 .Concat(this.Shell.GetUpdateDicts(serverConfig.Shell)).ToDictionary(k=>k.Key,v=>v.Value);
@@ -246,6 +251,12 @@ namespace ZLMediaKit.HttpApi.Dtos
             public string MediaServerId { get; set; }
 
             /// <summary>
+            /// 转协议是否全局开启或关闭音频
+            /// </summary>
+            [JsonConverter(typeof(ZLBoolConverter))]
+            public bool Enable_audio { get; set; }
+
+            /// <summary>
             /// hls协议是否按需生成，如果hls.segNum配置为0(意味着hls录制)，那么hls将一直生成(不管此开关)
             /// </summary>
             [JsonConverter(typeof(ZLBoolConverter))]
@@ -291,6 +302,7 @@ namespace ZLMediaKit.HttpApi.Dtos
                 if (!object.Equals(Rtmp_demand, generalConfig.Rtmp_demand)) dict.Add($"{GeneralConfig.PrefixName}rtmp_demand", Rtmp_demand ? 1 : 0);
                 if (!object.Equals(Ts_demand, generalConfig.Ts_demand)) dict.Add($"{GeneralConfig.PrefixName}ts_demand", Ts_demand ? 1 : 0);
                 if (!object.Equals(Fmp4_demand, generalConfig.Fmp4_demand)) dict.Add($"{GeneralConfig.PrefixName}fmp4_demand", Fmp4_demand ? 1 : 0);
+                if (!object.Equals(Enable_audio, generalConfig.Enable_audio)) dict.Add($"{GeneralConfig.PrefixName}enable_audio", Enable_audio ? 1 : 0);
                 return dict;
             }
 
@@ -334,6 +346,11 @@ namespace ZLMediaKit.HttpApi.Dtos
             /// </summary>
             [JsonConverter(typeof(ZLBoolConverter))]
             public bool BroadcastRecordTs { get; set; }
+            /// <summary>
+            /// 直播hls文件删除延时，单位秒，issue: #913
+            /// </summary>
+            public int DeleteDelaySec { get; set; }
+
 
             internal Dictionary<string, object> GetUpdateDicts(HlsConfig hlsConfig)
             {
@@ -344,6 +361,7 @@ namespace ZLMediaKit.HttpApi.Dtos
                 if (!object.Equals(SegNum, hlsConfig.SegNum)) dict.Add($"{HlsConfig.PrefixName}segNum", SegNum);
                 if (!object.Equals(SegRetain, hlsConfig.SegRetain)) dict.Add($"{HlsConfig.PrefixName}segRetain", SegRetain);
                 if (!object.Equals(BroadcastRecordTs, hlsConfig.BroadcastRecordTs)) dict.Add($"{HlsConfig.PrefixName}broadcastRecordTs", BroadcastRecordTs ? 1 : 0);
+                if (!object.Equals(DeleteDelaySec, hlsConfig.DeleteDelaySec)) dict.Add($"{HlsConfig.PrefixName}deleteDelaySec", DeleteDelaySec);
                 return dict;
             }
         }
@@ -729,6 +747,36 @@ namespace ZLMediaKit.HttpApi.Dtos
                 return dict;
             }
         }
+
+        public class RTCConfig
+        {
+            internal static string PrefixName = "rtc.";
+            /// <summary>
+            /// rtc播放推流、播放超时时间
+            /// </summary>
+            public int TimeoutSec { get; set; }
+            /// <summary>
+            /// 本机对rtc客户端的可见ip，作为服务器时一般为公网ip，置空时，会自动获取网卡ip
+            /// </summary>
+            public string ExternIP { get; set; }
+            /// <summary>
+            /// 设置remb比特率，非0时关闭twcc并开启remb。该设置在rtc推流时有效，可以控制推流画质
+            /// </summary>
+            public long RembBitRate { get; set; }
+
+            internal Dictionary<string, object> GetUpdateDicts(RTCConfig rtcConfig)
+            {
+                var dict = new Dictionary<string, object>();
+                if (!object.Equals(TimeoutSec, rtcConfig.TimeoutSec)) dict.Add($"{PrefixName}timeoutSec", TimeoutSec);
+                if (!object.Equals(ExternIP, rtcConfig.ExternIP)) dict.Add($"{PrefixName}externIP", ExternIP);
+                if (!object.Equals(RembBitRate, rtcConfig.RembBitRate)) dict.Add($"{PrefixName}rembBitRate", RembBitRate);
+                return dict;
+            }
+        }
+
+
+
+
         /// <summary>
         /// 
         /// </summary>

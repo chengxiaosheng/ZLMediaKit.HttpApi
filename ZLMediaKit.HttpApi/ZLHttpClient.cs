@@ -28,10 +28,6 @@ namespace ZLMediaKit.HttpApi
             if (config == null) throw new NullReferenceException("不存在ZLMediaKit HttpApi配置 ,应先调用AddZLMediaKitHttpClient方法进行全局注册");
             return config.HttpUrl
                 .WithTimeout(config.Timeout)
-                .ConfigureRequest(action =>
-                {
-                    action.CookiesEnabled = false;
-                })
                 .SetQueryParam("secret", config.ApiSecret);
         }
 
@@ -48,10 +44,6 @@ namespace ZLMediaKit.HttpApi
             if (config == default) throw new NullReferenceException("ZLMediaKit服务器配置不存在");
             this.Request = config.HttpUrl
                 .WithTimeout(config.Timeout)
-                .ConfigureRequest(action =>
-                {
-                    action.CookiesEnabled = false;
-                })
                 .SetQueryParam("secret", config.ApiSecret);
             return this;
         }
@@ -257,8 +249,10 @@ namespace ZLMediaKit.HttpApi
         /// <param name="enable_hls">是否转hls</param>
         /// <param name="enable_mp4">是否mp4录制</param>
         /// <param name="rtp_type">rtsp拉流时，拉流方式，0：tcp，1：udp，2：组播</param>
+        /// <param name="timeout_sec">拉流超时时间，单位秒，float类型</param>
+        /// <param name="retry_count">拉流重试次数,不传此参数或传值<=0时，则无限重试</param>
         /// <returns></returns>
-        public Task<ResultBase<StreamProxy>> AddStreamProxy(string vhost,string app,string stream,string url,bool enable_hls = false,bool enable_mp4 = false,int rtp_type = 0)
+        public Task<ResultBase<StreamProxy>> AddStreamProxy(string vhost,string app,string stream,string url,bool enable_hls = false,bool enable_mp4 = false,int rtp_type = 0,float timeout_sec = 10, int retry_count = 0)
         {
             return BaseRequest().AppendPathSegment("addStreamProxy")
                 .SetQueryParam("vhost", vhost)
@@ -268,6 +262,8 @@ namespace ZLMediaKit.HttpApi
                 .SetQueryParam("enable_hls", enable_hls ? 1 : 0)
                 .SetQueryParam("enable_mp4", enable_mp4 ? 1 : 0)
                 .SetQueryParam("rtp_type", rtp_type)
+                .SetQueryParam("timeout_sec", timeout_sec)
+                .SetQueryParam("retry_count", retry_count)
                 .GetJsonAsync<ResultBase<StreamProxy>>();
         }
 
@@ -292,8 +288,9 @@ namespace ZLMediaKit.HttpApi
         /// <param name="timeout_ms">FFmpeg推流成功超时时间</param>
         /// <param name="enable_hls">是否开启hls录制</param>
         /// <param name="enable_mp4">是否开启mp4录制</param>
+        /// <param name="ffmpeg_cmd_key">FFmpeg命令参数模板，置空则采用配置项:ffmpeg.cmd</param>
         /// <returns></returns>
-        public Task<ResultBase<StreamProxy>> AddFFmpegSource(string src_url,string dst_url,int timeout_ms = 5000, bool enable_hls = false, bool enable_mp4 = false)
+        public Task<ResultBase<StreamProxy>> AddFFmpegSource(string src_url,string dst_url,int timeout_ms = 5000, bool enable_hls = false, bool enable_mp4 = false,string ffmpeg_cmd_key = null)
         {
             return BaseRequest().AppendPathSegment("addFFmpegSource")
                 .SetQueryParam("src_url", src_url, true)
@@ -301,7 +298,46 @@ namespace ZLMediaKit.HttpApi
                 .SetQueryParam("timeout_ms", timeout_ms)
                 .SetQueryParam("enable_hls",enable_hls ? 1 : 0)
                 .SetQueryParam("enable_mp4", enable_mp4 ? 1 : 0)
+                .SetQueryParam("ffmpeg_cmd_key", enable_mp4 ? 1 : 0)
                 .GetJsonAsync<ResultBase<StreamProxy>>();
+        }
+
+        /// <summary>
+        /// 添加rtsp/rtmp推流(addStreamPusherProxy)
+        /// </summary>
+        /// <param name="schema">推流协议，支持rtsp、rtmp，大小写敏感</param>
+        /// <param name="vhost">已注册流的虚拟主机，一般为__defaultVhost__</param>
+        /// <param name="app">已注册流的应用名，例如live</param>
+        /// <param name="stream">已注册流的id名，例如test</param>
+        /// <param name="dst_url">推流地址，需要与schema字段协议一致</param>
+        /// <param name="rtp_type">rtsp推流时，推流方式，0：tcp，1：udp</param>
+        /// <param name="timeout_sec">推流超时时间，单位秒，float类型</param>
+        /// <param name="retry_count">推流重试次数,不传此参数或传值<=0时，则无限重试</param>
+        /// <returns></returns>
+        public Task<ResultBase<StreamProxy>> AddStreamPusherProxy(string schema, string vhost,string app,string stream,string dst_url,int rtp_type = 0,int timeout_sec = 10 ,int retry_count = 0)
+        {
+            return BaseRequest().AppendPathSegment("addStreamPusherProxy")
+               .SetQueryParam("schema", schema, true)
+               .SetQueryParam("vhost", vhost, true)
+               .SetQueryParam("app", app)
+               .SetQueryParam("stream", stream )
+               .SetQueryParam("dst_url", dst_url )
+               .SetQueryParam("rtp_type", rtp_type)
+               .SetQueryParam("timeout_sec", timeout_sec)
+               .SetQueryParam("retry_count", retry_count)
+               .GetJsonAsync<ResultBase<StreamProxy>>();
+        }
+
+        /// <summary>
+        /// 关闭推流(delStreamPusherProxy)
+        /// </summary>
+        /// <param name="key">addStreamPusherProxy接口返回的key</param>
+        /// <returns></returns>
+        public Task<ResultBase<DeleteStreamProxy>> DelStreamPusherProxy(string key)
+        {
+            return BaseRequest().AppendPathSegment("delStreamPusherProxy")
+                .SetQueryParam("key", key)
+                .GetJsonAsync<ResultBase<DeleteStreamProxy>>();
         }
 
 
@@ -406,8 +442,9 @@ namespace ZLMediaKit.HttpApi
         /// <param name="app">流的应用名</param>
         /// <param name="stream">流的ID</param>
         /// <param name="customized_path">录像保存目录</param>
+        /// <param name="max_second">mp4录像切片时间大小,单位秒，置0则采用配置项</param>
         /// <returns></returns>
-        public Task<ResultBase> StartRecord(int type, string vhost, string app, string stream,string customized_path)
+        public Task<ResultBase> StartRecord(int type, string vhost, string app, string stream,string customized_path = null ,int max_second = 0)
         {
             return BaseRequest().AppendPathSegment("startRecord")
                 .SetQueryParam("type", type)
@@ -415,6 +452,7 @@ namespace ZLMediaKit.HttpApi
                 .SetQueryParam("app", app)
                 .SetQueryParam("stream", stream)
                 .SetQueryParam("customized_path", customized_path)
+                .SetQueryParam("max_second", max_second)
                 .GetJsonAsync<ResultBase>();
         }
 
@@ -464,6 +502,9 @@ namespace ZLMediaKit.HttpApi
         public Task<byte[]> GetSnap(string url,int timeout_sec=5,int expire_sec=5)
         {
             return BaseRequest().AppendPathSegment("getSnap")
+                .SetQueryParam("url", url)
+                .SetQueryParam("timeout_sec", timeout_sec)
+                .SetQueryParam("expire_sec", expire_sec)
                 .GetBytesAsync();
         }
 
@@ -474,13 +515,13 @@ namespace ZLMediaKit.HttpApi
         /// <param name="enable_tcp">启用UDP监听的同时是否监听TCP端口</param>
         /// <param name="stream_id">该端口绑定的流ID，该端口只能创建这一个流(而不是根据ssrc创建多个)</param>
         /// <returns></returns>
-        public Task<ResultBase> OpenRtpServer(int port = 0,bool enable_tcp = false,string stream_id = null)
+        public Task<OpenRtpServerResult> OpenRtpServer(int port = 0,bool enable_tcp = false,string stream_id = null)
         {
             return BaseRequest().AppendPathSegment("openRtpServer")
                 .SetQueryParam("port", port)
                 .SetQueryParam("enable_tcp", enable_tcp)
                 .SetQueryParam("stream_id", stream_id)
-                .GetJsonAsync<ResultBase>();
+                .GetJsonAsync<OpenRtpServerResult>();
                 
         }
 
@@ -518,7 +559,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="is_udp">是否为udp模式,否则为tcp模式</param>
         /// <param name="src_port">使用的本机端口，为0或不传时默认为随机端口</param>
         /// <returns></returns>
-        public Task<ResultBase> StartSendRtp(string vhost,string app,string stream,string ssrc,string dst_url,int dst_port,bool is_udp,int src_port = 0)
+        public Task<StartSendRtpResult> StartSendRtp(string vhost,string app,string stream,string ssrc,string dst_url,int dst_port,bool is_udp,int src_port = 0)
         {
             return BaseRequest().AppendPathSegment("startSendRtp")
                 .SetQueryParam("vhost", vhost)
@@ -529,7 +570,7 @@ namespace ZLMediaKit.HttpApi
                 .SetQueryParam("dst_port", dst_port)
                 .SetQueryParam("is_udp", is_udp ? 1 : 0)
                 .SetQueryParam("src_port", src_port)
-                .GetJsonAsync<ResultBase>();
+                .GetJsonAsync<StartSendRtpResult>();
         }
         /// <summary>
         /// 停止GB28181 ps-rtp推流
@@ -540,7 +581,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="stream">流id，例如 test</param>
         /// <param name="ssrc"></param>
         /// <returns></returns>
-        public Task<ResultBase> StopSendRtp(string secret, string vhost, string app, string stream,string ssrc)
+        public Task<ResultBase> StopSendRtp(string secret, string vhost, string app, string stream,string ssrc = null)
         {
             return BaseRequest().AppendPathSegment("stopSendRtp")
                 .SetQueryParam("secret", secret)
