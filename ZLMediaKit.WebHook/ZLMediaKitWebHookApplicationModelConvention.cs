@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Routing;
-using System.Linq;
 using ZLMediaKit.WebHook.Services;
 
 namespace ZLMediaKit.WebHook
@@ -22,20 +20,15 @@ namespace ZLMediaKit.WebHook
             {
                 if (controller.ControllerType == typeof(ZLMediaKitWebHookServcies))
                 {
-                    //移除跨域设置
-                    //if (controller.Attributes.Cast<EnableCorsAttribute>().FirstOrDefault() is EnableCorsAttribute enableCors)
-                    //{
-                    //    enableCors.PolicyName = _routeOptions.CorsPolicyName;
-                    //}
                     controller.ApiExplorer.GroupName = "ZLMediaKit-WebHook";
                     controller.ApiExplorer.IsVisible = true;
                     foreach (var action in controller.Actions)
                     {
                         action.ApiExplorer.IsVisible = true;
                         var actionName = action.ActionName;
-                        foreach(var item in action.Attributes)
+                        foreach (var item in action.Attributes)
                         {
-                            if(item is HttpMethodAttribute route)
+                            if (item is HttpMethodAttribute route)
                             {
                                 if (!string.IsNullOrEmpty(route.Name))
                                 {

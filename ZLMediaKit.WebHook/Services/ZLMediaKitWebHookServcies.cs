@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using ZLMediaKit.WebHook.Dtos;
+using ZLMediaKit.Common;
+using ZLMediaKit.Common.Dtos;
+using ZLMediaKit.Common.Dtos.EventArgs;
+using ZLMediaKit.Common.Dtos.HookInputDto;
+using ZLMediaKit.Common.Dtos.HookResultDto;
 
 namespace ZLMediaKit.WebHook.Services
 {
@@ -15,7 +20,7 @@ namespace ZLMediaKit.WebHook.Services
     /// <summary>
     /// Web Hook Service
     /// </summary>
-    public class ZLMediaKitWebHookServcies 
+    public class ZLMediaKitWebHookServcies
     {
         private readonly IHttpContextAccessor _contextAccessor;
         /// <summary>
@@ -28,45 +33,80 @@ namespace ZLMediaKit.WebHook.Services
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
-        private void SetServerInfo(EventBase eventBase)
+        private void SetServerInfo(IHookBase eventBase)
         {
-            eventBase.ServerIp = _contextAccessor?.HttpContext?.Connection?.RemoteIpAddress;
-            eventBase.ServerPort = (_contextAccessor?.HttpContext?.Connection?.RemotePort)??0;
+            eventBase.ZlMediaKitAddress = _contextAccessor?.HttpContext?.Connection?.RemoteIpAddress.ToString();
+            eventBase.ZlMediaKitPort = _contextAccessor?.HttpContext?.Connection?.RemotePort ?? 0;
+
+
+        }
+
+        private async Task<IActionResult> Execute<T>(T value, Func<T, Task<IActionResult>> func) where T : IHookBase
+        {
+            _contextAccessor.HttpContext.Request.Body.Position = 0;
+
+            RegisteredModelInstance.ModelMappding.TryGetValue(typeof(T), out var type);
+
+            // 如果有类型映射，则获取类型映射的值, 否则保持原样
+            if (type != null)
+            {
+                value = (T)System.Text.Json.JsonSerializer.Deserialize(_contextAccessor.HttpContext.Request.Body, type, TypeMapping.SerializerOptions);
+            }
+            else value = System.Text.Json.JsonSerializer.Deserialize<T>(_contextAccessor.HttpContext.Request.Body, TypeMapping.SerializerOptions);
+            value.ZlMediaKitPort = _contextAccessor?.HttpContext?.Connection?.RemotePort ?? 0;
+            value.ZlMediaKitAddress = _contextAccessor?.HttpContext?.Connection?.RemoteIpAddress.ToString();
+            return await func(value);
+        }
+
+        private async Task<IActionResult> Execute<T, T1>(T value, Func<T, Task<T1>> func) where T : IHookBase where T1 : IResultBase
+        {
+            RegisteredModelInstance.ModelMappding.TryGetValue(typeof(T), out var type);
+
+            _contextAccessor.HttpContext.Request.EnableBuffering();
+            _contextAccessor.HttpContext.Request.Body.Position = 0;
+            var requestReader = new StreamReader(_contextAccessor.HttpContext.Request.Body);
+            var requestContent = await requestReader.ReadToEndAsync();
+
+            if (type != null)
+            {
+                value = (T)System.Text.Json.JsonSerializer.Deserialize(requestContent, type, TypeMapping.SerializerOptions);
+            }
+            else value = System.Text.Json.JsonSerializer.Deserialize<T>(requestContent, TypeMapping.SerializerOptions);
+
+            // 如果有类型映射，则获取类型映射的值, 否则保持原样
+
+
+            value.ZlMediaKitPort = _contextAccessor?.HttpContext?.Connection?.RemotePort ?? 0;
+            value.ZlMediaKitAddress = _contextAccessor?.HttpContext?.Connection?.RemoteIpAddress.ToString();
+            var result = await func(value);
+            if (result != null) return Json(result);
+            return Json(new HookCommonResult());
+
         }
 
         /// <summary>
         /// 流量统计事件,播放器或推流器断开时并且耗用流量超过特定阈值时会触发此事件，阈值通过配置文件
         /// </summary>
-        /// <param name="flowReport"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_flow_report")]
-        public async Task<IActionResult> FlowReportAsync([FromBody]Dtos.FlowReport flowReport)
-        {
-            if(!ZLMediaKitWebHookEvents.OnFlowReport_IsNull)
-            {
-                SetServerInfo(flowReport);
-                _ = Task.Run(() => {
-                    ZLMediaKitWebHookEvents.OnFlowReport_Call(flowReport);
-                });
-            }
-            return await Task.FromResult( Json(new ResultBase() ));
-        }
+        public async Task<IActionResult> FlowReportAsync() =>
+            await Execute(default(IReportFlowInput), model => ZLMediaKitWebHookEvents.OnFlowReport_Call(new HookEventArgs<IReportFlowInput>(_contextAccessor.HttpContext, model)));
+        
 
         /// <summary>
         /// 访问http文件服务器上hls之外的文件时触发
         /// </summary>
-        /// <param name="httpAccess"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_http_access")]
-        public async Task<IActionResult> HttpAccessAsync([FromBody] Dtos.HttpAccess httpAccess)
+        public async Task<IActionResult> HttpAccessAsync()
         {
-            if(ZLMediaKitWebHookEvents.OnHttpAccess_IsNull)
+
+            return await Execute(default(IHttpAccessInput), model =>
             {
-                return Json(new FlowReport());
-            }
-            SetServerInfo(httpAccess);
-            httpAccess.Header = _contextAccessor.HttpContext.Request.Form.Where(w => w.Key.StartsWith("header.")).ToDictionary(k => k.Key, v => v.Value.ToString());
-            return Json(ZLMediaKitWebHookEvents.OnHttpAccess_Call(httpAccess));
+                var headers = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(_contextAccessor.HttpContext.Request.Body).Where(w => w.Key.StartsWith("header.", StringComparison.OrdinalIgnoreCase)).Select(s => new { Key = s.Key.Replace("header.", String.Empty, StringComparison.OrdinalIgnoreCase), Value = s.Value }).ToDictionary(k => k.Key, v => v.Value);
+                model.InitHeader(headers);
+                return ZLMediaKitWebHookEvents.OnHttpAccess_Call(new HookEventArgs<IHttpAccessInput>(_contextAccessor.HttpContext, model));
+            });
         }
 
         /// <summary>
@@ -76,45 +116,24 @@ namespace ZLMediaKit.WebHook.Services
         /// 播放rtsp流时，如果该流启动了rtsp专属鉴权(on_rtsp_realm)那么将不再触发on_play事件。
         /// </remarks>
         [HttpPost(Name = "on_play")]
-        public async Task<IActionResult> PlayAsync([FromBody]PlayInfo playInfo)
-        {
-            if (ZLMediaKitWebHookEvents.OnPlay_IsNull) return Json(new ResultBase());
-            SetServerInfo(playInfo);
-            return Json(ZLMediaKitWebHookEvents.OnPlay_Call(playInfo));
-
-        }
+        public async Task<IActionResult> PlayAsync() =>
+            await Execute(default(IPlayInput), model => ZLMediaKitWebHookEvents.OnPlay_Call(new HookEventArgs<IPlayInput>(_contextAccessor.HttpContext, model)));
 
         /// <summary>
         /// rtsp/rtmp/rtp推流鉴权事件
         /// </summary>
-        /// <param name="publishInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_publish")]
-        public async Task<IActionResult> PublishAsync([FromBody]PublishInfo publishInfo)
-        {
-            if (ZLMediaKitWebHookEvents.OnPlay_IsNull) return Json(new PublishResult());
-            SetServerInfo(publishInfo);
-            return Json(ZLMediaKitWebHookEvents.OnPublish_Call(publishInfo));
-        }
+        public async Task<IActionResult> PublishAsync()
+            => await Execute(default(IPublishInput), model => ZLMediaKitWebHookEvents.OnPublish_Call(new HookEventArgs<IPublishInput>(_contextAccessor.HttpContext, model)));
 
         /// <summary>
         /// 录制mp4完成后通知事件；此事件对回复不敏感
         /// </summary>
-        /// <param name="recordInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_record_mp4")]
-        public async Task<IActionResult> RecordMp4Async([FromBody]RecordInfo recordInfo)
-        {
-            if(!ZLMediaKitWebHookEvents.OnRecordMP4_IsNull)
-            {
-                SetServerInfo(recordInfo);
-                _ = Task.Run(() =>
-                {
-                    ZLMediaKitWebHookEvents.OnRecordMP4_Call(recordInfo);
-                });
-            }
-            return Json(new ResultBase());
-        }
+        public async Task<IActionResult> RecordMp4Async()
+            => await Execute(default(IRecordMp4Input), model => ZLMediaKitWebHookEvents.OnRecordMP4_Call(new HookEventArgs<IRecordMp4Input>(_contextAccessor.HttpContext, model)));
 
         /// <summary>
         /// 录制TS完成后通知事件；此事件对回复不敏感
@@ -122,57 +141,36 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="recordInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_record_ts")]
-        public async Task<IActionResult> RecordTsAsync([FromBody]RecordInfo recordInfo)
-        {
-            if (!ZLMediaKitWebHookEvents.OnRecordTS_IsNull)
-            {
-                SetServerInfo(recordInfo);
-                _ = Task.Run(() =>
-                {
-                    ZLMediaKitWebHookEvents.OnRecordTS_Call(recordInfo);
-                });
-            }
-            return Json(new ResultBase());
-        }
+        public async Task<IActionResult> RecordTsAsync()
+            => await Execute(default(IRecordTsInput), model => ZLMediaKitWebHookEvents.OnRecordTS_Call(new HookEventArgs<IRecordTsInput>(_contextAccessor.HttpContext, model)));
 
         /// <summary>
         /// 该rtsp流是否开启rtsp专用方式的鉴权事件，开启后才会触发on_rtsp_auth事件
         /// </summary>
         /// <remarks>需要指出的是rtsp也支持url参数鉴权，它支持两种方式鉴权</remarks>
         [HttpPost(Name = "on_rtsp_realm")]
-        public async Task<IActionResult> RtspRealmAsync([FromBody]RtspRealmInfo rtspRealmInfo)
-        {
-            if (ZLMediaKitWebHookEvents.OnRtspRealm_IsNull) return Json(new RtspRealmInfoResult());
-            SetServerInfo(rtspRealmInfo);
-            return Json(ZLMediaKitWebHookEvents.OnRtspRealm_Call(rtspRealmInfo));
+        public async Task<IActionResult> RtspRealmAsync()
+            => await Execute(default(IRtspRealmInput), model => ZLMediaKitWebHookEvents.OnRtspRealm_Call(new HookEventArgs<IRtspRealmInput>(_contextAccessor.HttpContext, model)));
 
-        }
+
         /// <summary>
         /// rtsp专用的鉴权事件，先触发on_rtsp_realm事件然后才会触发on_rtsp_auth事件。
         /// </summary>
-        /// <param name="rtspAuthInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_rtsp_auth")]
-        public async Task<IActionResult> RtspAuthAsync([FromBody]RtspAuthInfo rtspAuthInfo)
-        {
-            if (ZLMediaKitWebHookEvents.OnRtspAuth_IsNull) return Json(new RtspAuthResult { Code = 0,Encrypted = false});
-            SetServerInfo(rtspAuthInfo);
-            return Json(ZLMediaKitWebHookEvents.OnRtspAuth_Call(rtspAuthInfo));
-        }
+        public async Task<IActionResult> RtspAuthAsync()
+            => await Execute(default(IRtspAuthInput), model => ZLMediaKitWebHookEvents.OnRtspAuth_Call(new HookEventArgs<IRtspAuthInput>(_contextAccessor.HttpContext, model)));
+
 
         /// <summary>
         /// shell登录鉴权，ZLMediaKit提供简单的telnet调试方式;
         /// 使用telnet 127.0.0.1 9000能进入MediaServer进程的shell界面
         /// </summary>
-        /// <param name="shellLoginInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_shell_login")]
-        public async Task<IActionResult> ShellLoginAsync([FromBody]ShellLoginInfo shellLoginInfo)
-        {
-            if(ZLMediaKitWebHookEvents.OnShellLogin_IsNull) return Json(new ShellLonginResult());
-            SetServerInfo(shellLoginInfo);
-            return Json(ZLMediaKitWebHookEvents.OnShellLogin_Call(shellLoginInfo));
-        }
+        public async Task<IActionResult> ShellLoginAsync()
+            => await Execute(default(IShellLoginInput), model => ZLMediaKitWebHookEvents.OnShellLogin_Call(new HookEventArgs<IShellLoginInput>(_contextAccessor.HttpContext, model)));
+
 
         /// <summary>
         /// rtsp/rtmp流注册或注销时触发此事件；此事件对回复不敏感。
@@ -180,46 +178,26 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="streamChangedInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_stream_changed")]
-        public async Task<IActionResult> StreamChangedAsync([FromBody]StreamChangedInfo streamChangedInfo)
-        {
-            if(!ZLMediaKitWebHookEvents.OnStreamChanged_IsNull)
-            {
-                SetServerInfo(streamChangedInfo);
-                _ = Task.Run(() => {
-                    ZLMediaKitWebHookEvents.OnStreamChanged_Call(streamChangedInfo);
-                });
-            }
-            return Json(new ResultBase());
-        }
+        public async Task<IActionResult> StreamChangedAsync()
+            => await Execute(default(IStreamChangedInput), model => ZLMediaKitWebHookEvents.OnStreamChanged_Call(new HookEventArgs<IStreamChangedInput>(_contextAccessor.HttpContext, model)));
+
 
         /// <summary>
         /// 流无人观看时事件，用户可以通过此事件选择是否关闭无人看的流。
         /// </summary>
-        /// <param name="streamNoneReaderInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_stream_none_reader")]
-        public async Task<IActionResult> StreamNoneReaderAsync([FromBody]StreamNoneReaderInfo streamNoneReaderInfo)
-        {
-            if (ZLMediaKitWebHookEvents.OnStreamNoneReader_IsNull) return Json(new StreamNoneReaderInfoResult());
-            SetServerInfo(streamNoneReaderInfo);
-            return Json(ZLMediaKitWebHookEvents.OnStreamNoneReader_Call(streamNoneReaderInfo));
-        }
+        public async Task<IActionResult> StreamNoneReaderAsync()
+            => await Execute(default(IStreamNoneReaderInput), model => ZLMediaKitWebHookEvents.OnStreamNoneReader_Call(new HookEventArgs<IStreamNoneReaderInput>(_contextAccessor.HttpContext, model)));
+
 
         /// <summary>
         /// 流未找到事件，用户可以在此事件触发时，立即去拉流，这样可以实现按需拉流；此事件对回复不敏感
         /// </summary>
-        /// <param name="streamNotFoundInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_stream_not_found")]
-        public async Task<IActionResult> StreamNotFoundAsync([FromBody]StreamNotFoundInfo streamNotFoundInfo)
-        {
-            if(!ZLMediaKitWebHookEvents.OnStreamNotFound_IsNull)
-            {
-                SetServerInfo(streamNotFoundInfo);
-                _ = Task.Run(() => ZLMediaKitWebHookEvents.OnStreamNotFound_Call(streamNotFoundInfo));
-            }
-            return Json(new ResultBase());
-        }
+        public async Task<IActionResult> StreamNotFoundAsync()
+            => await Execute(default(IStreamNotFoundInuut), model => ZLMediaKitWebHookEvents.OnStreamNotFound_Call(new HookEventArgs<IStreamNotFoundInuut>(_contextAccessor.HttpContext, model)));
 
         /// <summary>
         /// 服务器启动事件，可以用于监听服务器崩溃重启；此事件对回复不敏感。
@@ -227,40 +205,63 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="dicts"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_server_started")]
-        public async Task<IActionResult> ServerStartedAsync([FromBody]Dictionary<string,string> dicts)
+        public async Task<IActionResult> ServerStartedAsync([FromBody] Dictionary<string, string> dicts)
         {
 
-            if (!ZLMediaKitWebHookEvents.OnServerStarted_IsNull)
+            var groups = dicts.Select(s => new { Key = s.Key.Split('.'), Value = s.Value })
+                .Select(s => new { ClassName = s.Key.Length == 2 ? s.Key[0].Replace("_", String.Empty) :  "rootElement" , Key = s.Key.LastOrDefault(), Value = s.Value })
+                .GroupBy(x => x.ClassName);
+            IDictionary<string, object> result = new ExpandoObject();
+            foreach (var group in groups)
             {
-                var config = new ServerConfig();
-                SetServerInfo(config);
-                _ = Task.Run(() =>
+                IDictionary<string, object> temp = new ExpandoObject();
+                foreach (var item in group)
                 {
-                    config.Api = GetModel<ServerConfig.ApiConfig>(dicts, ServerConfig.ApiConfig.PrefixName);
-                    config.Ffmpeg = GetModel<ServerConfig.FfmpegConfig>(dicts, ServerConfig.FfmpegConfig.PrefixName);
-                    config.General = GetModel<ServerConfig.GeneralConfig>(dicts, ServerConfig.GeneralConfig.PrefixName);
-                    config.Hls = GetModel<ServerConfig.HlsConfig>(dicts, ServerConfig.HlsConfig.PrefixName);
-                    config.Hook = GetModel<ServerConfig.HookConfig>(dicts, ServerConfig.HookConfig.PrefixName);
-                    config.Http = GetModel<ServerConfig.HttpConfig>(dicts, ServerConfig.HttpConfig.PrefixName);
-                    config.Multicast = GetModel<ServerConfig.MulticastConfig>(dicts, ServerConfig.MulticastConfig.PrefixName);
-                    config.Record = GetModel<ServerConfig.RecordConfig>(dicts, ServerConfig.RecordConfig.PrefixName);
-                    config.Rtmp = GetModel<ServerConfig.RtmpConfig>(dicts, ServerConfig.RtmpConfig.PrefixName);
-                    config.Rtp = GetModel<ServerConfig.RtpConfig>(dicts, ServerConfig.RtpConfig.PrefixName);
-                    config.RtpProxy = GetModel<ServerConfig.RtpProxyConfig>(dicts, ServerConfig.RtpProxyConfig.PrefixName);
-                    config.Rtsp = GetModel<ServerConfig.RtspConfig>(dicts, ServerConfig.RtspConfig.PrefixName);
-                    config.Shell = GetModel<ServerConfig.ShellConfig>(dicts, ServerConfig.ShellConfig.PrefixName);
-                    ZLMediaKitWebHookEvents.OnServerStarted_Call(config);
-                });
+                    if(group.Key == "rootElement")
+                    {
+                        result[item.Key] = item.Value;
+                    }else 
+                    temp.Add(item.Key, item.Value);
+                }
+                result.Add(group.Key, temp);
             }
-            
-            return Json(new ResultBase());
+            var jsonStr = System.Text.Json.JsonSerializer.Serialize(result as ExpandoObject);
+            var serverCofnig = System.Text.Json.JsonSerializer.Deserialize<IServerStartedInput>(jsonStr,TypeMapping.SerializerOptions);
+            var serviceManager = IServerManager.GetServerManager(serverCofnig);
+            if (serviceManager == null)
+            {
+                serviceManager = new ServerManager()
+                {
+                    MediaServerId = serverCofnig.MediaServerId,
+                };
+                IServerManager.Instances[serverCofnig.MediaServerId] = serviceManager;
+            }
+            serviceManager.StartTime = DateTime.Now;
+            serviceManager.ServerConfig = serverCofnig;
 
+            serverCofnig.ZlMediaKitPort = _contextAccessor?.HttpContext?.Connection?.RemotePort ?? 0;
+            serverCofnig.ZlMediaKitAddress = _contextAccessor?.HttpContext?.Connection?.RemoteIpAddress.ToString();
+
+            return await ZLMediaKitWebHookEvents.OnServerStarted_Call(new HookEventArgs<IServerStartedInput>(_contextAccessor.HttpContext, serverCofnig)).ContinueWith(t => Json(t.Result));
         }
 
-        private T GetModel<T>(Dictionary<string, string> dicts, string name) where T : new()
+        /// <summary>
+        /// 心跳
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost(Name = "on_server_keepalive")]
+        public async Task<IActionResult> ServerKeepalive()
         {
-            var objDict = dicts.Where(w => w.Key.StartsWith(name)).ToDictionary(f => f.Key.Replace(name, ""), v => v.Value);
-            return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(objDict));
+            return await Execute(default(IServerKeepaliveInput), model =>
+            {
+                var serverManager = IServerManager.GetServerManager(model);
+                if(serverManager != null)
+                {
+                    serverManager.Keepalive = model;
+                    serverManager.KeepaliveTime = DateTime.Now;
+                }
+                return ZLMediaKitWebHookEvents.OnServerKeepalive_Call(new HookEventArgs<IServerKeepaliveInput>(_contextAccessor.HttpContext, model));
+            });
         }
 
 
@@ -268,7 +269,7 @@ namespace ZLMediaKit.WebHook.Services
         {
             return new ContentResult()
             {
-                Content = JsonConvert.SerializeObject(data, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
+                Content = System.Text.Json.JsonSerializer.Serialize(data, TypeMapping.SerializerOptions),
                 ContentType = "application/json;charset=utf-8",
             };
         }

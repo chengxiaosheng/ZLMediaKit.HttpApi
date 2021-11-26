@@ -1,10 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Text;
-using ZLMediaKit.WebHook;
+﻿using ZLMediaKit.WebHook;
 using ZLMediaKit.WebHook.Services;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -15,25 +9,12 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddHttpContextAccessor();
 
-            //if (string.IsNullOrEmpty(routeOptions.CorsPolicyName))
-            //{
-            //    routeOptions.CorsPolicyName = "ZLMWebHook";
-            //    services.AddCors(options =>
-            //    {
-            //        options.AddPolicy(routeOptions.CorsPolicyName, builder =>
-            //        {
-            //            builder.AllowAnyOrigin()
-            //              .AllowAnyHeader()
-            //              .WithMethods("GET", "POST", "HEAD", "PUT", "DELETE", "OPTIONS");
-            //        });
-            //    });
-            //}
             services.AddTransient<ZLMediaKitWebHookServcies>();
             services.AddMvcCore(options =>
             {
                 options.Conventions.Add(new ZLMediaKitWebHookApplicationModelConvention(routeOptions));
+
             }).PartManager.FeatureProviders.Add(new ZLMediaKitControllerFeatureProvider());
-            
 
             return services;
         }

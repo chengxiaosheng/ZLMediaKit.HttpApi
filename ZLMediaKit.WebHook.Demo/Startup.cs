@@ -27,14 +27,14 @@ namespace ZLMediaKit.WebHook.Demo
         {
             services.AddControllers();
             services.AddHostedService<HookService>();
-            services.AddZLMediaKitHttpClient(option =>
-            {
-                option.IpAddress = "127.0.0.1";
-                option.ApiPort = 8080;
-                option.ApiSecret = "035c73f7-bb6b-4889-a715-d9eb2d1925cc";
-            });
+            //services.AddZLMediaKitHttpClient(option =>
+            //{
+            //    option.IpAddress = "127.0.0.1";
+            //    option.ApiPort = 8080;
+            //    option.ApiSecret = "035c73f7-bb6b-4889-a715-d9eb2d1925cc";
+            //});
             //services.AddZLMediaKitHttpClient();
-            services.AddMediaKitWebHook(new APIRouteOptions(routePrefix : "app/api/zlhook"));
+            services.AddMediaKitWebHook(new APIRouteOptions(routePrefix : "api/zlhook"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

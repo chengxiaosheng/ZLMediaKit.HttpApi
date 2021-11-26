@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ZLMediaKit.HttpApi\ZLMediaKit.HttpApi.csproj" />
     <ProjectReference Include="..\ZLMediaKit.WebHook\ZLMediaKit.WebHook.csproj" />
   </ItemGroup>
 
