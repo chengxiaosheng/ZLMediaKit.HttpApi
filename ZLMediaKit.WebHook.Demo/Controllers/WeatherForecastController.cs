@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ZLMediaKit.Common.Dtos.ApiInputDto;
 //using ZLMediaKit.HttpApi.Dtos;
 
 namespace ZLMediaKit.WebHook.Demo.Controllers
@@ -12,19 +13,19 @@ namespace ZLMediaKit.WebHook.Demo.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        //private readonly ZLMediaKit.HttpApi.ZLHttpClient _zLHttpClient;
+        private readonly ZLMediaKit.HttpApi.ZLHttpClient _zLHttpClient;
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        //private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<WeatherForecastController> _logger;
 
-        //public WeatherForecastController(ILogger<WeatherForecastController> logger, HttpApi.ZLHttpClient zLHttpClient)
-        //{
-        //    _logger = logger;
-        //    this._zLHttpClient = zLHttpClient;
-        //}
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, HttpApi.ZLHttpClient zLHttpClient)
+        {
+            _logger = logger;
+            this._zLHttpClient = zLHttpClient;
+        }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
@@ -39,23 +40,23 @@ namespace ZLMediaKit.WebHook.Demo.Controllers
             .ToArray();
         }
 
-        //[HttpGet("GetStatistic")]
-        //public async Task<ZLMediaKit.HttpApi.Dtos.ResultBase<StatisticInfo>> GetStatistic()
-        //{
-        //    var value = await _zLHttpClient.GetStatistic();
-        //    return value;
-        //}
+        [HttpGet("GetStatistic")]
+        public async Task<IApiGetStatisticResult> GetStatistic()
+        {
+            var value = await _zLHttpClient.getStatistic();
+            return value;
+        }
 
-        //[HttpGet("GetConfig")]
-        //public async Task<ZLMediaKit.HttpApi.Dtos.ResultBase<ServerConfig>> GetConfig()
-        //{
-        //    return await _zLHttpClient.GetServerConfig();
-        //}
+        [HttpGet("GetConfig")]
+        public async Task<IApiGetServerConfigResult> GetConfig()
+        {
+            return await _zLHttpClient.GetServerConfig();
+        }
 
-        //[HttpGet("GetBin")]
-        //public IActionResult GetdownloadBin()
-        //{
-        //    return File(_zLHttpClient.DownloadBin().Result, "application/octet-stream", "MediaServer.exe");
-        //}
+        [HttpGet("GetBin")]
+        public IActionResult GetdownloadBin()
+        {
+            return File(_zLHttpClient.DownloadBin().Result, "application/octet-stream", "MediaServer.exe");
+        }
     }
 }
