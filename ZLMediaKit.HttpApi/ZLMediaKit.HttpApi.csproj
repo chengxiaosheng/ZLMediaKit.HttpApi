@@ -4,6 +4,7 @@
     <TargetFrameworks>net5;net6</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1573</NoWarn>
     <Authors>ChengXiaoSheng</Authors>
     <Description>实现ZLMediaKit Api访问</Description>
     <PackageProjectUrl>https://github.com/chengxiaosheng/ZLMediaKit.HttpApi</PackageProjectUrl>

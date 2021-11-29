@@ -5,6 +5,9 @@ using ZLMediaKit.Common.Dtos.HookResultDto;
 
 namespace ZLMediaKit.WebHook
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ZLMediaKitWebHookEvents
     {
 
@@ -98,7 +101,11 @@ namespace ZLMediaKit.WebHook
             _ = OnRecordMP4?.Invoke(hookEventArgs).ConfigureAwait(false);
             return await Task.FromResult(RegisteredModelInstance.GetResultModelDefault<IHookRecordMp4Result>());
         }
-
+        /// <summary>
+        /// 录制TS完成后通知事件
+        /// </summary>
+        /// <param name="hookEventArgs"></param>
+        /// <returns></returns>
         public delegate Task RecordTsEventHandle(IHookEventArgs<IRecordTsInput> hookEventArgs);
 
         /// <summary>

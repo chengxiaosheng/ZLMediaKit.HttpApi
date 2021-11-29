@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ZLMediaKit.Common.Dtos;
 using ZLMediaKit.Common.Dtos.HookResultDto;
+using ZLMediaKit.Common;
 
 namespace ZLMediaKit.WebHook
 {
@@ -10,7 +11,7 @@ namespace ZLMediaKit.WebHook
     /// </summary>
     public static class RegisteredModelInstance
     {
-        internal static Dictionary<Type, Type> ModelMappding = new Dictionary<Type, Type>();
+
 
         internal static Dictionary<Type, object> ResultModelMapping = new Dictionary<Type, object>()
         {
@@ -38,7 +39,7 @@ namespace ZLMediaKit.WebHook
         /// <typeparam name="T1"></typeparam>
         public static void RegisterModelMapping<T, T1>() where T : IHookBase where T1 : T, new()
         {
-            ModelMappding[typeof(T)] = typeof(T1);
+            TypeMapping.TypeMappings[typeof(T)] = typeof(T1);
         }
 
         /// <summary>

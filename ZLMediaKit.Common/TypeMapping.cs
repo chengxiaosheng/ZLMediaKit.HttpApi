@@ -10,26 +10,29 @@ using ZLMediaKit.Common.Dtos.HookInputDto;
 
 namespace ZLMediaKit.Common
 {
+    /// <summary>
+    /// 全局统一的类型映射 
+    /// </summary>
     public static class TypeMapping
     {
         static TypeMapping()
         {
             // HookInput
             SerializerOptions.Converters.Add(new ZLBoolConverter());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IHttpAccessInput,HttpAccessInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IPlayInput,PlayInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IPublishInput,PublishInpu>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IRecordMp4Input,RecordMp4Input>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IRecordTsInput,RecordTsInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IReportFlowInput,ReportFlowInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IRtspAuthInput,RtspAuthInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IRtspRealmInput,RtspRealmInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IServerKeepaliveInput,ServerKeepaliveInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IShellLoginInput,ShellLoginInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IServerStartedInput,ServerStartedInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IStreamChangedInput,StreamChangedInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IStreamNoneReaderInput,StreamNoneReaderInput>());
-            SerializerOptions.Converters.Add(new TypeMappingConvert<IStreamNotFoundInuut,StreamNotFoundInuut>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IHttpAccessInput, HttpAccessInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IPlayInput, PlayInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IPublishInput, PublishInpu>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IRecordMp4Input, RecordMp4Input>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IRecordTsInput, RecordTsInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IReportFlowInput, ReportFlowInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IRtspAuthInput, RtspAuthInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IRtspRealmInput, RtspRealmInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IServerKeepaliveInput, ServerKeepaliveInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IShellLoginInput, ShellLoginInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IServerStartedInput, ServerStartedInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IStreamChangedInput, StreamChangedInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IStreamNoneReaderInput, StreamNoneReaderInput>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IStreamNotFoundInuut, StreamNotFoundInuut>());
 
             SerializerOptions.Converters.Add(new TypeMappingConvert<IEvnetBase, EvnetBase>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IHookBase, HookBase>());
@@ -101,15 +104,24 @@ namespace ZLMediaKit.Common
             SerializerOptions.Converters.Add(new TypeMappingConvert<IWorkThreadsLoadApiResult, WorkThreadsLoadApiResult>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IWorkThreadsLoadApiResultItem, WorkThreadsLoadApiResultItem>());
         }
-
-        internal static Dictionary<Type, Type> TypeMappings = new Dictionary<Type, Type>();
-
+        /// <summary>
+        /// 类型映射，用于序列化数据时采用其他类型进行，以便处理一些特殊化的内容 
+        /// </summary>
+        /// <typeparam name="Type">接口类型</typeparam>
+        /// <typeparam name="Type">对接口的实现类型</typeparam>
+        /// <returns></returns>
+        public static Dictionary<Type, Type> TypeMappings = new Dictionary<Type, Type>();
+        /// <summary>
+        /// 全局统一的json 序列化配置 
+        /// </summary>
+        /// <value></value>
         public static JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
         {
             WriteIndented = true,
             PropertyNameCaseInsensitive = true,
             NumberHandling = JsonNumberHandling.AllowReadingFromString,
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+
         };
     }
 }

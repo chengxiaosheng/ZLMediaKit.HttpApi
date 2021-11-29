@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ZLMediaKit.Common;
 
 namespace ZLMediaKit.HttpApi
 {
@@ -21,7 +22,7 @@ namespace ZLMediaKit.HttpApi
             if (zLMediaKitSettings.ApiPort == 0) throw new InvalidDataException("ApiPort 参数值错误");
             if (string.IsNullOrEmpty(zLMediaKitSettings.MediaServerId)) throw new InvalidDataException("MediaServerId 不能为空");
             if (string.IsNullOrEmpty(zLMediaKitSettings.ApiSecret)) throw new InvalidDataException("ApiSecret 不能为空");
-            ZLMediaKitSettings.ZLMediaKitSettingsDict[zLMediaKitSettings.MediaServerId] = zLMediaKitSettings;
+            IServerManager.AddServer(zLMediaKitSettings);
         }
     }
 }

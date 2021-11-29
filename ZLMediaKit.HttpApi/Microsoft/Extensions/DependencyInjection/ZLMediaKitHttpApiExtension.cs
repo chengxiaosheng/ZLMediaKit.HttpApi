@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ZLMediaKit.Common;
 using ZLMediaKit.HttpApi;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -17,12 +18,12 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static IServiceCollection AddZLMediaKitHttpClient(this IServiceCollection services,Action<ZLMediaKitSettings> options)
+        public static IServiceCollection AddZLMediaKitHttpClient(this IServiceCollection services, Action<IZLMediaKitSettings> options)
         {
-            ZLMediaKitSettings config = new ZLMediaKitSettings();
+            IZLMediaKitSettings config = new ZLMediaKitSettings();
             options?.Invoke(config);
             if (string.IsNullOrEmpty(config.MediaServerId)) throw new InvalidDataException("MediaServerId 不能为空");
-            ZLMediaKitSettings.ZLMediaKitSettingsDict[config.MediaServerId] = config;
+            IServerManager.AddServer(config);
             return services.AddTransient<ZLHttpClient>();
         }
         /// <summary>
@@ -31,14 +32,14 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static IServiceCollection AddZLMediaKitHttpClient(this IServiceCollection services,Action<List<ZLMediaKitSettings>> options)
+        public static IServiceCollection AddZLMediaKitHttpClient(this IServiceCollection services, Action<List<ZLMediaKitSettings>> options)
         {
             var configs = new List<ZLMediaKitSettings>();
             options.Invoke(configs);
-            if(configs.Count == 0) throw new InvalidDataException("MediaKit HttpApi 服务配置不能为空");
-            foreach(var item in configs)
+            if (configs.Count == 0) throw new InvalidDataException("MediaKit HttpApi 服务配置不能为空");
+            foreach (var item in configs)
             {
-                ZLMediaKitSettings.ZLMediaKitSettingsDict[item.MediaServerId] = item;
+                IServerManager.AddServer(item);
             }
             return services.AddTransient<ZLHttpClient>();
 

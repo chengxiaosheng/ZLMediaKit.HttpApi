@@ -44,8 +44,8 @@ namespace ZLMediaKit.WebHook.Services
         private async Task<IActionResult> Execute<T>(T value, Func<T, Task<IActionResult>> func) where T : IHookBase
         {
             _contextAccessor.HttpContext.Request.Body.Position = 0;
-
-            RegisteredModelInstance.ModelMappding.TryGetValue(typeof(T), out var type);
+            TypeMapping.TypeMappings.TryGetValue(typeof(T), out var type);
+            //RegisteredModelInstance.ModelMappding.TryGetValue(typeof(T), out var type);
 
             // 如果有类型映射，则获取类型映射的值, 否则保持原样
             if (type != null)
@@ -60,8 +60,8 @@ namespace ZLMediaKit.WebHook.Services
 
         private async Task<IActionResult> Execute<T, T1>(T value, Func<T, Task<T1>> func) where T : IHookBase where T1 : IResultBase
         {
-            RegisteredModelInstance.ModelMappding.TryGetValue(typeof(T), out var type);
-
+            //RegisteredModelInstance.ModelMappding.TryGetValue(typeof(T), out var type);
+            TypeMapping.TypeMappings.TryGetValue(typeof(T), out var type);
             _contextAccessor.HttpContext.Request.EnableBuffering();
             _contextAccessor.HttpContext.Request.Body.Position = 0;
             var requestReader = new StreamReader(_contextAccessor.HttpContext.Request.Body);
@@ -91,7 +91,7 @@ namespace ZLMediaKit.WebHook.Services
         [HttpPost(Name = "on_flow_report")]
         public async Task<IActionResult> FlowReportAsync() =>
             await Execute(default(IReportFlowInput), model => ZLMediaKitWebHookEvents.OnFlowReport_Call(new HookEventArgs<IReportFlowInput>(_contextAccessor.HttpContext, model)));
-        
+
 
         /// <summary>
         /// 访问http文件服务器上hls之外的文件时触发
@@ -138,7 +138,6 @@ namespace ZLMediaKit.WebHook.Services
         /// <summary>
         /// 录制TS完成后通知事件；此事件对回复不敏感
         /// </summary>
-        /// <param name="recordInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_record_ts")]
         public async Task<IActionResult> RecordTsAsync()
@@ -175,7 +174,6 @@ namespace ZLMediaKit.WebHook.Services
         /// <summary>
         /// rtsp/rtmp流注册或注销时触发此事件；此事件对回复不敏感。
         /// </summary>
-        /// <param name="streamChangedInfo"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_stream_changed")]
         public async Task<IActionResult> StreamChangedAsync()
@@ -209,7 +207,7 @@ namespace ZLMediaKit.WebHook.Services
         {
 
             var groups = dicts.Select(s => new { Key = s.Key.Split('.'), Value = s.Value })
-                .Select(s => new { ClassName = s.Key.Length == 2 ? s.Key[0].Replace("_", String.Empty) :  "rootElement" , Key = s.Key.LastOrDefault(), Value = s.Value })
+                .Select(s => new { ClassName = s.Key.Length == 2 ? s.Key[0].Replace("_", String.Empty) : "rootElement", Key = s.Key.LastOrDefault(), Value = s.Value })
                 .GroupBy(x => x.ClassName);
             IDictionary<string, object> result = new ExpandoObject();
             foreach (var group in groups)
@@ -217,16 +215,17 @@ namespace ZLMediaKit.WebHook.Services
                 IDictionary<string, object> temp = new ExpandoObject();
                 foreach (var item in group)
                 {
-                    if(group.Key == "rootElement")
+                    if (group.Key == "rootElement")
                     {
                         result[item.Key] = item.Value;
-                    }else 
-                    temp.Add(item.Key, item.Value);
+                    }
+                    else
+                        temp.Add(item.Key, item.Value);
                 }
                 result.Add(group.Key, temp);
             }
             var jsonStr = System.Text.Json.JsonSerializer.Serialize(result as ExpandoObject);
-            var serverCofnig = System.Text.Json.JsonSerializer.Deserialize<IServerStartedInput>(jsonStr,TypeMapping.SerializerOptions);
+            var serverCofnig = System.Text.Json.JsonSerializer.Deserialize<IServerStartedInput>(jsonStr, TypeMapping.SerializerOptions);
             var serviceManager = IServerManager.GetServerManager(serverCofnig);
             if (serviceManager == null)
             {
@@ -255,7 +254,7 @@ namespace ZLMediaKit.WebHook.Services
             return await Execute(default(IServerKeepaliveInput), model =>
             {
                 var serverManager = IServerManager.GetServerManager(model);
-                if(serverManager != null)
+                if (serverManager != null)
                 {
                     serverManager.Keepalive = model;
                     serverManager.KeepaliveTime = DateTime.Now;

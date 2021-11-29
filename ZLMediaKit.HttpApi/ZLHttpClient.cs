@@ -29,13 +29,13 @@ namespace ZLMediaKit.HttpApi
         /// 
         /// </summary>
         /// <param name="mediaServerId"></param>
-        public ZLHttpClient([NotNull]string mediaServerId) => CreateClient(mediaServerId);
+        public ZLHttpClient([NotNull] string mediaServerId) => CreateClient(mediaServerId);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="serverManager"></param>
-        public ZLHttpClient([NotNull]IServerManager serverManager)=> CreateClient(serverManager);
+        public ZLHttpClient([NotNull] IServerManager serverManager) => CreateClient(serverManager);
 
 
         private IServerManager _serverManager;
@@ -49,10 +49,11 @@ namespace ZLMediaKit.HttpApi
         {
             _serverManager = serverManager;
             if (serverManager == null) throw new ArgumentNullException(nameof(serverManager));
-            var client = new RestClient($"http://{serverManager.ServerAddress}:{serverManager.ServerConfig.Http.Port}/index/api");
+            var client = new RestClient(_serverManager.ApiBaseUri);
             client.UseSystemTextJson(TypeMapping.SerializerOptions);
             this._restClient = client;
-            client.Timeout = 5000;
+            client.Timeout = _serverManager.Timeout;
+            client.AddDefaultQueryParameter("secret", _serverManager.ApiSecret);
             return client;
         }
 
@@ -178,12 +179,12 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 动态修改ZLM配置
         /// </summary>
-        /// <param name="serverConfig"></param>
+        /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<ISetServerConfigResult> SetServerConfig(params ISetServerConfigInput [] input)
+        public async Task<ISetServerConfigResult> SetServerConfig(params ISetServerConfigInput[] input)
         {
             var request = new RestRequest("setServerConfig");
-            foreach(var item in input)
+            foreach (var item in input)
             {
                 request.AddOrUpdateParameter($"{item.ClassName}.{item.Key}", item.Value);
             }
@@ -196,7 +197,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="mediaServerId"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<ISetServerConfigResult> SetServerConfig(string mediaServerId,params ISetServerConfigInput[] input)
+        public async Task<ISetServerConfigResult> SetServerConfig(string mediaServerId, params ISetServerConfigInput[] input)
         {
             CreateClient(mediaServerId);
             return await SetServerConfig(input);
@@ -210,7 +211,7 @@ namespace ZLMediaKit.HttpApi
         public async Task<IApiRestartServerResult> RestartServer()
         {
             var request = new RestRequest("restartServer");
-            return await(_restClient ?? CreateClient()).GetAsync<IApiRestartServerResult>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiRestartServerResult>(request);
         }
 
         /// <summary>
@@ -230,13 +231,13 @@ namespace ZLMediaKit.HttpApi
         /// <param name="vhost">筛选虚拟主机，例如__defaultVhost__</param>
         /// <param name="app">筛选应用名，例如 live</param>
         /// <returns></returns>
-        public async Task<IApiGetMediaListResult> GetMediaList(string schema = null,string vhost = null ,string app = null)
+        public async Task<IApiGetMediaListResult> GetMediaList(string schema = null, string vhost = null, string app = null)
         {
             var request = new RestRequest("getMediaList")
                 .AddQueryParameter("schema", schema, true)
                 .AddQueryParameter("vhost", vhost, true)
                 .AddQueryParameter("app", app, true);
-            return await(_restClient ?? CreateClient()).GetAsync<IApiGetMediaListResult>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiGetMediaListResult>(request);
         }
 
         /// <summary>
@@ -246,7 +247,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="vhost">筛选虚拟主机，例如__defaultVhost__</param>
         /// <param name="app">筛选应用名，例如 live</param>
         /// <returns></returns>
-        public async Task<IApiGetMediaListResult> GetMediaList(string mediaServerId,string schema = null, string vhost = null, string app = null)
+        public async Task<IApiGetMediaListResult> GetMediaList(string mediaServerId, string schema = null, string vhost = null, string app = null)
         {
             CreateClient(mediaServerId);
             return await GetMediaList(schema, vhost, app);
@@ -268,7 +269,7 @@ namespace ZLMediaKit.HttpApi
         /// </returns>
         /// <remarks>已过期，请使用 <see cref="CloseStreams(string, string, string, string, bool)"/>接口替代</remarks>
         [Obsolete("已过期，请使用close_streams接口替换")]
-        public async Task<IApiCloseStreamResult> CloseStream(string schema , string vhost , string app ,string stream,bool force)
+        public async Task<IApiCloseStreamResult> CloseStream(string schema, string vhost, string app, string stream, bool force)
         {
             var request = new RestRequest("close_stream")
                 .AddQueryParameter("schema", schema, true)
@@ -276,7 +277,7 @@ namespace ZLMediaKit.HttpApi
                 .AddQueryParameter("app", app, true)
                 .AddQueryParameter("stream", stream, true)
                 .AddQueryParameter("force", force ? "1" : "0");
-            return await(_restClient ?? CreateClient()).GetAsync<IApiCloseStreamResult>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiCloseStreamResult>(request);
         }
 
         /// <summary>
@@ -310,7 +311,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="stream">流id，例如 test</param>
         /// <param name="force">是否强制关闭(有人在观看是否还关闭)</param>
         /// <returns></returns>
-        public async Task<IApiClonseStreamsResult> CloseStreams(string schema= null, string vhost= null, string app= null, string stream = null, bool force = false)
+        public async Task<IApiClonseStreamsResult> CloseStreams(string schema = null, string vhost = null, string app = null, string stream = null, bool force = false)
         {
             var request = new RestRequest("close_streams")
                .AddQueryParameter("schema", schema, true)
@@ -343,12 +344,12 @@ namespace ZLMediaKit.HttpApi
         /// <param name="local_port">筛选本机端口，例如筛选rtsp链接：554</param>
         /// <param name="peer_ip">筛选客户端ip</param>
         /// <returns></returns>
-        public async Task<IApiGetAllSessionResult> GetAllSession (int? local_port = null,string peer_ip = null)
+        public async Task<IApiGetAllSessionResult> GetAllSession(int? local_port = null, string peer_ip = null)
         {
 
             IRestRequest request = new RestRequest("getAllSession");
             if (local_port.HasValue) request = request.AddQueryParameter("local_port", local_port.Value.ToString());
-            if(!string.IsNullOrEmpty(peer_ip)) request.AddQueryParameter("peer_ip", peer_ip);
+            if (!string.IsNullOrEmpty(peer_ip)) request.AddQueryParameter("peer_ip", peer_ip);
             return await (_restClient ?? CreateClient()).GetAsync<IApiGetAllSessionResult>(request);
         }
 
@@ -359,7 +360,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="local_port">筛选本机端口，例如筛选rtsp链接：554</param>
         /// <param name="peer_ip">筛选客户端ip</param>
         /// <returns></returns>
-        public async Task<IApiGetAllSessionResult> GetAllSession(string mediaServerId,int? local_port = null, string peer_ip = null)
+        public async Task<IApiGetAllSessionResult> GetAllSession(string mediaServerId, int? local_port = null, string peer_ip = null)
         {
             CreateClient(mediaServerId);
             return await GetAllSession(local_port, peer_ip);
@@ -374,7 +375,7 @@ namespace ZLMediaKit.HttpApi
         {
             IRestRequest request = new RestRequest("getAllSession")
                 .AddQueryParameter("id", id);
-            return await(_restClient ?? CreateClient()).GetAsync<IApiResultBase>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiResultBase>(request);
         }
 
         /// <summary>
@@ -395,22 +396,23 @@ namespace ZLMediaKit.HttpApi
         /// <param name="local_port"></param>
         /// <param name="peer_ip"></param>
         /// <returns></returns>
-        public async Task<IApKillSessionsResult> KickSessions(int? local_port = null ,string peer_ip = null)
+        public async Task<IApKillSessionsResult> KickSessions(int? local_port = null, string peer_ip = null)
         {
             IRestRequest request = new RestRequest("kick_sessions");
             if (local_port.HasValue) request = request.AddQueryParameter("local_port", local_port.Value.ToString());
             if (!string.IsNullOrEmpty(peer_ip)) request.AddQueryParameter("peer_ip", peer_ip);
-            return await(_restClient ?? CreateClient()).GetAsync<IApKillSessionsResult>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApKillSessionsResult>(request);
 
         }
 
         /// <summary>
         /// 断开tcp连接，比如说可以断开rtsp、rtmp播放器
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="local_port"></param>
         /// <param name="peer_ip"></param>
         /// <returns></returns>
-        public async Task<IApKillSessionsResult> KickSessions(string mediaServerId,int? local_port = null, string peer_ip = null)
+        public async Task<IApKillSessionsResult> KickSessions(string mediaServerId, int? local_port = null, string peer_ip = null)
         {
             CreateClient(mediaServerId);
             return await KickSessions(local_port, peer_ip);
@@ -427,9 +429,9 @@ namespace ZLMediaKit.HttpApi
         /// <param name="enable_mp4">是否mp4录制</param>
         /// <param name="rtp_type">rtsp拉流时，拉流方式，0：tcp，1：udp，2：组播</param>
         /// <param name="timeout_sec">拉流超时时间，单位秒，float类型</param>
-        /// <param name="retry_count">拉流重试次数,不传此参数或传值<=0时，则无限重试</param>
+        /// <param name="retry_count">拉流重试次数,不传此参数或传值小于等于0时，则无限重试</param>
         /// <returns></returns>
-        public async Task<IApiAddStreamPorxyResult> AddStreamProxy([NotNull]string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string url,bool? enable_hls,bool? enable_mp4,int? rtp_type ,float? timeout_sec, int? retry_count)
+        public async Task<IApiAddStreamPorxyResult> AddStreamProxy([NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string url, bool? enable_hls, bool? enable_mp4, int? rtp_type, float? timeout_sec, int? retry_count)
         {
             IRestRequest request = new RestRequest("addStreamProxy")
                 .AddQueryParameter("vhost", vhost)
@@ -441,13 +443,14 @@ namespace ZLMediaKit.HttpApi
             if (rtp_type.HasValue) request = request.AddQueryParameter("rtp_type", rtp_type.ToString());
             if (timeout_sec.HasValue) request = request.AddQueryParameter("timeout_sec", timeout_sec.ToString());
             if (retry_count.HasValue) request = request.AddQueryParameter("retry_count", retry_count.ToString());
-            return await(_restClient ?? CreateClient()).GetAsync<IApiAddStreamPorxyResult>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiAddStreamPorxyResult>(request);
 
         }
 
         /// <summary>
         /// 动态添加rtsp/rtmp/hls拉流代理(只支持H264/H265/aac/G711负载)
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="vhost">添加的流的虚拟主机，例如__defaultVhost__</param>
         /// <param name="app">添加的流的应用名，例如live</param>
         /// <param name="stream">添加的流的id名，例如test</param>
@@ -456,9 +459,9 @@ namespace ZLMediaKit.HttpApi
         /// <param name="enable_mp4">是否mp4录制</param>
         /// <param name="rtp_type">rtsp拉流时，拉流方式，0：tcp，1：udp，2：组播</param>
         /// <param name="timeout_sec">拉流超时时间，单位秒，float类型</param>
-        /// <param name="retry_count">拉流重试次数,不传此参数或传值<=0时，则无限重试</param>
+        /// <param name="retry_count">拉流重试次数,不传此参数或传值小于等于0时，则无限重试</param>
         /// <returns></returns>
-        public async Task<IApiAddStreamPorxyResult> AddStreamProxy([NotNull]string mediaServerId, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string url, bool? enable_hls, bool? enable_mp4, int? rtp_type, float? timeout_sec, int? retry_count)
+        public async Task<IApiAddStreamPorxyResult> AddStreamProxy([NotNull] string mediaServerId, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string url, bool? enable_hls, bool? enable_mp4, int? rtp_type, float? timeout_sec, int? retry_count)
         {
             CreateClient(mediaServerId);
             return await AddStreamProxy(vhost, app, stream, url, enable_hls, enable_mp4, rtp_type, timeout_sec, retry_count);
@@ -470,7 +473,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="key">addStreamProxy接口返回的key</param>
         /// <returns></returns>
         /// <remarks>流注册成功后，也可以使用close_streams接口替代</remarks>
-        public async Task<IApiDelStreamProxyResultItem> DelStreamProxy([NotNull]string key)
+        public async Task<IApiDelStreamProxyResultItem> DelStreamProxy([NotNull] string key)
         {
             IRestRequest request = new RestRequest("delStreamProxy")
                 .AddQueryParameter("key", key);
@@ -480,6 +483,7 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 关闭拉流代理
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="key">addStreamProxy接口返回的key</param>
         /// <returns></returns>
         /// <remarks>流注册成功后，也可以使用close_streams接口替代</remarks>
@@ -501,7 +505,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="enable_mp4">是否开启mp4录制</param>
         /// <param name="ffmpeg_cmd_key">FFmpeg命令参数模板，置空则采用配置项:ffmpeg.cmd</param>
         /// <returns></returns>
-        public async Task<IApiAddFFmpegSourceResult> AddFFmpegSource([NotNull]string src_url, [NotNull] string dst_url, [NotNull] int timeout_ms = 5000, [NotNull] bool enable_hls = false, [NotNull] bool enable_mp4 = false, string ffmpeg_cmd_key = null)
+        public async Task<IApiAddFFmpegSourceResult> AddFFmpegSource([NotNull] string src_url, [NotNull] string dst_url, [NotNull] int timeout_ms = 5000, [NotNull] bool enable_hls = false, [NotNull] bool enable_mp4 = false, string ffmpeg_cmd_key = null)
         {
             IRestRequest request = new RestRequest("addFFmpegSource")
                 .AddQueryParameter("src_url", src_url)
@@ -511,12 +515,13 @@ namespace ZLMediaKit.HttpApi
                 .AddQueryParameter("enable_mp4", enable_mp4 ? "1" : "0");
             if (string.IsNullOrEmpty(ffmpeg_cmd_key)) request = request.AddQueryParameter("ffmpeg_cmd_key", ffmpeg_cmd_key);
 
-            return await(_restClient ?? CreateClient()).GetAsync<IApiAddFFmpegSourceResult>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiAddFFmpegSourceResult>(request);
         }
 
         /// <summary>
         /// 通过fork FFmpeg进程的方式拉流代理，支持任意协议
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="src_url">FFmpeg拉流地址,支持任意协议或格式(只要FFmpeg支持即可)</param>
         /// <param name="dst_url">FFmpeg rtmp推流地址，一般都是推给自己，<para><c>例如:<b>rtmp://127.0.0.1/live/stream_form_ffmpeg</b></c></para></param>
         /// <param name="timeout_ms">FFmpeg推流成功超时时间</param>
@@ -524,7 +529,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="enable_mp4">是否开启mp4录制</param>
         /// <param name="ffmpeg_cmd_key">FFmpeg命令参数模板，置空则采用配置项:ffmpeg.cmd</param>
         /// <returns></returns>
-        public async Task<IApiAddFFmpegSourceResult> AddFFmpegSource([NotNull]string mediaServerId, [NotNull] string src_url, [NotNull] string dst_url, [NotNull] int timeout_ms = 5000, [NotNull] bool enable_hls = false, [NotNull] bool enable_mp4 = false, string ffmpeg_cmd_key = null)
+        public async Task<IApiAddFFmpegSourceResult> AddFFmpegSource([NotNull] string mediaServerId, [NotNull] string src_url, [NotNull] string dst_url, [NotNull] int timeout_ms = 5000, [NotNull] bool enable_hls = false, [NotNull] bool enable_mp4 = false, string ffmpeg_cmd_key = null)
         {
             CreateClient(mediaServerId);
             return await AddFFmpegSource(src_url, dst_url, timeout_ms, enable_hls, enable_mp4, ffmpeg_cmd_key);
@@ -540,9 +545,9 @@ namespace ZLMediaKit.HttpApi
         /// <param name="dst_url">推流地址，需要与schema字段协议一致</param>
         /// <param name="rtp_type">rtsp推流时，推流方式，0：tcp，1：udp</param>
         /// <param name="timeout_sec">推流超时时间，单位秒，float类型</param>
-        /// <param name="retry_count">推流重试次数,不传此参数或传值<=0时，则无限重试</param>
+        /// <param name="retry_count">推流重试次数,不传此参数或传值小于等于0时，则无限重试</param>
         /// <returns></returns>
-        public async Task<IApiAddStreamPusherProxyResult> AddStreamPusherProxy([NotNull]string schema, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string dst_url,int rtp_type = 0,int timeout_sec = 10 ,int retry_count = 0)
+        public async Task<IApiAddStreamPusherProxyResult> AddStreamPusherProxy([NotNull] string schema, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string dst_url, int rtp_type = 0, int timeout_sec = 10, int retry_count = 0)
         {
             IRestRequest request = new RestRequest("addStreamPusherProxy")
                 .AddQueryParameter("schema", schema)
@@ -554,12 +559,13 @@ namespace ZLMediaKit.HttpApi
                 .AddQueryParameter("timeout_sec", timeout_sec.ToString())
                 .AddQueryParameter("retry_count", retry_count.ToString());
 
-            return await(_restClient ?? CreateClient()).GetAsync<IApiAddStreamPusherProxyResult>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiAddStreamPusherProxyResult>(request);
         }
 
         /// <summary>
         /// 添加rtsp/rtmp推流(addStreamPusherProxy)
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="schema">推流协议，支持rtsp、rtmp，大小写敏感</param>
         /// <param name="vhost">已注册流的虚拟主机，一般为__defaultVhost__</param>
         /// <param name="app">已注册流的应用名，例如live</param>
@@ -567,7 +573,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="dst_url">推流地址，需要与schema字段协议一致</param>
         /// <param name="rtp_type">rtsp推流时，推流方式，0：tcp，1：udp</param>
         /// <param name="timeout_sec">推流超时时间，单位秒，float类型</param>
-        /// <param name="retry_count">推流重试次数,不传此参数或传值<=0时，则无限重试</param>
+        /// <param name="retry_count">推流重试次数,不传此参数或传值小于等于0时，则无限重试</param>
         /// <returns></returns>
         public async Task<IApiAddStreamPusherProxyResult> AddStreamPusherProxy([NotNull] string mediaServerId, [NotNull] string schema, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string dst_url, int rtp_type = 0, int timeout_sec = 10, int retry_count = 0)
         {
@@ -580,16 +586,17 @@ namespace ZLMediaKit.HttpApi
         /// </summary>
         /// <param name="key">addStreamPusherProxy接口返回的key</param>
         /// <returns></returns>
-        public async Task<IApiDelStreamPusherProxyResult> DelStreamPusherProxy([NotNull]string key)
+        public async Task<IApiDelStreamPusherProxyResult> DelStreamPusherProxy([NotNull] string key)
         {
             IRestRequest request = new RestRequest("delStreamPusherProxy")
                 .AddQueryParameter("key", key);
-            return await(_restClient ?? CreateClient()).GetAsync<IApiDelStreamPusherProxyResult>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiDelStreamPusherProxyResult>(request);
         }
 
         /// <summary>
         /// 关闭推流(delStreamPusherProxy)
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="key">addStreamPusherProxy接口返回的key</param>
         /// <returns></returns>
         public async Task<IApiDelStreamPusherProxyResult> DelStreamPusherProxy([NotNull] string mediaServerId, [NotNull] string key)
@@ -605,16 +612,17 @@ namespace ZLMediaKit.HttpApi
         /// <param name="key">addStreamProxy接口返回的key</param>
         /// <returns></returns>
         /// <remarks>流注册成功后，也可以使用close_streams接口替代</remarks>
-        public async Task<IApiDelFFmpegSourceResult> DelFFmpegSource([NotNull]string key)
+        public async Task<IApiDelFFmpegSourceResult> DelFFmpegSource([NotNull] string key)
         {
             IRestRequest request = new RestRequest("delFFmpegSource")
                 .AddQueryParameter("key", key);
-            return await(_restClient ?? CreateClient()).GetAsync<IApiDelFFmpegSourceResult>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiDelFFmpegSourceResult>(request);
         }
 
         /// <summary>
         /// 关闭ffmpeg拉流代理
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="key">addStreamProxy接口返回的key</param>
         /// <returns></returns>
         /// <remarks>流注册成功后，也可以使用close_streams接口替代</remarks>
@@ -631,7 +639,7 @@ namespace ZLMediaKit.HttpApi
         public byte[] DownloadBin()
         {
             IRestRequest request = new RestRequest("downloadBin");
-            return  (_restClient ?? CreateClient()).DownloadData(request);
+            return (_restClient ?? CreateClient()).DownloadData(request);
         }
         /// <summary>
         /// 下载可执行文件
@@ -653,7 +661,7 @@ namespace ZLMediaKit.HttpApi
         /// <returns></returns>
         /// <remarks>已过期，请使用 <see cref="GetMediaList(string, string, string)"/>接口替代</remarks>
         [Obsolete("已过期，请使用getMediaList接口替代")]
-        public async Task<IApiIsMediaOnlineResult> IsMediaOnline([NotNull]string schema , [NotNull]string vhost ,[NotNull]string app,[NotNull]string stream)
+        public async Task<IApiIsMediaOnlineResult> IsMediaOnline([NotNull] string schema, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream)
         {
             IRestRequest request = new RestRequest("isMediaOnline")
                 .AddQueryParameter("schema", schema)
@@ -667,6 +675,7 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 判断直播流是否在线
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="schema">协议，例如 rtsp或rtmp</param>
         /// <param name="vhost">虚拟主机，例如__defaultVhost__</param>
         /// <param name="app">应用名，例如 live</param>
@@ -674,7 +683,7 @@ namespace ZLMediaKit.HttpApi
         /// <returns></returns>
         /// <remarks>已过期，请使用 <see cref="GetMediaList(string, string, string)"/>接口替代</remarks>
         [Obsolete("已过期，请使用getMediaList接口替代")]
-        public async Task<IApiIsMediaOnlineResult> IsMediaOnline([NotNull] string mediaServerId,[NotNull] string schema, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream)
+        public async Task<IApiIsMediaOnlineResult> IsMediaOnline([NotNull] string mediaServerId, [NotNull] string schema, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream)
         {
             CreateClient(mediaServerId);
             return await IsMediaOnline(schema, vhost, app, stream);
@@ -692,7 +701,7 @@ namespace ZLMediaKit.HttpApi
         /// <returns></returns>
         /// <remarks>已过期，请使用 <see cref="GetMediaList(string, string, string)"/>接口替代</remarks>
         [Obsolete("已过期，请使用getMediaList接口替代")]
-        public async Task<IApiGetMediaInfo> GetMediaInfo([NotNull]string schema, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream)
+        public async Task<IApiGetMediaInfo> GetMediaInfo([NotNull] string schema, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream)
         {
             IRestRequest request = new RestRequest("getMediaInfo")
                  .AddQueryParameter("schema", schema)
@@ -705,6 +714,7 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 获取流相关信息
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="schema">协议，例如 rtsp或rtmp</param>
         /// <param name="vhost">虚拟主机，例如__defaultVhost__</param>
         /// <param name="app">应用名，例如 live</param>
@@ -724,7 +734,7 @@ namespace ZLMediaKit.HttpApi
         /// </summary>
         /// <param name="stream_id">RTP的ssrc，16进制字符串或者是流的id(openRtpServer接口指定)</param>
         /// <returns></returns>
-        public async Task<IApiGetRtpInfoResult> GetRtpInfo([NotNull]string stream_id)
+        public async Task<IApiGetRtpInfoResult> GetRtpInfo([NotNull] string stream_id)
         {
             IRestRequest request = new RestRequest("getRtpInfo")
                 .AddQueryParameter("stream_id", stream_id);
@@ -735,6 +745,7 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 获取rtp代理时的某路ssrc rtp信息
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="stream_id">RTP的ssrc，16进制字符串或者是流的id(openRtpServer接口指定)</param>
         /// <returns></returns>
         public async Task<IApiGetRtpInfoResult> GetRtpInfo([NotNull] string mediaServerId, [NotNull] string stream_id)
@@ -764,12 +775,13 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 搜索文件系统，获取流对应的录像文件列表或日期文件夹列表
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="vhost">流的虚拟主机名</param>
         /// <param name="app">流的应用名</param>
         /// <param name="stream">流的ID</param>
         /// <param name="period">流的录像日期，格式为2020-02-01,如果不是完整的日期，那么是搜索录像文件夹列表，否则搜索对应日期下的mp4文件列表</param>
         /// <returns></returns>
-        public async Task<IApiGetMp4RecordFileResult> GetMp4RecordFile([NotNull] string mediaServerId,[NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string period)
+        public async Task<IApiGetMp4RecordFileResult> GetMp4RecordFile([NotNull] string mediaServerId, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string period)
         {
             CreateClient(mediaServerId);
             return await GetMp4RecordFile(vhost, app, stream, period);
@@ -785,7 +797,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="customized_path">录像保存目录</param>
         /// <param name="max_second">mp4录像切片时间大小,单位秒，置0则采用配置项</param>
         /// <returns></returns>
-        public async Task<IApiStartRecordResult> StartRecord([NotNull]int type, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream,string customized_path  ,int? max_second = 0)
+        public async Task<IApiStartRecordResult> StartRecord([NotNull] int type, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, string customized_path, int? max_second = 0)
         {
 
             IRestRequest request = new RestRequest("startRecord")
@@ -798,7 +810,7 @@ namespace ZLMediaKit.HttpApi
             return await (_restClient ?? CreateClient()).GetAsync<IApiStartRecordResult>(request);
         }
 
-      
+
 
         /// <summary>
         /// 开始录制hls或MP4
@@ -811,7 +823,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="customized_path">录像保存目录</param>
         /// <param name="max_second">mp4录像切片时间大小,单位秒，置0则采用配置项</param>
         /// <returns></returns>
-        public async Task<IApiStartRecordResult> StartRecord([NotNull]string mediaServerId,[NotNull] int type, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, string customized_path, int? max_second = 0)
+        public async Task<IApiStartRecordResult> StartRecord([NotNull] string mediaServerId, [NotNull] int type, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, string customized_path, int? max_second = 0)
         {
             CreateClient(mediaServerId);
             return await StartRecord(type, vhost, app, stream, customized_path, max_second);
@@ -862,7 +874,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="stream"></param>
         /// <param name="stamp"></param>
         /// <returns></returns>
-        public async Task<IApiSeekRecordStampResult> SeekRecordStamp([NotNull] string schema, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream,long stamp)
+        public async Task<IApiSeekRecordStampResult> SeekRecordStamp([NotNull] string schema, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, long stamp)
         {
             IRestRequest request = new RestRequest("seekRecordStamp")
                 .AddQueryParameter("schema", schema)
@@ -876,6 +888,7 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 跳转到指定位置
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="schema"></param>
         /// <param name="vhost"></param>
         /// <param name="app"></param>
@@ -915,7 +928,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="app">流的应用名</param>
         /// <param name="stream">流的ID</param>
         /// <returns></returns>
-        public async Task<IApiStopRecordResult> StopRecord([NotNull]string mediaServerId, [NotNull] int type, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream)
+        public async Task<IApiStopRecordResult> StopRecord([NotNull] string mediaServerId, [NotNull] int type, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream)
         {
             CreateClient(mediaServerId);
             return await StopRecord(type, vhost, app, stream);
@@ -936,13 +949,14 @@ namespace ZLMediaKit.HttpApi
                 .AddQueryParameter("vhost", vhost)
                 .AddQueryParameter("app", app)
                 .AddQueryParameter("stream", stream);
-            return await(_restClient ?? CreateClient()).GetAsync<IApiIsRecordingResult>(request);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiIsRecordingResult>(request);
 
         }
 
         /// <summary>
         /// 获取流录制状态
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="type">0为hls，1为mp4</param>
         /// <param name="vhost">流的虚拟主机名</param>
         /// <param name="app">流的应用名</param>
@@ -961,7 +975,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="timeout_sec">截图失败超时时间，防止FFmpeg一直等待截图</param>
         /// <param name="expire_sec">截图的过期时间，该时间内产生的截图都会作为缓存返回</param>
         /// <returns>jpeg格式的图片，可以在浏览器直接打开</returns>
-        public byte[] GetSnap([NotNull]string url,int timeout_sec=5,int expire_sec=5)
+        public byte[] GetSnap([NotNull] string url, int timeout_sec = 5, int expire_sec = 5)
         {
             IRestRequest request = new RestRequest("getSnap")
                 .AddQueryParameter("url", url)
@@ -973,11 +987,12 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 获取截图或生成实时截图并返回
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="url">需要截图的url，可以是本机的，也可以是远程主机的</param>
         /// <param name="timeout_sec">截图失败超时时间，防止FFmpeg一直等待截图</param>
         /// <param name="expire_sec">截图的过期时间，该时间内产生的截图都会作为缓存返回</param>
         /// <returns>jpeg格式的图片，可以在浏览器直接打开</returns>
-        public byte[] GetSnap([NotNull] string mediaServerId,[NotNull] string url, int timeout_sec = 5, int expire_sec = 5)
+        public byte[] GetSnap([NotNull] string mediaServerId, [NotNull] string url, int timeout_sec = 5, int expire_sec = 5)
         {
             CreateClient(mediaServerId);
             return GetSnap(url, timeout_sec, expire_sec);
@@ -990,7 +1005,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="enable_tcp">启用UDP监听的同时是否监听TCP端口</param>
         /// <param name="stream_id">该端口绑定的流ID，该端口只能创建这一个流(而不是根据ssrc创建多个)</param>
         /// <returns></returns>
-        public async Task<IApiOpenRtpServerResult> OpenRtpServer(int port = 0,bool enable_tcp = false,string stream_id = null)
+        public async Task<IApiOpenRtpServerResult> OpenRtpServer(int port = 0, bool enable_tcp = false, string stream_id = null)
         {
             IRestRequest request = new RestRequest("openRtpServer")
                 .AddQueryParameter("port", port.ToString())
@@ -1003,15 +1018,16 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 创建GB28181 RTP接收端口，如果该端口接收数据超时，则会自动被回收(不用调用closeRtpServer接口)
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="port">接收端口，0则为随机端口</param>
         /// <param name="enable_tcp">启用UDP监听的同时是否监听TCP端口</param>
         /// <param name="stream_id">该端口绑定的流ID，该端口只能创建这一个流(而不是根据ssrc创建多个)</param>
         /// <returns></returns>
-        public async Task<IApiOpenRtpServerResult> OpenRtpServer([NotNull] string mediaServerId,int port = 0, bool enable_tcp = false, string stream_id = null)
+        public async Task<IApiOpenRtpServerResult> OpenRtpServer([NotNull] string mediaServerId, int port = 0, bool enable_tcp = false, string stream_id = null)
         {
             CreateClient(mediaServerId);
             return await OpenRtpServer(port, enable_tcp, stream_id);
-            
+
         }
 
         /// <summary>
@@ -1030,12 +1046,13 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 关闭GB28181 RTP接收端口
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="stream_id"></param>
         /// <returns></returns>
         public async Task<IApiCloseRtpServerResult> CloseRtpServer([NotNull] string mediaServerId, [NotNull] string stream_id)
         {
             CreateClient(mediaServerId);
-            return await CloseRtpServer( stream_id);
+            return await CloseRtpServer(stream_id);
         }
 
         /// <summary>
@@ -1070,7 +1087,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="is_udp">是否为udp模式,否则为tcp模式</param>
         /// <param name="src_port">使用的本机端口，为0或不传时默认为随机端口</param>
         /// <returns></returns>
-        public async Task<IApiStartSendRtpResult> StartSendRtp([NotNull]string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string ssrc, [NotNull] string dst_url,int dst_port,bool is_udp,int src_port = 0)
+        public async Task<IApiStartSendRtpResult> StartSendRtp([NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string ssrc, [NotNull] string dst_url, int dst_port, bool is_udp, int src_port = 0)
         {
             IRestRequest request = new RestRequest("startSendRtp")
                 .AddQueryParameter("vhost", vhost)
@@ -1087,6 +1104,7 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 作为GB28181客户端，启动ps-rtp推流，支持rtp/udp方式；该接口支持rtsp/rtmp等协议转ps-rtp推流。第一次推流失败会直接返回错误，成功一次后，后续失败也将无限重试
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="vhost">虚拟主机，例如__defaultVhost__</param>
         /// <param name="app">应用名，例如 live</param>
         /// <param name="stream">流id，例如 test</param>
@@ -1096,7 +1114,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="is_udp">是否为udp模式,否则为tcp模式</param>
         /// <param name="src_port">使用的本机端口，为0或不传时默认为随机端口</param>
         /// <returns></returns>
-        public async Task<IApiStartSendRtpResult> StartSendRtp([NotNull] string mediaServerId,[NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string ssrc, [NotNull] string dst_url, int dst_port, bool is_udp, int src_port = 0)
+        public async Task<IApiStartSendRtpResult> StartSendRtp([NotNull] string mediaServerId, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string ssrc, [NotNull] string dst_url, int dst_port, bool is_udp, int src_port = 0)
         {
             CreateClient(mediaServerId);
             return await StartSendRtp(vhost, app, stream, ssrc, dst_url, dst_port, is_udp, src_port);
@@ -1105,32 +1123,31 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 停止GB28181 ps-rtp推流
         /// </summary>
-        /// <param name="secret">api操作密钥(配置文件配置)，如果操作ip是127.0.0.1，则不需要此参数</param>
         /// <param name="vhost">虚拟主机，例如__defaultVhost__</param>
         /// <param name="app">应用名，例如 live</param>
         /// <param name="stream">流id，例如 test</param>
         /// <param name="ssrc"></param>
         /// <returns></returns>
-        public async Task<IApiStopSendRtpResult> StopSendRtp([NotNull] string vhost, [NotNull] string app, [NotNull] string stream,string ssrc = null)
+        public async Task<IApiStopSendRtpResult> StopSendRtp([NotNull] string vhost, [NotNull] string app, [NotNull] string stream, string ssrc = null)
         {
             IRestRequest request = new RestRequest("stopSendRtp")
                 .AddQueryParameter("vhost", vhost)
                 .AddQueryParameter("app	", app)
                 .AddQueryParameter("stream", stream);
-            if(!string.IsNullOrEmpty(ssrc)) request = request.AddQueryParameter("ssrc", ssrc);
-            return await(_restClient ?? CreateClient()).GetAsync<IApiStopSendRtpResult>(request);
+            if (!string.IsNullOrEmpty(ssrc)) request = request.AddQueryParameter("ssrc", ssrc);
+            return await (_restClient ?? CreateClient()).GetAsync<IApiStopSendRtpResult>(request);
         }
 
         /// <summary>
         /// 停止GB28181 ps-rtp推流
         /// </summary>
-        /// <param name="secret">api操作密钥(配置文件配置)，如果操作ip是127.0.0.1，则不需要此参数</param>
+        /// <param name="mediaServerId"></param>
         /// <param name="vhost">虚拟主机，例如__defaultVhost__</param>
         /// <param name="app">应用名，例如 live</param>
         /// <param name="stream">流id，例如 test</param>
         /// <param name="ssrc"></param>
         /// <returns></returns>
-        public async Task<IApiStopSendRtpResult> StopSendRtp([NotNull]string mediaServerId,[NotNull] string vhost, [NotNull] string app, [NotNull] string stream, string ssrc = null)
+        public async Task<IApiStopSendRtpResult> StopSendRtp([NotNull] string mediaServerId, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, string ssrc = null)
         {
             CreateClient(mediaServerId);
             return await StopSendRtp(vhost, app, stream, ssrc);
@@ -1141,7 +1158,7 @@ namespace ZLMediaKit.HttpApi
         /// </summary>
         /// <param name="streamid"></param>
         /// <returns></returns>
-        public async Task<IApiPauseRtpCheckResult> PauseRtpCheck([NotNull]string streamid)
+        public async Task<IApiPauseRtpCheckResult> PauseRtpCheck([NotNull] string streamid)
         {
             IRestRequest request = new RestRequest("pauseRtpCheck")
                 .AddQueryParameter("stream_id", streamid);
@@ -1151,6 +1168,7 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 停止RTP代理超时检查
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="streamid"></param>
         /// <returns></returns>
         public async Task<IApiPauseRtpCheckResult> PauseRtpCheck([NotNull] string mediaServerId, [NotNull] string streamid)
@@ -1173,6 +1191,7 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 恢复RTP代理超时检查
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <param name="streamid"></param>
         /// <returns></returns>
         public async Task<IApiResumeRtpCheckResult> ResumeRtpCheck([NotNull] string mediaServerId, [NotNull] string streamid)
@@ -1196,11 +1215,44 @@ namespace ZLMediaKit.HttpApi
         /// <summary>
         /// 获取ZLMediaKit对象统计
         /// </summary>
+        /// <param name="mediaServerId"></param>
         /// <returns></returns>
         public async Task<IApiGetStatisticResult> GetStatistic([NotNull] string mediaServerId)
         {
             CreateClient(mediaServerId);
             return await GetStatistic();
+        }
+        /// <summary>
+        /// 根据方法名调用接口获取数据
+        /// </summary>
+        /// <param name="methodName">方法名词</param>
+        /// <param name="paras">请求参数</param>
+        /// <typeparam name="T">返回参数</typeparam>
+        /// <returns></returns>
+        public async Task<T> GetByMethod<T>(string methodName, Dictionary<string, string> paras)
+        {
+
+            IRestRequest request = new RestRequest(methodName);
+            if (paras != null && paras.Count > 0)
+            {
+
+                request = request.AddOrUpdateParameters(paras.Select(s => new RestSharp.Parameter(s.Key, s.Value, ParameterType.QueryStringWithoutEncode)));
+            }
+            return await (_restClient ?? CreateClient()).GetAsync<T>(request);
+        }
+
+        /// <summary>
+        /// 根据方法名调用接口获取数据
+        /// </summary>
+        /// <param name="mediaServerId"></param>
+        /// <param name="methodName">方法名词</param>
+        /// <param name="paras">请求参数</param>
+        /// <typeparam name="T">返回参数</typeparam>
+        /// <returns></returns>
+        public async Task<T> GetByMethod<T>([NotNull] string mediaServerId, string methodName, Dictionary<string, string> paras)
+        {
+            CreateClient(mediaServerId);
+            return await GetByMethod<T>(methodName, paras);
         }
     }
 }
