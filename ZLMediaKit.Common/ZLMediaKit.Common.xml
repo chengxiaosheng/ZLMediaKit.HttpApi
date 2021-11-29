@@ -1,0 +1,2081 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ZLMediaKit.Common</name>
+    </assembly>
+    <members>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiAddFFmpegSourceResultItem.Key">
+            <summary>
+            流的唯一标识
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiAddFFmpegSourceResultItem.Key">
+            <summary>
+            流的唯一标识
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiAddStreamProxyResultItem.Key">
+            <summary>
+            流的唯一标识
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiAddStreamPorxyResultItem.Key">
+            <summary>
+            流的唯一标识
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiAddStreamPusherProxyResultItem.Key">
+            <summary>
+            流的唯一标识
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiAddStreamPusherProxyResultItem.Key">
+            <summary>
+            流的唯一标识
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiClonseStreamsResult.CountHit">
+            <summary>
+            筛选条件命中数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiClonseStreamsResult.CountClose">
+            <summary>
+            被关闭的流个数，可能小于count_hit
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiClonseStreamsResult.CountHit">
+            <summary>
+            筛选条件命中数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiClonseStreamsResult.CountClose">
+            <summary>
+            被关闭的流个数，可能小于count_hit
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiCloseRtpServerResult.Hit">
+            <summary>
+            CloseRtpServer
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiCloseRtpServerResult.Hit">
+            <summary>
+            CloseRtpServer
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiCloseStreamResult.Result">
+            <summary>
+            0:成功，-1:关闭失败，-2:该流不存在
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiCloseStreamResult.Result">
+            <summary>
+            0:成功，-1:关闭失败，-2:该流不存在
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiDelFFmpegSourceResultItem.Flag">
+            <summary>
+            成功与否
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiDelFFmpegSourceResultItem.Flag">
+            <summary>
+            成功与否
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiDelStreamProxyResultItem.Flag">
+            <summary>
+            成功与否
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiDelStreamProxyResultItem.Flag">
+            <summary>
+            成功与否
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiDelStreamPusherProxyResultItem.Flag">
+            <summary>
+            成功与否
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiDelStreamPusherProxyResultItem.Flag">
+            <summary>
+            成功与否
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiGetMp4RecordFileResultItem.Paths">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiGetMp4RecordFileResultItem.RootPath">
+            <summary>
+            
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiGetMp4RecordFileResultItem.Paths" -->
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiGetMp4RecordFileResultItem.RootPath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiGetRtpInfoResult.exist">
+            <summary>
+            是否存在
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiGetRtpInfoResult.LocalIp">
+            <summary>
+            本级IP
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiGetRtpInfoResult.LocalPort">
+            <summary>
+            本级端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiGetRtpInfoResult.PeerIp">
+            <summary>
+            对端IP
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiGetRtpInfoResult.PeerPort">
+            <summary>
+            对端端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiGetRtpInfoResult.exist">
+            <summary>
+            是否存在
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiGetRtpInfoResult.LocalIp">
+            <summary>
+            本级IP
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiGetRtpInfoResult.LocalPort">
+            <summary>
+            本级端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiGetRtpInfoResult.PeerIp">
+            <summary>
+            对端IP
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiGetRtpInfoResult.PeerPort">
+            <summary>
+            对端端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiIsMediaOnlineResult.Online">
+            <summary>
+            是否在线
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiIsMediaOnlineResult.Online">
+            <summary>
+            是否在线
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiIsRecordingResult.Status">
+            <summary>
+            false:未录制,true:正在录制
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiIsRecordingResult.Status">
+            <summary>
+            false:未录制,true:正在录制
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiListRtpServerResultItem.Port">
+            <summary>
+            绑定的端口号
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiListRtpServerResultItem.StreamId">
+            <summary>
+            绑定的流ID
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiListRtpServerResultItem.Port">
+            <summary>
+            绑定的端口号
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiListRtpServerResultItem.StreamId">
+            <summary>
+            绑定的流ID
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiOpenRtpServerResult.Port">
+            <summary>
+            接收端口，方便获取随机端口号
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiOpenRtpServerResult.Port">
+            <summary>
+            接收端口，方便获取随机端口号
+            </summary>
+        </member>
+        <member name="F:ZLMediaKit.Common.Dtos.ApiInputDto.ApiResultCodeType.Exception">
+            <summary>
+            代码抛异常
+            </summary>
+        </member>
+        <member name="F:ZLMediaKit.Common.Dtos.ApiInputDto.ApiResultCodeType.InvalidArgs">
+            <summary>
+            参数不合法
+            </summary>
+        </member>
+        <member name="F:ZLMediaKit.Common.Dtos.ApiInputDto.ApiResultCodeType.SqlFailed">
+            <summary>
+            sql执行失败
+            </summary>
+        </member>
+        <member name="F:ZLMediaKit.Common.Dtos.ApiInputDto.ApiResultCodeType.AuthFailed">
+            <summary>
+            鉴权失败
+            </summary>
+        </member>
+        <member name="F:ZLMediaKit.Common.Dtos.ApiInputDto.ApiResultCodeType.OtherFailed">
+            <summary>
+            业务代码执行失败
+            </summary>
+        </member>
+        <member name="F:ZLMediaKit.Common.Dtos.ApiInputDto.ApiResultCodeType.Success">
+            <summary>
+            执行成功
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiSeekRecordStampResult.Result">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiSeekRecordStampResult.Result">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiSetRecordSpeedResult.Result">
+            <summary>
+            0 成功， -1 失败，-2 流不存在
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiSetRecordSpeedResult.Result" -->
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiStartRecordResult.Result">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiStartRecordResult.Result">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiStartSendRtpResult.LocalPort">
+            <summary>
+            使用的本地端口号 
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiStartSendRtpResult.LocalPort">
+            <summary>
+            使用的本地端口号 
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApiStopRecordResult.Result">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiStopRecordResult.Result">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IApKillSessionsResult.CountHit">
+            <summary>
+            筛选命中客户端个数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApKillSessionsResult.CountHit">
+            <summary>
+            筛选命中客户端个数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ISetServerConfigInput.ClassName">
+            <summary>
+            Config.ini 中的 [] 节点名称
+            如 api.apiDebug , 此处填写 api
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ISetServerConfigInput.Key">
+            <summary>
+            具体配置项
+            如 api.apiDebug , 此处填写 apiDebug
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ISetServerConfigInput.Value">
+            <summary>
+            配置值 如 0 
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.SetServerConfigInput.ClassName">
+            <summary>
+            Config.ini 中的 [] 节点名称
+            如 api.apiDebug , 此处填写 api
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.SetServerConfigInput.Key">
+            <summary>
+            具体配置项
+            如 api.apiDebug , 此处填写 apiDebug
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.SetServerConfigInput.Value">
+            <summary>
+            配置值 如 0 
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ISetServerConfigResult.Changed">
+            <summary>
+            配置项变更个数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.SetServerConfigResult.Changed">
+            <summary>
+            配置项变更个数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IThreadsLoadApiResultItem.Delay">
+            <summary>
+            该线程延时
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IThreadsLoadApiResultItem.Load">
+            <summary>
+            该线程负载，0 ~ 100
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ThreadsLoadApiResultItem.Delay">
+            <summary>
+            该线程延时
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ThreadsLoadApiResultItem.Load">
+            <summary>
+            该线程负载，0 ~ 100
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IWorkThreadsLoadApiResultItem.Delay">
+            <summary>
+            该线程延时
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.IWorkThreadsLoadApiResultItem.Load">
+            <summary>
+            该线程负载，0 ~ 100
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.WorkThreadsLoadApiResultItem.Delay">
+            <summary>
+            该线程延时
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.WorkThreadsLoadApiResultItem.Load">
+            <summary>
+            该线程负载，0 ~ 100
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.EventArgs.IHookEventArgs`1.Payload">
+            <summary>
+            事件承载数据
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.EventArgs.HookEventArgs`1.HttpContext">
+            <summary>
+            Http 数据
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.EventArgs.HookEventArgs`1.Payload">
+            <summary>
+            事件承载数据
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IHttpAccessInput">
+            <summary>
+            http 访问路径是文件还是目录
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IHttpAccessInput.IsDir">
+            <summary>
+            http 访问路径是文件还是目录
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IHttpAccessInput.Path">
+            <summary>
+            请求访问的文件或目录
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IHttpAccessInput.Headers">
+            <summary>
+            http header
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.HttpAccessInput">
+            <summary>
+            http 访问路径是文件还是目录
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IPlayInput">
+            <summary>
+            播放器鉴权事件
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.PlayInput">
+            <summary>
+            播放器鉴权事件
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IPublishInput">
+            <summary>
+            rtsp/rtmp/rtp推流鉴权事
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.PublishInpu">
+            <summary>
+            rtsp/rtmp/rtp推流鉴权事
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IRecordMp4Input">
+            <summary>
+            录制mp4完成后通知事件；此事件对回复不敏感
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IRecordMp4Input.FileName">
+            <summary>
+            文件名
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IRecordMp4Input.FilePath">
+            <summary>
+            文件绝对路径
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IRecordMp4Input.FileSize">
+            <summary>
+            文件大小，单位字节
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IRecordMp4Input.Folder">
+            <summary>
+            文件所在目录路径
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IRecordMp4Input.StartTime">
+            <summary>
+            开始录制时间戳
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IRecordMp4Input.TimeLen">
+            <summary>
+            录制时长，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IRecordMp4Input.Url">
+            <summary>
+            http/rtsp/rtmp点播相对url路径
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.RecordMp4Input">
+            <summary>
+            录制mp4完成后通知事件；此事件对回复不敏感
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IReportFlowInput">
+            <summary>
+            流量统计事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IReportFlowInput.Duration">
+            <summary>
+            tcp链接维持时间，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IReportFlowInput.Player">
+            <summary>
+            true为播放器，false为推流器
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IReportFlowInput.TotalBytes">
+            <summary>
+            耗费上下行流量总和，单位字节
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IRtspAuthInput">
+            <summary>
+            rtsp专用的鉴权事件，先触发on_rtsp_realm事件然后才会触发on_rtsp_auth事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IRtspAuthInput.MustNoEncrypt">
+            <summary>
+            请求的密码是否必须为明文(base64鉴权需要明文密码)
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IRtspAuthInput.Realm">
+            <summary>
+            rtsp播放鉴权加密realm
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IRtspAuthInput.UserName">
+            <summary>
+            播放用户名
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.RtspAuthInput">
+            <summary>
+            rtsp专用的鉴权事件，先触发on_rtsp_realm事件然后才会触发on_rtsp_auth事件
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IRtspRealmInput">
+            <summary>
+            该rtsp流是否开启rtsp专用方式的鉴权事件，开启后才会触发on_rtsp_auth事件
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.RtspRealmInput">
+            <summary>
+            该rtsp流是否开启rtsp专用方式的鉴权事件，开启后才会触发on_rtsp_auth事件
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IServerKeepaliveInput">
+            <summary>
+            服务器定时上报时间，上报间隔可配置，默认10s上报一次
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.ServerKeepaliveInput">
+            <summary>
+            服务器定时上报时间，上报间隔可配置，默认10s上报一次
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IServerStartedInput">
+            <summary>
+            服务器启动事件，可以用于监听服务器崩溃重启；此事件对回复不敏感。
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IShellLoginInput">
+            <summary>
+            shell登录鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IShellLoginInput.Password">
+            <summary>
+            telnet 终端登录用户密码
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookInputDto.IShellLoginInput.Username">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IStreamChangedInput">
+            <summary>
+            rtsp/rtmp流注册或注销时触发此事件；此事件对回复不敏感。
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.StreamChangedInput">
+            <summary>
+            rtsp/rtmp流注册或注销时触发此事件；此事件对回复不敏感。
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IStreamNoneReaderInput">
+            <summary>
+            流无人观看时事件，用户可以通过此事件选择是否关闭无人看的流。
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.StreamNoneReaderInput">
+            <summary>
+            流无人观看时事件，用户可以通过此事件选择是否关闭无人看的流。
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.IStreamNotFoundInuut">
+            <summary>
+            流未找到事件，用户可以在此事件触发时，立即去拉流，这样可以实现按需拉流；此事件对回复不敏感。
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookInputDto.StreamNotFoundInuut">
+            <summary>
+            流未找到事件，用户可以在此事件触发时，立即去拉流，这样可以实现按需拉流；此事件对回复不敏感。
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookCommonResult.Message">
+            <summary>
+            返回消息
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookCommonResult.Message">
+            <summary>
+            返回消息
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookHttpAccessResult.Message">
+            <summary>
+            请固定返回0
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookHttpAccessResult.Path">
+            <summary>
+            不允许访问的错误提示，允许访问请置空
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookHttpAccessResult.Second">
+            <summary>
+            该客户端能访问或被禁止的顶端目录，如果为空字符串，则表述为当前目录
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult.Message">
+            <summary>
+            请固定返回0
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult.Path">
+            <summary>
+            不允许访问的错误提示，允许访问请置空
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult.Second">
+            <summary>
+            该客户端能访问或被禁止的顶端目录，如果为空字符串，则表述为当前目录
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookPublishResult.EnableHls">
+            <summary>
+            是否转换成hls协议
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookPublishResult.EnableMP4">
+            <summary>
+            是否允许mp4录制
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookPublishResult.EnableHls">
+            <summary>
+            是否转换成hls协议
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookPublishResult.EnableMP4">
+            <summary>
+            是否允许mp4录制
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookRtspAuthResult.Encrypted">
+            <summary>
+            用户密码是否已加密
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookRtspAuthResult.Passwd">
+            <summary>
+            用户密码
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookRtspAuthResult.Encrypted">
+            <summary>
+            用户密码是否已加密
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookRtspAuthResult.Passwd">
+            <summary>
+            用户密码
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookRtspRealmResult.Realm">
+            <summary>
+            该rtsp流是否需要rtsp专有鉴权，空字符串代码不需要鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookRtspRealmResult.Realm">
+            <summary>
+            该rtsp流是否需要rtsp专有鉴权，空字符串代码不需要鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookStreamNonReaderResult.Close">
+            <summary>
+            是否关闭推流或拉流
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookStreamNonReaderResult.Close">
+            <summary>
+            是否关闭推流或拉流
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IEvnetBase.ServerManager">
+            <summary>
+            服务器信息
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookBase.MediaServerId">
+            <summary>
+            服务Id
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookBase.ZlMediaKitAddress">
+            <summary>
+            服务地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookInputWithClient.IP">
+            <summary>
+            客户端IP
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookInputWithClient.Id">
+            <summary>
+            TCP链接唯一ID
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookInputWithClient.Port">
+            <summary>
+            端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookInputWithClient.Params">
+            <summary>
+            推流或播放url参数
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookWithMediaBaseAndClient">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookWithMediaBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaBase.Vhost">
+            <summary>
+            流虚拟主机
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaBase.App">
+            <summary>
+            流应用名
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaBase.Schema">
+            <summary>
+            播放或推流的协议，可能是rtsp、rtmp、http
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaBase.Stream">
+            <summary>
+            流ID
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.Regist">
+            <summary>
+            是否为注册
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.AliveSecond">
+            <summary>
+            存活时间，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.BytesSpeed">
+            <summary>
+            数据产生速度，单位byte/s
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.CreateStamp">
+            <summary>
+            GMT unix系统时间戳，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.OriginSock">
+            <summary>
+            链接信息
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.OriginType">
+            <summary>
+            产生源类型，包括 unknown = 0,rtmp_push=1,rtsp_push=2,rtp_push=3,pull=4,ffmpeg_pull=5,mp4_vod=6,device_chn=7,rtc_push=8
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.OriginTypeStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.OriginUrl">
+            <summary>
+            产生源的url
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.ReaderCount">
+            <summary>
+             本协议观看人数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.TotalReaderCount">
+            <summary>
+            观看总人数，包括hls/rtsp/rtmp/http-flv/ws-flv/rtc
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaInfo.Tracks">
+            <summary>
+            媒体轨道信息
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.Regist">
+            <summary>
+            是否为注册
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.AliveSecond">
+            <summary>
+            存活时间，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.BytesSpeed">
+            <summary>
+            数据产生速度，单位byte/s
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.CreateStamp">
+            <summary>
+            GMT unix系统时间戳，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.OriginSock">
+            <summary>
+            链接信息
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.OriginType">
+            <summary>
+            产生源类型，包括 unknown = 0,rtmp_push=1,rtsp_push=2,rtp_push=3,pull=4,ffmpeg_pull=5,mp4_vod=6,device_chn=7,rtc_push=8
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.OriginTypeStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.OriginUrl">
+            <summary>
+            产生源的url
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.ReaderCount">
+            <summary>
+             本协议观看人数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.TotalReaderCount">
+            <summary>
+            观看总人数，包括hls/rtsp/rtmp/http-flv/ws-flv/rtc
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaInfo.Tracks">
+            <summary>
+            媒体轨道信息
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IApiConfig.ApiDebug">
+            <summary>
+            是否调试http api,启用调试后，会打印每次http请求的内容和回复
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IApiConfig.Secret">
+            <summary>
+             一些比较敏感的http api在访问时需要提供secret，否则无权限调用
+             如果是通过127.0.0.1访问,那么可以不提供secret
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IApiConfig.SnapRoot">
+            <summary>
+            截图保存路径根目录，截图通过http api(/index/api/getSnap)生成和获取
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IApiConfig.DefaultSnap">
+            <summary>
+            默认截图图片，在启动FFmpeg截图后但是截图还未生成时，可以返回默认的预设图片
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IFFmpegConfig.Bin">
+            <summary>
+            FFmpeg可执行程序绝对路径
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IFFmpegConfig.Cmd">
+            <summary>
+            FFmpeg拉流再推流的命令模板，通过该模板可以设置再编码的一些参数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IFFmpegConfig.Snap">
+            <summary>
+            FFmpeg生成截图的命令，可以通过修改该配置改变截图分辨率或质量
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IFFmpegConfig.Log">
+            <summary>
+            FFmpeg日志的路径，如果置空则不生成FFmpeg日志
+            可以为相对(相对于本可执行程序目录)或绝对路径
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.EnableVhost">
+            <summary>
+            是否启用虚拟主机
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.FlowThreshold">
+            <summary>
+            播放器或推流器在断开后会触发hook.on_flow_report事件(使用多少流量事件)，
+            flowThreshold参数控制触发hook.on_flow_report事件阈值，使用流量超过该阈值后才触发，单位KB
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.MaxStreamWaitMS">
+             <summary>
+            播放最多等待时间，单位毫秒
+            播放在播放某个流时，如果该流不存在，
+            ZLMediaKit会最多让播放器等待maxStreamWaitMS毫秒
+            如果在这个时间内，该流注册成功，那么会立即返回播放器播放成功
+            否则返回播放器未找到该流，该机制的目的是可以先播放再推流
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.StreamNoneReaderDelayMS">
+             <summary>
+            某个流无人观看时，触发hook.on_stream_none_reader事件的最大等待时间，单位毫秒
+            在配合hook.on_stream_none_reader事件时，可以做到无人观看自动停止拉流或停止接收推流
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.AddMuteAudio">
+             <summary>
+            拉流代理是否添加静音音频(直接拉流模式本协议无效)
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.ResetWhenRePlay">
+             <summary>
+            拉流代理时如果断流再重连成功是否删除前一次的媒体流数据，如果删除将重新开始，
+            如果不删除将会接着上一次的数据继续写(录制hls/mp4时会继续在前一个文件后面写)
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.PublishToHls">
+             <summary>
+            是否默认推流时转换成hls，hook接口(on_publish)中可以覆盖该设置
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.PublishToMP4">
+             <summary>
+            是否默认推流时mp4录像，hook接口(on_publish)中可以覆盖该设置
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.MergeWriteMS">
+             <summary>
+            合并写缓存大小(单位毫秒)，合并写指服务器缓存一定的数据后才会一次性写入socket，这样能提高性能，但是会提高延时
+            开启后会同时关闭TCP_NODELAY并开启MSG_MORE
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.ModifyStamp">
+             <summary>
+            全局的时间戳覆盖开关，在转协议时，对frame进行时间戳覆盖
+            该开关对rtsp/rtmp/rtp推流、rtsp/rtmp/hls拉流代理转协议时生效
+            会直接影响rtsp/rtmp/hls/mp4/flv等协议的时间戳
+            同协议情况下不影响(例如rtsp/rtmp推流，那么播放rtsp/rtmp时不会影响时间戳)
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.MediaServerId">
+             <summary>
+            服务器唯一id，用于触发hook时区别是哪台服务器
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.EnableAudio">
+             <summary>
+            转协议是否全局开启或关闭音频
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.HlsDemand">
+             <summary>
+            hls协议是否按需生成，如果hls.segNum配置为0(意味着hls录制)，那么hls将一直生成(不管此开关)
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.RtspDemand">
+             <summary>
+            rtsp[s]协议是否按需生成
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.RtmpDemand">
+             <summary>
+            rtmp[s]、http[s]-flv、ws[s]-flv协议是否按需生成
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.TsDemand">
+             <summary>
+            http[s]-ts协议是否按需生成
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IGeneralConfig.Fmp4Demand">
+             <summary>
+            http[s]-fmp4、ws[s]-fmp4协议是否按需生成
+             </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHlsConfig.FileBufSize">
+            <summary>
+            hls写文件的buf大小，调整参数可以提高文件io性能
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHlsConfig.FilePath">
+            <summary>
+            hls保存文件路径
+            可以为相对(相对于本可执行程序目录)或绝对路径
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHlsConfig.SegDur">
+            <summary>
+            hls最大切片时间
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHlsConfig.SegNum">
+            <summary>
+            m3u8索引中,hls保留切片个数(实际保留切片个数大2~3个)
+            如果设置为0，则不删除切片，而是保存为点播
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHlsConfig.SegRetain">
+            <summary>
+            HLS切片从m3u8文件中移除后，继续保留在磁盘上的个数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHlsConfig.BroadcastRecordTs">
+            <summary>
+            是否广播 ts 切片完成通知
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHlsConfig.DeleteDelaySec">
+            <summary>
+            直播hls文件删除延时，单位秒，issue: //913
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HlsConfig.FileBufSize">
+            <summary>
+            hls写文件的buf大小，调整参数可以提高文件io性能
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HlsConfig.FilePath">
+            <summary>
+            hls保存文件路径
+            可以为相对(相对于本可执行程序目录)或绝对路径
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HlsConfig.SegDur">
+            <summary>
+            hls最大切片时间
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HlsConfig.SegNum">
+            <summary>
+            m3u8索引中,hls保留切片个数(实际保留切片个数大2~3个)
+            如果设置为0，则不删除切片，而是保存为点播
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HlsConfig.SegRetain">
+            <summary>
+            HLS切片从m3u8文件中移除后，继续保留在磁盘上的个数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HlsConfig.BroadcastRecordTs">
+            <summary>
+            是否广播 ts 切片完成通知
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HlsConfig.DeleteDelaySec">
+            <summary>
+            直播hls文件删除延时，单位秒，issue: //913
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.AdminParams">
+            <summary>
+            在推流时，如果url参数匹对admin_params，那么可以不经过hook鉴权直接推流成功，播放时亦然
+            该配置项的目的是为了开发者自己调试测试，该参数暴露后会有泄露隐私的安全隐患
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.Enable">
+            <summary>
+            是否启用hook事件，启用后，推拉流都将进行鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnFlowReport">
+            <summary>
+            播放器或推流器使用流量事件，置空则关闭
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnHttpAccess">
+            <summary>
+            访问http文件鉴权事件，置空则关闭鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnPlay">
+            <summary>
+            播放鉴权事件，置空则关闭鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnPublish">
+            <summary>
+            推流鉴权事件，置空则关闭鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnRecordMp4">
+            <summary>
+            录制mp4切片完成事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.NnRecordTs">
+            <summary>
+            录制 hls ts 切片完成事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.NnRtspAuth">
+            <summary>
+            rtsp播放鉴权事件，此事件中比对rtsp的用户名密码
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnRtspRealm">
+            <summary>
+            rtsp播放是否开启专属鉴权事件，置空则关闭rtsp鉴权。rtsp播放鉴权还支持url方式鉴权
+            建议开发者统一采用url参数方式鉴权，rtsp用户名密码鉴权一般在设备上用的比较多
+            开启rtsp专属鉴权后，将不再触发on_play鉴权事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnShellLogin">
+            <summary>
+            远程telnet调试鉴权事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnStreamChanged">
+            <summary>
+            直播流注册或注销事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnStreamNoneReader">
+            <summary>
+            无人观看流事件，通过该事件，可以选择是否关闭无人观看的流。配合general.streamNoneReaderDelayMS选项一起使用
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnStreamNotFound">
+            <summary>
+            播放时，未找到流事件，通过配合hook.on_stream_none_reader事件可以完成按需拉流
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnServerStarted">
+            <summary>
+            服务器启动报告，可以用于服务器的崩溃重启事件监听
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.OnServerKeepalive">
+            <summary>
+            server保活上报
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.TimeoutSec">
+            <summary>
+            hook api最大等待回复时间，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHookConfig.AliveInterval">
+            <summary>
+            keepalive hook触发间隔,单位秒，float类型
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.AdminParams">
+            <summary>
+            在推流时，如果url参数匹对admin_params，那么可以不经过hook鉴权直接推流成功，播放时亦然
+            该配置项的目的是为了开发者自己调试测试，该参数暴露后会有泄露隐私的安全隐患
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.Enable">
+            <summary>
+            是否启用hook事件，启用后，推拉流都将进行鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnFlowReport">
+            <summary>
+            播放器或推流器使用流量事件，置空则关闭
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnHttpAccess">
+            <summary>
+            访问http文件鉴权事件，置空则关闭鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnPlay">
+            <summary>
+            播放鉴权事件，置空则关闭鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnPublish">
+            <summary>
+            推流鉴权事件，置空则关闭鉴权
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnRecordMp4">
+            <summary>
+            录制mp4切片完成事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.NnRecordTs">
+            <summary>
+            录制 hls ts 切片完成事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.NnRtspAuth">
+            <summary>
+            rtsp播放鉴权事件，此事件中比对rtsp的用户名密码
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnRtspRealm">
+            <summary>
+            rtsp播放是否开启专属鉴权事件，置空则关闭rtsp鉴权。rtsp播放鉴权还支持url方式鉴权
+            建议开发者统一采用url参数方式鉴权，rtsp用户名密码鉴权一般在设备上用的比较多
+            开启rtsp专属鉴权后，将不再触发on_play鉴权事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnShellLogin">
+            <summary>
+            远程telnet调试鉴权事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnStreamChanged">
+            <summary>
+            直播流注册或注销事件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnStreamNoneReader">
+            <summary>
+            无人观看流事件，通过该事件，可以选择是否关闭无人观看的流。配合general.streamNoneReaderDelayMS选项一起使用
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnStreamNotFound">
+            <summary>
+            播放时，未找到流事件，通过配合hook.on_stream_none_reader事件可以完成按需拉流
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnServerStarted">
+            <summary>
+            服务器启动报告，可以用于服务器的崩溃重启事件监听
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.OnServerKeepalive">
+            <summary>
+            server保活上报
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.TimeoutSec">
+            <summary>
+            hook api最大等待回复时间，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookConfig.AliveInterval">
+            <summary>
+            keepalive hook触发间隔,单位秒，float类型
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHttpConfig.CharSet">
+            <summary>
+            http服务器字符编码，windows上默认gb2312
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHttpConfig.KeepAliveSecond">
+            <summary>
+            http链接超时时间
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHttpConfig.MaxReqSize">
+            <summary>
+            http请求体最大字节数，如果post的body太大，则不适合缓存body在内存
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHttpConfig.NotFound">
+            <summary>
+            404网页内容，用户可以自定义404网页
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHttpConfig.Port">
+            <summary>
+            http服务器监听端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHttpConfig.RootPath">
+            <summary>
+            http文件服务器根目录
+            可以为相对(相对于本可执行程序目录)或绝对路径
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHttpConfig.SendBufSize">
+            <summary>
+            http文件服务器读文件缓存大小，单位BYTE，调整该参数可以优化文件io性能
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHttpConfig.Sslport">
+            <summary>
+            https服务器监听端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHttpConfig.DirMenu">
+            <summary>
+            是否显示文件夹菜单，开启后可以浏览文件夹
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IHttpConfig.VirtualPath">
+            <summary>
+            虚拟目录, 虚拟目录名和文件路径使用","隔开，多个配置路径间用";"隔开
+            例如赋值为 app_a,/path/to/a;app_b,/path/to/b 那么
+            访问 http://127.0.0.1/app_a/file_a 对应的文件路径为 /path/to/a/file_a
+            访问 http://127.0.0.1/app_b/file_b 对应的文件路径为 /path/to/b/file_b
+            访问其他http路径,对应的文件路径还是在rootPath内
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HttpConfig.CharSet">
+            <summary>
+            http服务器字符编码，windows上默认gb2312
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HttpConfig.KeepAliveSecond">
+            <summary>
+            http链接超时时间
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HttpConfig.MaxReqSize">
+            <summary>
+            http请求体最大字节数，如果post的body太大，则不适合缓存body在内存
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HttpConfig.NotFound">
+            <summary>
+            404网页内容，用户可以自定义404网页
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HttpConfig.Port">
+            <summary>
+            http服务器监听端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HttpConfig.RootPath">
+            <summary>
+            http文件服务器根目录
+            可以为相对(相对于本可执行程序目录)或绝对路径
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HttpConfig.SendBufSize">
+            <summary>
+            http文件服务器读文件缓存大小，单位BYTE，调整该参数可以优化文件io性能
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HttpConfig.Sslport">
+            <summary>
+            https服务器监听端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HttpConfig.DirMenu">
+            <summary>
+            是否显示文件夹菜单，开启后可以浏览文件夹
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HttpConfig.VirtualPath">
+            <summary>
+            虚拟目录, 虚拟目录名和文件路径使用","隔开，多个配置路径间用";"隔开
+            例如赋值为 app_a,/path/to/a;app_b,/path/to/b 那么
+            访问 http://127.0.0.1/app_a/file_a 对应的文件路径为 /path/to/a/file_a
+            访问 http://127.0.0.1/app_b/file_b 对应的文件路径为 /path/to/b/file_b
+            访问其他http路径,对应的文件路径还是在rootPath内
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMulticastConfig.AddrMax">
+            <summary>
+            rtp组播截止组播ip地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMulticastConfig.AddrMin">
+            <summary>
+            rtp组播起始组播ip地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMulticastConfig.UdpTTL">
+            <summary>
+            组播udp ttl
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MulticastConfig.AddrMax">
+            <summary>
+            rtp组播截止组播ip地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MulticastConfig.AddrMin">
+            <summary>
+            rtp组播起始组播ip地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MulticastConfig.UdpTTL">
+            <summary>
+            组播udp ttl
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRecordConfig.AppName">
+            <summary>
+            mp4录制或mp4点播的应用名，通过限制应用名，可以防止随意点播 点播的文件必须放置在此文件夹下
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRecordConfig.FileBufSize">
+            <summary>
+            mp4录制写文件缓存，单位BYTE,调整参数可以提高文件io性能
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRecordConfig.FilePath">
+            <summary>
+            mp4录制保存、mp4点播根路径 ，可以为相对(相对于本可执行程序目录)或绝对路径
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRecordConfig.FileSecond">
+            <summary>
+            mp4录制切片时间，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRecordConfig.SampleMS">
+            <summary>
+            mp4点播每次流化数据量，单位毫秒， 减少该值可以让点播数据发送量更平滑，增大该值则更节省cpu资源
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRecordConfig.FastStart">
+            <summary>
+            mp4录制完成后是否进行二次关键帧索引写入头部
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRecordConfig.FileRepeat">
+            <summary>
+            MP4点播(rtsp/rtmp/http-flv/ws-flv)是否循环播放文件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RecordConfig.AppName">
+            <summary>
+            mp4录制或mp4点播的应用名，通过限制应用名，可以防止随意点播 点播的文件必须放置在此文件夹下
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RecordConfig.FileBufSize">
+            <summary>
+            mp4录制写文件缓存，单位BYTE,调整参数可以提高文件io性能
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RecordConfig.FilePath">
+            <summary>
+            mp4录制保存、mp4点播根路径 ，可以为相对(相对于本可执行程序目录)或绝对路径
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RecordConfig.FileSecond">
+            <summary>
+            mp4录制切片时间，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RecordConfig.SampleMS">
+            <summary>
+            mp4点播每次流化数据量，单位毫秒， 减少该值可以让点播数据发送量更平滑，增大该值则更节省cpu资源
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RecordConfig.FastStart">
+            <summary>
+            mp4录制完成后是否进行二次关键帧索引写入头部
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RecordConfig.FileRepeat">
+            <summary>
+            MP4点播(rtsp/rtmp/http-flv/ws-flv)是否循环播放文件
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtmpConfig.HandshakeSecond">
+            <summary>
+            rtmp必须在此时间内完成握手，否则服务器会断开链接，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtmpConfig.KeepAliveSecond">
+            <summary>
+            rtmp超时时间，如果该时间内未收到客户端的数据， 或者tcp发送缓存超过这个时间，则会断开连接，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtmpConfig.ModifyStamp">
+            <summary>
+            在接收rtmp推流时，是否重新生成时间戳(很多推流器的时间戳着实很烂)
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtmpConfig.Port">
+            <summary>
+            rtmp服务器监听端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtmpConfig.Sslport">
+            <summary>
+            rtmps服务器监听地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtmpConfig.HandshakeSecond">
+            <summary>
+            rtmp必须在此时间内完成握手，否则服务器会断开链接，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtmpConfig.KeepAliveSecond">
+            <summary>
+            rtmp超时时间，如果该时间内未收到客户端的数据， 或者tcp发送缓存超过这个时间，则会断开连接，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtmpConfig.ModifyStamp">
+            <summary>
+            在接收rtmp推流时，是否重新生成时间戳(很多推流器的时间戳着实很烂)
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtmpConfig.Port">
+            <summary>
+            rtmp服务器监听端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtmpConfig.Sslport">
+            <summary>
+            rtmps服务器监听地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtpConfig.AudioMtuSize">
+            <summary>
+            频mtu大小，该参数限制rtp最大字节数，推荐不要超过1400
+            加大该值会明显增加直播延时
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtpConfig.VideoMtuSize">
+            <summary>
+            视频mtu大小，该参数限制rtp最大字节数，推荐不要超过1400
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtpConfig.RtpMaxSize">
+            <summary>
+            rtp包最大长度限制，单位KB,主要用于识别TCP上下文破坏时，获取到错误的rtp
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtpConfig.AudioMtuSize">
+            <summary>
+            频mtu大小，该参数限制rtp最大字节数，推荐不要超过1400
+            加大该值会明显增加直播延时
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtpConfig.VideoMtuSize">
+            <summary>
+            视频mtu大小，该参数限制rtp最大字节数，推荐不要超过1400
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtpConfig.RtpMaxSize">
+            <summary>
+            rtp包最大长度限制，单位KB,主要用于识别TCP上下文破坏时，获取到错误的rtp
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtpProxyConfig.DumpDir">
+            <summary>
+            导出调试数据(包括rtp/ps/h264)至该目录,置空则关闭数据导出
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtpProxyConfig.Port">
+            <summary>
+            udp和tcp代理服务器，支持rtp(必须是ts或ps类型)代理
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtpProxyConfig.TimeoutSec">
+            <summary>
+            rtp超时时间，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtpProxyConfig.DumpDir">
+            <summary>
+            导出调试数据(包括rtp/ps/h264)至该目录,置空则关闭数据导出
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtpProxyConfig.Port">
+            <summary>
+            udp和tcp代理服务器，支持rtp(必须是ts或ps类型)代理
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtpProxyConfig.TimeoutSec">
+            <summary>
+            rtp超时时间，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtcConfig.TimeoutSec">
+            <summary>
+            rtc播放推流、播放超时时间
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtcConfig.ExternIP">
+            <summary>
+            本机对rtc客户端的可见ip，作为服务器时一般为公网ip，置空时，会自动获取网卡ip
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtcConfig.Port">
+            <summary>
+            rtc udp服务器监听端口号，所有rtc客户端将通过该端口传输stun/dtls/srtp/srtcp数据，
+            该端口是多线程的，同时支持客户端网络切换导致的连接迁移
+            需要注意的是，如果服务器在nat内，需要做端口映射时，必须确保外网映射端口跟该端口一致
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtcConfig.RembBitRate">
+            <summary>
+            设置remb比特率，非0时关闭twcc并开启remb。该设置在rtc推流时有效，可以控制推流画质
+            目前已经实现twcc自动调整码率，关闭remb根据真实网络状况调整码率
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtcConfig.PreferredCodecA">
+            <summary>
+            rtc支持的音频codec类型,在前面的优先级更高
+            以下范例为所有支持的音频codec
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtcConfig.PreferredCodecV">
+            <summary>
+            rtc支持的视频codec类型,在前面的优先级更高
+            以下范例为所有支持的视频codec
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtcConfig.TimeoutSec">
+            <summary>
+            rtc播放推流、播放超时时间
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtcConfig.ExternIP">
+            <summary>
+            本机对rtc客户端的可见ip，作为服务器时一般为公网ip，置空时，会自动获取网卡ip
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtcConfig.Port">
+            <summary>
+            rtc udp服务器监听端口号，所有rtc客户端将通过该端口传输stun/dtls/srtp/srtcp数据，
+            该端口是多线程的，同时支持客户端网络切换导致的连接迁移
+            需要注意的是，如果服务器在nat内，需要做端口映射时，必须确保外网映射端口跟该端口一致
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtcConfig.RembBitRate">
+            <summary>
+            设置remb比特率，非0时关闭twcc并开启remb。该设置在rtc推流时有效，可以控制推流画质
+            目前已经实现twcc自动调整码率，关闭remb根据真实网络状况调整码率
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtcConfig.PreferredCodecA">
+            <summary>
+            rtc支持的音频codec类型,在前面的优先级更高
+            以下范例为所有支持的音频codec
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtcConfig.PreferredCodecV">
+            <summary>
+            rtc支持的视频codec类型,在前面的优先级更高
+            以下范例为所有支持的视频codec
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtspConfig.AuthBasic">
+            <summary>
+            rtsp专有鉴权方式是采用base64还是md5方式
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtspConfig.DirectProxy">
+            <summary>
+            rtsp拉流、推流代理是否是直接代理模式
+            直接代理后支持任意编码格式，但是会导致GOP缓存无法定位到I帧，可能会导致开播花屏
+            并且如果是tcp方式拉流，如果rtp大于mtu会导致无法使用udp方式代理
+            假定您的拉流源地址不是264或265或AAC，那么你可以使用直接代理的方式来支持rtsp代理
+            如果你是rtsp推拉流，但是rtc播放，也建议关闭直接代理模式，
+            因为直接代理时，rtp中可能没有sps pps,会导致rtc无法播放
+            默认开启rtsp直接代理，rtmp由于没有这些问题，是强制开启直接代理的
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtspConfig.HandshakeSecond">
+            <summary>
+            rtsp必须在此时间内完成握手，否则服务器会断开链接，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtspConfig.KeepAliveSecond">
+            <summary>
+            rtsp超时时间，如果该时间内未收到客户端的数据，
+            或者tcp发送缓存超过这个时间，则会断开连接，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtspConfig.Port">
+            <summary>
+            rtsp服务器监听地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IRtspConfig.Sslport">
+            <summary>
+            rtsps服务器监听地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtspConfig.AuthBasic">
+            <summary>
+            rtsp专有鉴权方式是采用base64还是md5方式
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtspConfig.DirectProxy">
+            <summary>
+            rtsp拉流、推流代理是否是直接代理模式
+            直接代理后支持任意编码格式，但是会导致GOP缓存无法定位到I帧，可能会导致开播花屏
+            并且如果是tcp方式拉流，如果rtp大于mtu会导致无法使用udp方式代理
+            假定您的拉流源地址不是264或265或AAC，那么你可以使用直接代理的方式来支持rtsp代理
+            如果你是rtsp推拉流，但是rtc播放，也建议关闭直接代理模式，
+            因为直接代理时，rtp中可能没有sps pps,会导致rtc无法播放
+            默认开启rtsp直接代理，rtmp由于没有这些问题，是强制开启直接代理的
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtspConfig.HandshakeSecond">
+            <summary>
+            rtsp必须在此时间内完成握手，否则服务器会断开链接，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtspConfig.KeepAliveSecond">
+            <summary>
+            rtsp超时时间，如果该时间内未收到客户端的数据，
+            或者tcp发送缓存超过这个时间，则会断开连接，单位秒
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtspConfig.Port">
+            <summary>
+            rtsp服务器监听地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.RtspConfig.Sslport">
+            <summary>
+            rtsps服务器监听地址
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IShellConfig.MaxReqSize">
+            <summary>
+            调试telnet服务器接受最大bufffer大小
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IShellConfig.Port">
+            <summary>
+            调试telnet服务器监听端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ShellConfig.MaxReqSize">
+            <summary>
+            调试telnet服务器接受最大bufffer大小
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ShellConfig.Port">
+            <summary>
+            调试telnet服务器监听端口
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.ISocketInfo">
+            <summary>
+            Socket 连接信息
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ISocketInfo.Identifier">
+            <summary>
+            tcp 唯一标识
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ISocketInfo.LocalIp">
+            <summary>
+            本级IP
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ISocketInfo.LocalPort">
+            <summary>
+            本级端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ISocketInfo.PeerIp">
+            <summary>
+            对端IP
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ISocketInfo.PeerPort">
+            <summary>
+            对端端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.ISocketInfo.TypeId">
+            <summary>
+            客户端TCPSession typeid
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.SocketInfo">
+            <summary>
+            Socket 连接信息
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.SocketInfo.Identifier">
+            <summary>
+            tcp 唯一标识
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.SocketInfo.LocalIp">
+            <summary>
+            本级IP
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.SocketInfo.LocalPort">
+            <summary>
+            本级端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.SocketInfo.PeerIp">
+            <summary>
+            对端IP
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.SocketInfo.PeerPort">
+            <summary>
+            对端端口
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.SocketInfo.TypeId">
+            <summary>
+            客户端TCPSession typeid
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.Dtos.IMediaTrack">
+            <summary>
+            媒体轨道
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaTrack.Codec">
+            <summary>
+            H264 = 0, H265 = 1, AAC = 2, G711A = 3, G711U = 4
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaTrack.CodecType">
+            <summary>
+            Video = 0, Audio = 1
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaTrack.CodecName">
+            <summary>
+            编码类型名称
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IMediaTrack.Ready">
+            <summary>
+            轨道是否准备就绪
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IVideoMediaTrack.Fps">
+            <summary>
+            视频fps
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IVideoMediaTrack.Height">
+            <summary>
+            视频高
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IVideoMediaTrack.Width">
+            <summary>
+            视
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IAudioMediaTrack.Channels">
+            <summary>
+            音频通道数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IAudioMediaTrack.SampleBit">
+            <summary>
+            音频采样位数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.IAudioMediaTrack.SampleRate">
+            <summary>
+            音频采样
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaTrack.Codec">
+            <summary>
+            H264 = 0, H265 = 1, AAC = 2, G711A = 3, G711U = 4
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaTrack.CodecType">
+            <summary>
+            Video = 0, Audio = 1
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaTrack.CodecName">
+            <summary>
+            编码类型名称
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.MediaTrack.Ready">
+            <summary>
+            轨道是否准备就绪
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.VideoMediaTrack.Fps">
+            <summary>
+            视频fps
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.VideoMediaTrack.Height">
+            <summary>
+            视频高
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.VideoMediaTrack.Width">
+            <summary>
+            视
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.AudioMediaTrack.Channels">
+            <summary>
+            音频通道数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.AudioMediaTrack.SampleBit">
+            <summary>
+            音频采样位数
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.AudioMediaTrack.SampleRate">
+            <summary>
+            音频采样
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.IServerManager.KeepaliveTime">
+            <summary>
+            最后一次心跳时间
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.IServerManager.ServerConfig">
+            <summary>
+            服务器配置
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.IServerManager.Keepalive">
+            <summary>
+            服务器心跳信息
+            </summary>
+        </member>
+        <member name="M:ZLMediaKit.Common.IServerManager.AddServer(ZLMediaKit.Common.IServerManager)">
+            <summary>
+            新增一个服务
+            </summary>
+            <param name="server"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:ZLMediaKit.Common.IServerManager.RemoveServer(ZLMediaKit.Common.IServerManager)">
+            <summary>
+            删除一个服务器
+            </summary>
+            <param name="server"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:ZLMediaKit.Common.IServerManager.RemoveServer(System.String)">
+            <summary>
+            删除一个服务器
+            </summary>
+            <param name="server"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:ZLMediaKit.Common.IServerManager.Stop(System.String)">
+            <summary>
+            停止一个服务
+            </summary>
+            <param name="mediaServerId"></param>
+            <returns></returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:ZLMediaKit.Common.IServerManager.Stop(ZLMediaKit.Common.IServerManager)">
+            <summary>
+            停止一个服务
+            </summary>
+            <param name="server"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:ZLMediaKit.Common.IServerManager.Stop">
+            <summary>
+            停止一个服务
+            </summary>
+            <param name="server"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:ZLMediaKit.Common.ServerManager">
+            <summary>
+            服务器管理
+            </summary>
+        </member>
+        <member name="T:ZLMediaKit.Common.TypeMapping">
+            <summary>
+            全局统一的类型映射 
+            </summary>
+        </member>
+        <member name="F:ZLMediaKit.Common.TypeMapping.TypeMappings">
+            <summary>
+            类型映射，用于序列化数据时采用其他类型进行，以便处理一些特殊化的内容 
+            </summary>
+            <typeparam name="Type">接口类型</typeparam>
+            <typeparam name="Type">对接口的实现类型</typeparam>
+            <returns></returns>
+        </member>
+        <member name="F:ZLMediaKit.Common.TypeMapping.SerializerOptions">
+            <summary>
+            全局统一的json 序列化配置 
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:IZLMediaKitSettings.IpAddress">
+            <summary>
+            ip地址
+            </summary>
+        </member>
+        <member name="P:IZLMediaKitSettings.ApiPort">
+            <summary>
+            api 端口
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:IZLMediaKitSettings.ApiSecret">
+            <summary>
+            密钥 
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:IZLMediaKitSettings.Timeout">
+            <summary>
+            api 秦艽超时时间 
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:IZLMediaKitSettings.MediaServerId">
+            <summary>
+            服务唯一编码 
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:IZLMediaKitSettings.HttpSchema">
+            <summary>
+            api 请求模式， http / https 
+            </summary>
+            <value></value>   
+        </member>
+        <member name="T:ZLMediaKitSettings">
+            <summary>
+            基本配置
+            </summary>
+        </member>
+        <member name="T:HttpSchema">
+            <summary>
+            http 请求模式
+            </summary>
+        </member>
+    </members>
+</doc>

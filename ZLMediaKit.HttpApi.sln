@@ -5,13 +5,11 @@ VisualStudioVersion = 17.1.31903.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLMediaKit.HttpApi", "ZLMediaKit.HttpApi\ZLMediaKit.HttpApi.csproj", "{FC1697A7-80D5-40B9-8A03-3CCF62D2D799}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLMediaKit.HttpApi.Test", "ZLMediaKit.HttpApi.Test\ZLMediaKit.HttpApi.Test.csproj", "{DE954215-BC92-4627-BD82-81A90189D7C7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLMediaKit.WebHook", "ZLMediaKit.WebHook\ZLMediaKit.WebHook.csproj", "{DC722623-BFEB-4FA3-9E7B-1DC3373DDD05}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLMediaKit.WebHook.Demo", "ZLMediaKit.WebHook.Demo\ZLMediaKit.WebHook.Demo.csproj", "{50BA7D48-3679-46CB-9467-246E2C69AFB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZLMediaKit.Common", "ZLMediaKit.Common\ZLMediaKit.Common.csproj", "{AF671696-E9CF-42C8-9A0A-3441E93700F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLMediaKit.Common", "ZLMediaKit.Common\ZLMediaKit.Common.csproj", "{AF671696-E9CF-42C8-9A0A-3441E93700F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{FC1697A7-80D5-40B9-8A03-3CCF62D2D799}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC1697A7-80D5-40B9-8A03-3CCF62D2D799}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC1697A7-80D5-40B9-8A03-3CCF62D2D799}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE954215-BC92-4627-BD82-81A90189D7C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE954215-BC92-4627-BD82-81A90189D7C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE954215-BC92-4627-BD82-81A90189D7C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE954215-BC92-4627-BD82-81A90189D7C7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC722623-BFEB-4FA3-9E7B-1DC3373DDD05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC722623-BFEB-4FA3-9E7B-1DC3373DDD05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC722623-BFEB-4FA3-9E7B-1DC3373DDD05}.Release|Any CPU.ActiveCfg = Release|Any CPU

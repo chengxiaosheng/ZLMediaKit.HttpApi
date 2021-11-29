@@ -44,6 +44,7 @@ namespace ZLMediaKit.Common
             SerializerOptions.Converters.Add(new TypeMappingConvert<IVideoMediaTrack, VideoMediaTrack>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IAudioMediaTrack, AudioMediaTrack>());
             // ServerConfig 
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IServerConfig, ServerConfig>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiConfig, ApiConfig>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IFFmpegConfig, FFmpegConfig>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IGeneralConfig, GeneralConfig>());
@@ -60,7 +61,9 @@ namespace ZLMediaKit.Common
             SerializerOptions.Converters.Add(new TypeMappingConvert<IShellConfig, ShellConfig>());
 
             // Api
+
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiResultBase, ApiResultBase>());
+            //SerializerOptions.Converters.Add(new TypeMappingConvert<IApiResultDictBase<Dictionary<string,string>>, ApiResultDictBase<Dictionary<string, string>>>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiAddFFmpegSourceResult, ApiAddFFmpegSourceResult>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiAddStreamPorxyResult, ApiAddStreamPorxyResult>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiAddStreamPusherProxyResult, ApiAddStreamPusherProxyResult>());

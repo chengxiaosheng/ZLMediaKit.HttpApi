@@ -43,7 +43,7 @@ namespace ZLMediaKit.WebHook.Demo.Controllers
         [HttpGet("GetStatistic")]
         public async Task<IApiGetStatisticResult> GetStatistic()
         {
-            var value = await _zLHttpClient.getStatistic();
+            var value = await _zLHttpClient.GetStatistic();
             return value;
         }
 
@@ -56,7 +56,7 @@ namespace ZLMediaKit.WebHook.Demo.Controllers
         [HttpGet("GetBin")]
         public IActionResult GetdownloadBin()
         {
-            return File(_zLHttpClient.DownloadBin().Result, "application/octet-stream", "MediaServer.exe");
+            return File(_zLHttpClient.DownloadBin(), "application/octet-stream", "MediaServer.exe");
         }
     }
 }

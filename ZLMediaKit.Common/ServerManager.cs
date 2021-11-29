@@ -7,6 +7,7 @@ namespace ZLMediaKit.Common
 {
     public interface IServerManager : IZLMediaKitSettings
     {
+        //internal IServerManager GetBySettings(IZLMediaKitSettings settings);
 
         public DateTime? StartTime { get; set; }
         /// <summary>
@@ -53,14 +54,14 @@ namespace ZLMediaKit.Common
         public static void AddServer(IServerManager server)
         {
             if (server == null) throw new ArgumentNullException(nameof(server));
-            if (Instances.ContainsKey(server.MediaServerId)) throw new ArgumentException("此平台已存在");
-            Instances.Add(server.MediaServerId, server);
+            //if (Instances.ContainsKey(server.MediaServerId)) throw new ArgumentException("此平台已存在");
+            Instances[server.MediaServerId] = server;
         }
 
         public static void AddServer(IZLMediaKitSettings settings)
         {
             if (settings == null) throw new ArgumentNullException(nameof(settings));
-            Instances[settings.MediaServerId] = settings as IServerManager;
+            Instances[settings.MediaServerId] = new ServerManager().GetBySettings(settings);
         }
 
         /// <summary>
@@ -124,6 +125,7 @@ namespace ZLMediaKit.Common
     /// </summary>
     public sealed class ServerManager : ZLMediaKitSettings, IServerManager
     {
+
         public IServerConfig ServerConfig { get; set; }
 
         public IKeepalive Keepalive { get; set; }
@@ -137,6 +139,16 @@ namespace ZLMediaKit.Common
         public bool Stop()
         {
             return true;
+        }
+
+        internal IServerManager GetBySettings(IZLMediaKitSettings settings)
+        {
+            this.MediaServerId = settings.MediaServerId;
+            this.IpAddress = settings.IpAddress;
+            this.HttpSchema = settings.HttpSchema;
+            this.ApiPort = settings.ApiPort;
+            this.Timeout = settings.Timeout;
+            return this;
         }
     }
 }

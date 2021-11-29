@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>net5;net6</TargetFrameworks>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>./ZLMediaKit.Common.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

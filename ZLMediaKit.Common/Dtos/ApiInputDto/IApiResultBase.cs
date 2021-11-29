@@ -18,7 +18,7 @@ namespace ZLMediaKit.Common.Dtos.ApiInputDto
 
     }
 
-    public interface IApiResultBase<T> : IApiResultBase where T : IApiResultDataBase
+    public interface IApiResultBase<T> : IApiResultBase //where T : IApiResultDataBase
     {
         [JsonPropertyName("data")]
         public T Data { get; set; }
@@ -30,10 +30,10 @@ namespace ZLMediaKit.Common.Dtos.ApiInputDto
         public IList<T> Data { get; set; }
     }
 
-    public interface IApiResultDictBase<T> : IApiResultBase where T : IDictionary<string,string>
-    {
+    public interface IApiResultDictBase<T,T1> : IApiResultBase
+    { 
         [JsonPropertyName("data")]
-        public T Data { get; set; }
+        public Dictionary<T,T1> Data { get; set; }
     }
 
     public class ApiResultBase: IApiResultBase
@@ -45,7 +45,7 @@ namespace ZLMediaKit.Common.Dtos.ApiInputDto
         public string Messag { get; set; }
     }
 
-    public class ApiResultBase<T> : ApiResultBase, IApiResultBase<T> where T : IApiResultDataBase
+    public class ApiResultBase<T> : ApiResultBase, IApiResultBase<T> //where T : IApiResultDataBase
     {
         public T Data { get; set; }
     }
@@ -56,10 +56,10 @@ namespace ZLMediaKit.Common.Dtos.ApiInputDto
         public IList<T> Data { get; set; }
     }
 
-    public class ApiResultDictBase<T> : ApiResultBase, IApiResultDictBase<T> where T : IDictionary<string, string>
+    public class ApiResultDictBase<T,T1> : ApiResultBase, IApiResultDictBase<T,T1> 
     {
         [JsonPropertyName("data")]
-        public T Data { get; set; }
+        public Dictionary<T,T1> Data { get; set; }
     }
 
 

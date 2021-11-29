@@ -131,14 +131,14 @@ namespace ZLMediaKit.HttpApi
         public async Task<IApiGetServerConfigResult> GetServerConfig()
         {
             var request = new RestRequest("getServerConfig");
-            var result = await (_restClient ?? CreateClient()).GetAsync<IApiResultDictBase<Dictionary<string, string>>>(request);
-            var groups = result.Data.Select(s => new { Key = s.Key.Split('.'), Value = s.Value }).Select(s => new
+            var result = await (_restClient ?? CreateClient()).GetAsync<ApiResultBase<List<Dictionary<string,string>>>>(request);
+
+            var groups = result.Data.FirstOrDefault()?.Select(s => new { Key = s.Key.Split('.'), Value = s.Value }).Select(s => new
             {
-                ClassName = s.Key.Length == 2 ? s.Key.FirstOrDefault() : "RootElement",
+                ClassName = s.Key.Length == 2 ? s.Key.FirstOrDefault().Replace("_",String.Empty) : "RootElement",
                 Key = s.Key.LastOrDefault(),
                 Value = s.Value
             }).GroupBy(s => s.ClassName);
-
             IDictionary<string, object> configDict = new ExpandoObject();
             foreach (var group in groups)
             {
@@ -156,11 +156,21 @@ namespace ZLMediaKit.HttpApi
             }
             var jsonStr = System.Text.Json.JsonSerializer.Serialize(configDict as ExpandoObject);
             var serverCofnig = System.Text.Json.JsonSerializer.Deserialize<IServerConfig>(jsonStr, TypeMapping.SerializerOptions);
+            if(serverCofnig != null)
+            {
+                if (_serverManager.MediaServerId != serverCofnig.General.MediaServerId)
+                {
+                    IServerManager.RemoveServer(_serverManager);
+                    _serverManager.MediaServerId = serverCofnig.General.MediaServerId;
+                    IServerManager.AddServer(_serverManager);
+                }
+                _serverManager.ServerConfig = serverCofnig;
+            }
             var resultInfo = new ApiGetServerConfigResult()
             {
                 Code = result.Code,
                 Messag = result.Messag,
-                Data = serverCofnig
+                Data =  serverCofnig
             };
             return resultInfo;
         }
@@ -184,10 +194,8 @@ namespace ZLMediaKit.HttpApi
         public async Task<ISetServerConfigResult> SetServerConfig(params ISetServerConfigInput[] input)
         {
             var request = new RestRequest("setServerConfig");
-            foreach (var item in input)
-            {
-                request.AddOrUpdateParameter($"{item.ClassName}.{item.Key}", item.Value);
-            }
+            request.AddOrUpdateParameters(input?.Select(s=> new Parameter($"{s.ClassName}.{s.Key}",s.Value, ParameterType.QueryStringWithoutEncode)));
+            _ =  GetServerConfig(_serverManager.MediaServerId).ConfigureAwait(false);
             return await (_restClient ?? CreateClient()).GetAsync<ISetServerConfigResult>(request);
         }
 

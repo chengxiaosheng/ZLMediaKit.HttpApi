@@ -13,10 +13,11 @@
     <RepositoryBranch>master</RepositoryBranch>
     <PackageTags>ZLMediaKit HttpClient HttpApi</PackageTags>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
-    <AssemblyVersion>1.0.9</AssemblyVersion>
-    <FileVersion>1.0.9</FileVersion>
-    <Version>1.0.9</Version>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+    <FileVersion>2.0.0</FileVersion>
+    <Version>2.0.0</Version>
     <PackageReleaseNotes>
+      V2.0.0 : 适配ZLMediaKit 到 # edbbaa4
       V1.0.9 : 适配ZLMediaKit 到 # bad9553
       V1.0.8 : 适配多ZLMediaKit交互能力，需要升级ZLMediaKit 到 # 6a8268f
       V1.0.7 : 添加媒体时间错等信息  commit by zlmediaKit : # 6a8268f
