@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace ZLMediaKit.WebHook.Services
     /// <summary>
     /// Web Hook Service
     /// </summary>
+    [AllowAnonymous]
     public class ZLMediaKitWebHookServcies
     {
         private readonly IHttpContextAccessor _contextAccessor;

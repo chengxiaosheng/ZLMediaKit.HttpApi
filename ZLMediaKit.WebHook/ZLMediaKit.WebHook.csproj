@@ -12,10 +12,11 @@
     <RepositoryBranch>master</RepositoryBranch>
     <PackageTags>ZLMediaKit WebHook HttpApi</PackageTags>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
-    <AssemblyVersion>2.0.0</AssemblyVersion>
-    <FileVersion>2.0.0</FileVersion>
-    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.1</AssemblyVersion>
+    <FileVersion>2.0.1</FileVersion>
+    <Version>2.0.1</Version>
     <PackageReleaseNotes>
+      V2.0.1 : WebHook 添加[AllowAnonymous]
       V2.0.0 : 适配ZLMediaKit 到 # edbbaa4
       V1.0.5 : 适配ZLMediaKit 到 # bad9553
       v1.0.4 : 增加mediaserverId；修复部分事件无法获取到对端IP与端口， commit by zlmediaKit : # 6a8268f

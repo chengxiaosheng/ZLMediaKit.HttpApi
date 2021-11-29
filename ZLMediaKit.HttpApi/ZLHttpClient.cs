@@ -439,7 +439,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="timeout_sec">拉流超时时间，单位秒，float类型</param>
         /// <param name="retry_count">拉流重试次数,不传此参数或传值小于等于0时，则无限重试</param>
         /// <returns></returns>
-        public async Task<IApiAddStreamPorxyResult> AddStreamProxy([NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string url, bool? enable_hls, bool? enable_mp4, int? rtp_type, float? timeout_sec, int? retry_count)
+        public async Task<IApiAddStreamPorxyResult> AddStreamProxy([NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string url, bool? enable_hls = null, bool? enable_mp4 = null, int? rtp_type = null, float? timeout_sec = null, int? retry_count = null)
         {
             IRestRequest request = new RestRequest("addStreamProxy")
                 .AddQueryParameter("vhost", vhost)
@@ -469,7 +469,7 @@ namespace ZLMediaKit.HttpApi
         /// <param name="timeout_sec">拉流超时时间，单位秒，float类型</param>
         /// <param name="retry_count">拉流重试次数,不传此参数或传值小于等于0时，则无限重试</param>
         /// <returns></returns>
-        public async Task<IApiAddStreamPorxyResult> AddStreamProxy([NotNull] string mediaServerId, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string url, bool? enable_hls, bool? enable_mp4, int? rtp_type, float? timeout_sec, int? retry_count)
+        public async Task<IApiAddStreamPorxyResult> AddStreamProxy([NotNull] string mediaServerId, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string url, bool? enable_hls = null, bool? enable_mp4 = null, int? rtp_type = null, float? timeout_sec = null, int? retry_count = null)
         {
             CreateClient(mediaServerId);
             return await AddStreamProxy(vhost, app, stream, url, enable_hls, enable_mp4, rtp_type, timeout_sec, retry_count);

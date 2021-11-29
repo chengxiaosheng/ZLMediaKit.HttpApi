@@ -13,10 +13,11 @@
     <RepositoryBranch>master</RepositoryBranch>
     <PackageTags>ZLMediaKit HttpClient HttpApi</PackageTags>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
-    <AssemblyVersion>2.0.0</AssemblyVersion>
-    <FileVersion>2.0.0</FileVersion>
-    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.1</AssemblyVersion>
+    <FileVersion>2.0.1</FileVersion>
+    <Version>2.0.1</Version>
     <PackageReleaseNotes>
+      V2.0.1 : WebHook 添加[AllowAnonymous]
       V2.0.0 : 适配ZLMediaKit 到 # edbbaa4
       V1.0.9 : 适配ZLMediaKit 到 # bad9553
       V1.0.8 : 适配多ZLMediaKit交互能力，需要升级ZLMediaKit 到 # 6a8268f
