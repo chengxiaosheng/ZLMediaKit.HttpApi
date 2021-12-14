@@ -221,7 +221,7 @@ namespace ZLMediaKit.WebHook
         public static event StreamNotFoundEventHandle OnStreamNotFound;
         internal static async Task<IHookStreamNotFoundResult> OnStreamNotFound_Call(IHookEventArgs<IStreamNotFoundInuut> hookEventArgs)
         {
-            _ = OnStreamNotFound?.Invoke(hookEventArgs).ConfigureAwait(false);
+            _ = OnStreamNotFound?.Invoke(hookEventArgs);
             return await Task.FromResult(RegisteredModelInstance.GetResultModelDefault<IHookStreamNotFoundResult>());
         }
 

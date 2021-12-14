@@ -19,7 +19,7 @@ namespace ZLMediaKit.Common.Dtos.ApiInputDto
         /// 本级端口
         /// </summary>
         [JsonPropertyName("local_port")]
-        public string LocalPort { get; set; }
+        public int LocalPort { get; set; }
         /// <summary>
         /// 对端IP
         /// </summary>
@@ -29,7 +29,7 @@ namespace ZLMediaKit.Common.Dtos.ApiInputDto
         /// 对端端口
         /// </summary>
         [JsonPropertyName("peer_port")]
-        public string PeerPort { get; set; }
+        public int PeerPort { get; set; }
     }
 
     public class ApiGetRtpInfoResult : ApiResultBase, IApiGetRtpInfoResult
@@ -49,7 +49,7 @@ namespace ZLMediaKit.Common.Dtos.ApiInputDto
         /// 本级端口
         /// </summary>
         [JsonPropertyName("local_port")]
-        public string LocalPort { get; set; }
+        public int LocalPort { get; set; }
         /// <summary>
         /// 对端IP
         /// </summary>
@@ -59,6 +59,6 @@ namespace ZLMediaKit.Common.Dtos.ApiInputDto
         /// 对端端口
         /// </summary>
         [JsonPropertyName("peer_port")]
-        public string PeerPort { get; set; }
+        public int PeerPort { get; set; }
     }
 }

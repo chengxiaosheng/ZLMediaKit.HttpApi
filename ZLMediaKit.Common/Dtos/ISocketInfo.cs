@@ -22,7 +22,7 @@ namespace ZLMediaKit.Common.Dtos
         /// 本级端口
         /// </summary>
         [JsonPropertyName("local_port")]
-        public string LocalPort { get; set; }
+        public int LocalPort { get; set; }
         /// <summary>
         /// 对端IP
         /// </summary>
@@ -32,7 +32,7 @@ namespace ZLMediaKit.Common.Dtos
         /// 对端端口
         /// </summary>
         [JsonPropertyName("peer_port")]
-        public string PeerPort { get; set; }
+        public int PeerPort { get; set; }
 
         /// <summary>
         /// 客户端TCPSession typeid
@@ -60,7 +60,7 @@ namespace ZLMediaKit.Common.Dtos
         /// 本级端口
         /// </summary>
         [JsonPropertyName("local_port")]
-        public string LocalPort { get;  set; }
+        public int LocalPort { get;  set; }
         /// <summary>
         /// 对端IP
         /// </summary>
@@ -70,7 +70,7 @@ namespace ZLMediaKit.Common.Dtos
         /// 对端端口
         /// </summary>
         [JsonPropertyName("peer_port")]
-        public string PeerPort { get;  set; }
+        public int PeerPort { get;  set; }
 
         /// <summary>
         /// 客户端TCPSession typeid

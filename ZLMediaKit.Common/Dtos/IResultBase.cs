@@ -17,7 +17,7 @@ namespace ZLMediaKit.Common.Dtos
     {
 
         [JsonPropertyName("code")]
-        public int Code { get; set; }
+        public virtual int Code { get; set; }
     }
 
 }

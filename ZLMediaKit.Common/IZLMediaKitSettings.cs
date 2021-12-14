@@ -39,8 +39,8 @@ public interface IZLMediaKitSettings
 /// </summary>
 public class ZLMediaKitSettings : IZLMediaKitSettings
 {
-    public string IpAddress { get; set; } = "127.0.0.1";
-    public int ApiPort { get; set; } = 80;
+    public string IpAddress { get; set; }
+    public int ApiPort { get; set; }
     public string ApiSecret { get; set; } = "035c73f7-bb6b-4889-a715-d9eb2d1925cc";
     public int Timeout { get; set; } = 2000;
     public string MediaServerId { get; set; } = "your_server_id";

@@ -43,6 +43,7 @@ namespace ZLMediaKit.Common
             SerializerOptions.Converters.Add(new TypeMappingConvert<ISocketInfo, SocketInfo>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IVideoMediaTrack, VideoMediaTrack>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IAudioMediaTrack, AudioMediaTrack>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IMediaTrack, MediaTrack>());
             // ServerConfig 
             SerializerOptions.Converters.Add(new TypeMappingConvert<IServerConfig, ServerConfig>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiConfig, ApiConfig>());

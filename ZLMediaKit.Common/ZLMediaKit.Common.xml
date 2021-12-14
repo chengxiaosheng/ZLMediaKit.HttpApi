@@ -620,34 +620,49 @@
             返回消息
             </summary>
         </member>
+        <member name="T:ZLMediaKit.Common.Dtos.HookResultDto.IHookHttpAccessResult">
+            <summary>
+            访问http文件服务器上hls之外的文件的返回结果
+            </summary>
+        </member>
         <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookHttpAccessResult.Message">
             <summary>
-            请固定返回0
+            不允许访问的错误提示，允许访问请置空
             </summary>
         </member>
         <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookHttpAccessResult.Path">
             <summary>
-            不允许访问的错误提示，允许访问请置空
+            该客户端能访问或被禁止的顶端目录，如果为空字符串，则表述为当前目录
             </summary>
         </member>
         <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookHttpAccessResult.Second">
             <summary>
-            该客户端能访问或被禁止的顶端目录，如果为空字符串，则表述为当前目录
+            本次授权结果的有效期，单位秒
             </summary>
         </member>
-        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult.Message">
+        <member name="T:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult">
+            <summary>
+            访问http文件服务器上hls之外的文件的返回结果
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult.Code">
             <summary>
             请固定返回0
             </summary>
         </member>
-        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult.Path">
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult.Message">
             <summary>
             不允许访问的错误提示，允许访问请置空
             </summary>
         </member>
-        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult.Second">
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult.Path">
             <summary>
             该客户端能访问或被禁止的顶端目录，如果为空字符串，则表述为当前目录
+            </summary>
+        </member>
+        <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.HookHttpAccessResult.Second">
+            <summary>
+            本次授权结果的有效期，单位秒
             </summary>
         </member>
         <member name="P:ZLMediaKit.Common.Dtos.HookResultDto.IHookPublishResult.EnableHls">

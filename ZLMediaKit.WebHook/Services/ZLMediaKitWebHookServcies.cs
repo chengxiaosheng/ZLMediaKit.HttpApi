@@ -91,6 +91,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_flow_report")]
+        [ProducesResponseType(typeof(IHookReportFlowResult),200)]
         public async Task<IActionResult> FlowReportAsync() =>
             await Execute(default(IReportFlowInput), model => ZLMediaKitWebHookEvents.OnFlowReport_Call(new HookEventArgs<IReportFlowInput>(_contextAccessor.HttpContext, model)));
 
@@ -100,6 +101,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_http_access")]
+        [ProducesResponseType(typeof(IHookHttpAccessResult),200)]
         public async Task<IActionResult> HttpAccessAsync()
         {
 
@@ -118,6 +120,7 @@ namespace ZLMediaKit.WebHook.Services
         /// 播放rtsp流时，如果该流启动了rtsp专属鉴权(on_rtsp_realm)那么将不再触发on_play事件。
         /// </remarks>
         [HttpPost(Name = "on_play")]
+        [ProducesResponseType(typeof(IHookPlayResult),200)]
         public async Task<IActionResult> PlayAsync() =>
             await Execute(default(IPlayInput), model => ZLMediaKitWebHookEvents.OnPlay_Call(new HookEventArgs<IPlayInput>(_contextAccessor.HttpContext, model)));
 
@@ -126,6 +129,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_publish")]
+        [ProducesResponseType(typeof(IHookPublishResult),200)]
         public async Task<IActionResult> PublishAsync()
             => await Execute(default(IPublishInput), model => ZLMediaKitWebHookEvents.OnPublish_Call(new HookEventArgs<IPublishInput>(_contextAccessor.HttpContext, model)));
 
@@ -134,6 +138,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_record_mp4")]
+        [ProducesResponseType(typeof(IHookRecordMp4Result),200)]
         public async Task<IActionResult> RecordMp4Async()
             => await Execute(default(IRecordMp4Input), model => ZLMediaKitWebHookEvents.OnRecordMP4_Call(new HookEventArgs<IRecordMp4Input>(_contextAccessor.HttpContext, model)));
 
@@ -142,6 +147,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_record_ts")]
+        [ProducesResponseType(typeof(IHookRecordTsResult),200)]
         public async Task<IActionResult> RecordTsAsync()
             => await Execute(default(IRecordTsInput), model => ZLMediaKitWebHookEvents.OnRecordTS_Call(new HookEventArgs<IRecordTsInput>(_contextAccessor.HttpContext, model)));
 
@@ -150,6 +156,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <remarks>需要指出的是rtsp也支持url参数鉴权，它支持两种方式鉴权</remarks>
         [HttpPost(Name = "on_rtsp_realm")]
+        [ProducesResponseType(typeof(IHookRtspRealmResult),200)]
         public async Task<IActionResult> RtspRealmAsync()
             => await Execute(default(IRtspRealmInput), model => ZLMediaKitWebHookEvents.OnRtspRealm_Call(new HookEventArgs<IRtspRealmInput>(_contextAccessor.HttpContext, model)));
 
@@ -159,6 +166,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_rtsp_auth")]
+        [ProducesResponseType(typeof(IHookRtspAuthResult),200)]
         public async Task<IActionResult> RtspAuthAsync()
             => await Execute(default(IRtspAuthInput), model => ZLMediaKitWebHookEvents.OnRtspAuth_Call(new HookEventArgs<IRtspAuthInput>(_contextAccessor.HttpContext, model)));
 
@@ -169,6 +177,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_shell_login")]
+        [ProducesResponseType(typeof(IHookShellLoginResult),200)]
         public async Task<IActionResult> ShellLoginAsync()
             => await Execute(default(IShellLoginInput), model => ZLMediaKitWebHookEvents.OnShellLogin_Call(new HookEventArgs<IShellLoginInput>(_contextAccessor.HttpContext, model)));
 
@@ -178,6 +187,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_stream_changed")]
+        [ProducesResponseType(typeof(IHookStreamChangedResult),200)]
         public async Task<IActionResult> StreamChangedAsync()
             => await Execute(default(IStreamChangedInput), model => ZLMediaKitWebHookEvents.OnStreamChanged_Call(new HookEventArgs<IStreamChangedInput>(_contextAccessor.HttpContext, model)));
 
@@ -187,6 +197,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_stream_none_reader")]
+        [ProducesResponseType(typeof(IHookStreamNonReaderResult),200)]
         public async Task<IActionResult> StreamNoneReaderAsync()
             => await Execute(default(IStreamNoneReaderInput), model => ZLMediaKitWebHookEvents.OnStreamNoneReader_Call(new HookEventArgs<IStreamNoneReaderInput>(_contextAccessor.HttpContext, model)));
 
@@ -196,6 +207,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_stream_not_found")]
+        [ProducesResponseType(typeof(IHookStreamNotFoundResult),200)]
         public async Task<IActionResult> StreamNotFoundAsync()
             => await Execute(default(IStreamNotFoundInuut), model => ZLMediaKitWebHookEvents.OnStreamNotFound_Call(new HookEventArgs<IStreamNotFoundInuut>(_contextAccessor.HttpContext, model)));
 
@@ -205,6 +217,7 @@ namespace ZLMediaKit.WebHook.Services
         /// <param name="dicts"></param>
         /// <returns></returns>
         [HttpPost(Name = "on_server_started")]
+        [ProducesResponseType(typeof(IHookServerStartedResult),200)]
         public async Task<IActionResult> ServerStartedAsync([FromBody] Dictionary<string, string> dicts)
         {
 
@@ -251,6 +264,7 @@ namespace ZLMediaKit.WebHook.Services
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "on_server_keepalive")]
+        [ProducesResponseType(typeof(IHookServerKeepaliveResult),200)]
         public async Task<IActionResult> ServerKeepalive()
         {
             return await Execute(default(IServerKeepaliveInput), model =>
