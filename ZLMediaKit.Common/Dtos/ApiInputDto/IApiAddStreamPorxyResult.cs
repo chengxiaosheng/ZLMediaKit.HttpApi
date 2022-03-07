@@ -15,8 +15,7 @@ namespace ZLMediaKit.Common.Dtos.ApiInputDto
     {
 
     }
-
-    public class ApiAddStreamPorxyResultItem : IApiAddStreamProxyResultItem
+    public class ApiAddStreamProxyResultItem : IApiAddStreamProxyResultItem
     {
         /// <summary>
         /// 流的唯一标识

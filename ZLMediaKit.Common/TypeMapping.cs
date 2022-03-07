@@ -67,6 +67,7 @@ namespace ZLMediaKit.Common
             //SerializerOptions.Converters.Add(new TypeMappingConvert<IApiResultDictBase<Dictionary<string,string>>, ApiResultDictBase<Dictionary<string, string>>>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiAddFFmpegSourceResult, ApiAddFFmpegSourceResult>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiAddStreamPorxyResult, ApiAddStreamPorxyResult>());
+            SerializerOptions.Converters.Add(new TypeMappingConvert<IApiAddStreamProxyResultItem, ApiAddStreamProxyResultItem>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiAddStreamPusherProxyResult, ApiAddStreamPusherProxyResult>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiAddStreamPusherProxyResultItem, ApiAddStreamPusherProxyResultItem>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IApiClonseStreamsResult, ApiClonseStreamsResult>());
@@ -107,6 +108,7 @@ namespace ZLMediaKit.Common
             SerializerOptions.Converters.Add(new TypeMappingConvert<IThreadsLoadApiResultItem, ThreadsLoadApiResultItem>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IWorkThreadsLoadApiResult, WorkThreadsLoadApiResult>());
             SerializerOptions.Converters.Add(new TypeMappingConvert<IWorkThreadsLoadApiResultItem, WorkThreadsLoadApiResultItem>());
+
         }
         /// <summary>
         /// 类型映射，用于序列化数据时采用其他类型进行，以便处理一些特殊化的内容 

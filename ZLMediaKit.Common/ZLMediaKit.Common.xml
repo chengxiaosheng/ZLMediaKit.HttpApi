@@ -19,7 +19,7 @@
             流的唯一标识
             </summary>
         </member>
-        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiAddStreamPorxyResultItem.Key">
+        <member name="P:ZLMediaKit.Common.Dtos.ApiInputDto.ApiAddStreamProxyResultItem.Key">
             <summary>
             流的唯一标识
             </summary>
