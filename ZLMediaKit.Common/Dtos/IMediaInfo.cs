@@ -42,7 +42,7 @@ namespace ZLMediaKit.Common.Dtos
         /// 
         /// </summary>
         [JsonPropertyName("originTypeStr")]
-        public bool OriginTypeStr { get; set; }
+        public string OriginTypeStr { get; set; }
         /// <summary>
         /// 产生源的url
         /// </summary>
@@ -104,7 +104,7 @@ namespace ZLMediaKit.Common.Dtos
         /// 
         /// </summary>
         [JsonPropertyName("originTypeStr")]
-        public bool OriginTypeStr { get; set; }
+        public string OriginTypeStr { get; set; }
         /// <summary>
         /// 产生源的url
         /// </summary>
