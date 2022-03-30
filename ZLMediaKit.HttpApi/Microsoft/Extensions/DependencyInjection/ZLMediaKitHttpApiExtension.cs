@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using ZLMediaKit.Common;
 using ZLMediaKit.HttpApi;
 
@@ -24,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
             options?.Invoke(config);
             if (string.IsNullOrEmpty(config.MediaServerId)) throw new InvalidDataException("MediaServerId 不能为空");
             IServerManager.AddServer(config);
-            return services.AddTransient<ZLHttpClient>();
+            return services;
         }
         /// <summary>
         /// 添加ZLMediaKit Http Api Client
@@ -41,7 +42,7 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 IServerManager.AddServer(item);
             }
-            return services.AddTransient<ZLHttpClient>();
+            return services;
 
         }
 
@@ -54,7 +55,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <remarks>用于与WebHook配合，通过WebHook主动产生ZLMediakitWebClient,需要调用ZLHttpClientRegister.Register 方法进行注册</remarks>
         public static IServiceCollection AddZLMediaKitHttpClient(this IServiceCollection services)
         {
-            return services.AddTransient<ZLHttpClient>();
+            return services;
         }
     }
 }
