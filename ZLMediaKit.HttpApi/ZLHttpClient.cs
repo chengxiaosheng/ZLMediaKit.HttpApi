@@ -446,8 +446,36 @@ namespace ZLMediaKit.HttpApi
         /// <param name="rtp_type">rtsp拉流时，拉流方式，0：tcp，1：udp，2：组播</param>
         /// <param name="timeout_sec">拉流超时时间，单位秒，float类型</param>
         /// <param name="retry_count">拉流重试次数,不传此参数或传值小于等于0时，则无限重试</param>
+        /// <param name="enable_rtsp">是否转rtsp协议</param>
+        /// <param name="enable_rtmp">是否转rtmp/flv协议</param>
+        /// <param name="enable_ts">是否转http-ts/ws-ts协议</param>
+        /// <param name="enable_fmp4">是否转http-fmp4/ws-fmp4协议</param>
+        /// <param name="enable_audio">转协议时是否开启音频</param>
+        /// <param name="add_mute_audio">转协议时，无音频是否添加静音aac音频</param>
+        /// <param name="mp4_save_path">mp4录制文件保存根目录，置空使用默认</param>
+        /// <param name="mp4_max_second">mp4录制切片大小，单位秒</param>
+        /// <param name="hls_save_path">hls文件保存保存根目录，置空使用默认</param>
         /// <returns></returns>
-        public static async Task<IApiAddStreamPorxyResult> AddStreamProxy(this RestClient client, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string url, bool? enable_hls = null, bool? enable_mp4 = null, int? rtp_type = null, float? timeout_sec = null, int? retry_count = null)
+        public static async Task<IApiAddStreamPorxyResult> AddStreamProxy(this RestClient client,
+                                                                          [NotNull] string vhost,
+                                                                          [NotNull] string app,
+                                                                          [NotNull] string stream,
+                                                                          [NotNull] string url,
+                                                                          bool? enable_hls = null,
+                                                                          bool? enable_mp4 = null,
+                                                                          int? rtp_type = null,
+                                                                          float? timeout_sec = null,
+                                                                          int? retry_count = null,
+                                                                          bool? enable_rtsp = null,
+                                                                          bool? enable_rtmp = null,
+                                                                          bool? enable_ts = null,
+                                                                          bool? enable_fmp4 = null,
+                                                                          bool? enable_audio = null,
+                                                                          bool? add_mute_audio = null,
+                                                                          string? mp4_save_path = null,
+                                                                          int? mp4_max_second = null,
+                                                                          string? hls_save_path = null
+                                                                          )
         {
             var request = new RestRequest("addStreamProxy")
                 .AddQueryParameter("vhost", vhost)
@@ -459,6 +487,15 @@ namespace ZLMediaKit.HttpApi
             if (rtp_type.HasValue) request = request.AddQueryParameter("rtp_type", rtp_type.ToString());
             if (timeout_sec.HasValue) request = request.AddQueryParameter("timeout_sec", timeout_sec.ToString());
             if (retry_count.HasValue) request = request.AddQueryParameter("retry_count", retry_count.ToString());
+            if (enable_rtsp.HasValue) request = request.AddQueryParameter("enable_rtsp", enable_rtsp == true ? "1" : "0");
+            if (enable_rtmp.HasValue) request = request.AddQueryParameter("enable_rtmp", enable_rtmp == true ? "1" : "0");
+            if (enable_ts.HasValue) request = request.AddQueryParameter("enable_ts", enable_ts == true ? "1" : "0");
+            if (enable_fmp4.HasValue) request = request.AddQueryParameter("enable_fmp4", enable_fmp4 == true ? "1" : "0");
+            if (enable_audio.HasValue) request = request.AddQueryParameter("enable_audio", enable_audio == true ? "1" : "0");
+            if (add_mute_audio.HasValue) request = request.AddQueryParameter("add_mute_audio", add_mute_audio == true ? "1" : "0");
+            if (string.IsNullOrEmpty(mp4_save_path)) request = request.AddQueryParameter("mp4_save_path", mp4_save_path);
+            if (mp4_max_second.HasValue) request = request.AddQueryParameter("mp4_max_second", mp4_max_second.ToString());
+            if (string.IsNullOrEmpty(hls_save_path)) request = request.AddQueryParameter("hls_save_path", hls_save_path);
             return await client.GetAsync<IApiAddStreamPorxyResult>(request);
 
         }
@@ -476,11 +513,52 @@ namespace ZLMediaKit.HttpApi
         /// <param name="rtp_type">rtsp拉流时，拉流方式，0：tcp，1：udp，2：组播</param>
         /// <param name="timeout_sec">拉流超时时间，单位秒，float类型</param>
         /// <param name="retry_count">拉流重试次数,不传此参数或传值小于等于0时，则无限重试</param>
+        /// <param name="enable_rtsp">是否转rtsp协议</param>
+        /// <param name="enable_rtmp">是否转rtmp/flv协议</param>
+        /// <param name="enable_ts">是否转http-ts/ws-ts协议</param>
+        /// <param name="enable_fmp4">是否转http-fmp4/ws-fmp4协议</param>
+        /// <param name="enable_audio">转协议时是否开启音频</param>
+        /// <param name="add_mute_audio">转协议时，无音频是否添加静音aac音频</param>
+        /// <param name="mp4_save_path">mp4录制文件保存根目录，置空使用默认</param>
+        /// <param name="mp4_max_second">mp4录制切片大小，单位秒</param>
+        /// <param name="hls_save_path">hls文件保存保存根目录，置空使用默认</param>
         /// <returns></returns>
-        public static async Task<IApiAddStreamPorxyResult> AddStreamProxy([NotNull] string mediaServerId, [NotNull] string vhost, [NotNull] string app, [NotNull] string stream, [NotNull] string url, bool? enable_hls = null, bool? enable_mp4 = null, int? rtp_type = null, float? timeout_sec = null, int? retry_count = null)
-        {
-            return await CreateClient(mediaServerId).AddStreamProxy( vhost, app, stream, url, enable_hls, enable_mp4, rtp_type, timeout_sec, retry_count);
-        }
+        public static async Task<IApiAddStreamPorxyResult> AddStreamProxy([NotNull] string mediaServerId,
+                                                                          [NotNull] string vhost,
+                                                                          [NotNull] string app,
+                                                                          [NotNull] string stream,
+                                                                          [NotNull] string url,
+                                                                          bool? enable_hls = null,
+                                                                          bool? enable_mp4 = null,
+                                                                          int? rtp_type = null,
+                                                                          float? timeout_sec = null,
+                                                                          int? retry_count = null,
+                                                                          bool? enable_rtsp = null,
+                                                                          bool? enable_rtmp = null,
+                                                                          bool? enable_ts = null,
+                                                                          bool? enable_fmp4 = null,
+                                                                          bool? enable_audio = null,
+                                                                          bool? add_mute_audio = null,
+                                                                          string? mp4_save_path = null,
+                                                                          int? mp4_max_second = null,
+                                                                          string? hls_save_path = null) => await CreateClient(mediaServerId).AddStreamProxy(vhost,
+                                                                                                                                                            app,
+                                                                                                                                                            stream,
+                                                                                                                                                            url,
+                                                                                                                                                            enable_hls,
+                                                                                                                                                            enable_mp4,
+                                                                                                                                                            rtp_type,
+                                                                                                                                                            timeout_sec,
+                                                                                                                                                            retry_count,
+                                                                                                                                                            enable_rtsp,
+                                                                                                                                                            enable_rtmp,
+                                                                                                                                                            enable_ts,
+                                                                                                                                                            enable_fmp4,
+                                                                                                                                                            enable_audio,
+                                                                                                                                                            add_mute_audio,
+                                                                                                                                                            mp4_save_path,
+                                                                                                                                                            mp4_max_second,
+                                                                                                                                                            hls_save_path);
 
         /// <summary>
         /// 关闭拉流代理
